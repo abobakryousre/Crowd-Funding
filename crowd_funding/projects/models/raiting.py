@@ -13,6 +13,7 @@ class Raiting(models.Model):
     three_star = models.IntegerField(default=0)
     four_star = models.IntegerField(default=0)
     five_star = models.IntegerField(default=0)
+    #projcet mas many rating
     project = models.ForeignKey(Projects, on_delete=models.CASCADE)
 
     def getAvarageStar(self):
