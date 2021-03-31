@@ -1,4 +1,5 @@
 from django.db import models
+from users.models import User
 
 
 class Projects(models.Model):
@@ -9,6 +10,7 @@ class Projects(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     start_time = models.DateField(auto_now=False, auto_now_add=False, null=False)
     end_time = models.DateField(auto_now=False, auto_now_add=False, null=False)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def __str__(self):
         return self.title
