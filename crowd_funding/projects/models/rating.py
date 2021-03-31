@@ -7,7 +7,7 @@ check the __init__ file for more details !
 """
 
 
-class Raiting(models.Model):
+class Rating(models.Model):
     one_star = models.IntegerField(default=0)
     two_star = models.IntegerField(default=0)
     three_star = models.IntegerField(default=0)

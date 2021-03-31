@@ -1,6 +1,6 @@
 from .images import Images
 from .projects import Projects
-from .raiting import Raiting
+from .rating import Rating
 from .tags import Tags
 
 """ 

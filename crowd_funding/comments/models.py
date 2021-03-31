@@ -36,6 +36,7 @@ class Comments(models.Model):
 class ReportedComment(models.Model):
     # the comment has only one reportedComment object
     report_count = models.IntegerField(default=1)
+    report_message = models.TextField()
     comment = models.OneToOneField(
         Comments, on_delete=models.CASCADE, primary_key=True)
 
