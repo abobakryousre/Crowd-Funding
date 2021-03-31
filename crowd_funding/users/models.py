@@ -11,3 +11,6 @@ class User(models.Model):
     profile_picutre = models.ImageField()
     mobile_phone = models.CharField(max_length=11)
     birth_date = models.DateField(auto_now=False, auto_now_add=False)
+
+    def __str__(self):
+        return self.first_name + self.last_name
