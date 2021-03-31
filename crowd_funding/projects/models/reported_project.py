@@ -1,7 +1,10 @@
 from django.db import models
 
-from .projects import Project
+from .projects import Projects
 
+""" 
+its work jsut like the  ReportedComment proccess, check it for more details
+"""
 
 class ReportedProject(models.Model):
 

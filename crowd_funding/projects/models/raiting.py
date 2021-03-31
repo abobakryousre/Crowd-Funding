@@ -1,6 +1,10 @@
 from django.db import models
 
-from .projects import Project
+from .projects import Projects
+
+""" 
+check the __init__ file for more details !
+"""
 
 
 class Raiting(models.Model):
