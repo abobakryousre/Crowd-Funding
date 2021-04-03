@@ -25,3 +25,9 @@ def edit_profile(request):
         else:
             context = {"user_profile": updated_data}
             return render(request, "users/edit_profile.html", context)
+
+def view_profile(request):
+    # get user information
+    current_user = User.objects.first() # will change with request.usr.pk
+    context = {"current_user": current_user}
+    return render(request, 'users/profile.html', context )

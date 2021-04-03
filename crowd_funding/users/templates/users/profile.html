@@ -1,0 +1,26 @@
+{% extends "users/base.html" %}
+{% block title %} Profile {% endblock %}
+{% load static %}
+
+{% block content %}
+    <label>First name</label>
+    {{ current_user.first_name }}<br/>
+    <label>Last name</label>
+    {{ current_user.last_name }}<br/>
+    <label>Email</label>
+    {{ current_user.email }}<br/>
+    <label>Countre</label>
+    {{ current_user.country }}<br/><br/>
+
+    <img src="{{ current_user.profile_picutre.url }}" /><br/><br/>
+
+        <label>Moblie Number</label>
+    {{ current_user.mobile_phone }}<br/>
+        <label>Birth Date</label>
+    {{ current_user.birth_date }}<br/><br/><br/>
+
+    <a class="btn btn-info" href="#">Change Password</a><br/>
+    <a class="btn btn-primary" href="{% url 'edit-profile' %}">Edit Profile</a><br/>
+    <a class="btn btn-danger" href="#">Delete Account</a><br/>
+
+{% endblock %}
