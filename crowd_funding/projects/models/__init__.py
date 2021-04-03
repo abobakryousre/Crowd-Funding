@@ -1,5 +1,5 @@
 from .images import Images
-from .projects import Projects
+from .projects import Projects, Donation
 from .rating import Rating
 from .tags import Tags
 

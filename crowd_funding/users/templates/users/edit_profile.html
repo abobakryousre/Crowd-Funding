@@ -1,0 +1,17 @@
+{% extends "users/base.html" %}
+{% load static %}
+{% block content %}
+    <form
+  action="{% url 'edit-profile' %}"
+  method="post"
+  enctype="multipart/form-data"
+>
+  <div>
+       {% csrf_token %}
+    {{ user_profile.as_p }}
+    </div>
+
+  <button type="submit">Update</button>
+</form>
+
+{% endblock %}
