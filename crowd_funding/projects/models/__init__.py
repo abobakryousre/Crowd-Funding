@@ -1,8 +1,8 @@
 from .images import Images
-from .projects import Projects
+from .projects import Donation, Projects
 from .rating import Rating
-from .tags import Tags
 from .reported_project import ReportedProject
+from .tags import Tags
 
 """ 
 # to create a report for a project check how we do it in the comment reported model

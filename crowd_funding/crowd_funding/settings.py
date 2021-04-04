@@ -33,6 +33,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -85,8 +86,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'crowd_funding',
         'HOST': 'localhost',
-        'USER': 'ghada',
-        'PASSWORD': 'Ghada109@',
+        'USER': 'root',
+        'PASSWORD': 'root',
     }
 }
 
