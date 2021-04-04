@@ -83,7 +83,7 @@ DATABASES = {
         'NAME': 'crowd_funding',
         'HOST': 'localhost',
         'USER': 'root',
-        'PASSWORD': 'ayman24228811',
+        'PASSWORD': '',
     }
 }
 
