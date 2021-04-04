@@ -11,7 +11,7 @@ def index(request):
     # TODO: five-latest-projects
     latest_five_projects = Projects.objects.all().order_by('-created_at')[:5]
     # TODO: list of 5 projects selected by admin
-    # TODO: category and it's projects
+    # TODO: each category and display  it's projects with ajax request
     # TODO: search bar, with projects tag, and title.
     context = {
         'highest_projects': highest_rated_projects,
