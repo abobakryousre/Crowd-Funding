@@ -1,6 +1,7 @@
-from django.contrib import admin
-from projects.models import Projects, Rating, Tags, Images, ReportedProject
 from comments.models import Comments, ReportedComment
+from django.contrib import admin
+
+from projects.models import Images, Projects, Rating, ReportedProject, Tags
 
 # Register your models here.
 
