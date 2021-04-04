@@ -5,10 +5,14 @@
       <excludeFolder url="file://$MODULE_DIR$/venv" />
     </content>
 <<<<<<< HEAD
+<<<<<<< HEAD
     <orderEntry type="jdk" jdkName="Python 3.8 (crowd-funding)" jdkType="Python SDK" />
 =======
     <orderEntry type="jdk" jdkName="Python 3.9 (crowd-funding)" jdkType="Python SDK" />
 >>>>>>> feat(create-project): create project
+=======
+    <orderEntry type="jdk" jdkName="Python 3.8 (project)" jdkType="Python SDK" />
+>>>>>>> feat(view-project): rebase from branch feature-create-project
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">
