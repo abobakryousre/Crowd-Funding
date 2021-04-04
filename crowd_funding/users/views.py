@@ -1,9 +1,12 @@
-from django.shortcuts import render, redirect, HttpResponse
-from django.shortcuts import get_object_or_404
-from .models import User
-from .forms import UserProfile
+from django.db.models import Sum
 from django.http import JsonResponse
+from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
+from projects.models import Donation, Images, Projects
 
+from .forms import UserProfile
+from .models import User
+
+# from projects.models.projects import Donation
 
 # Create your views here.
 def index(request):
@@ -34,7 +37,14 @@ def edit_profile(request):
 def view_profile(request):
     # get user information
     current_user = User.objects.first()  # will change with request.usr.pk
-    context = {"current_user": current_user}
+    projects_of_specific_user = Projects.objects.filter(user_id = 1)
+    donations=Donation.objects.select_related('project').filter(user_id=1)
+
+    context = {"current_user": current_user,
+    "projects":projects_of_specific_user,
+    "donations":donations
+    }
+
     return render(request, 'users/profile.html', context)
 
 
@@ -71,3 +81,30 @@ def change_password(request):
         else:
             context = {'error': "Old Passwords Incorrect"}
             return render(request, 'users/change_password.html', context)
+
+def deleteItem(request,pk):
+    sum_donations_of_project = Donation.objects.values('project_id').order_by('project_id').annotate(total_price=Sum('amount')).get(project_id=pk)
+
+    project = Projects.objects.get(id=pk)
+
+   # return HttpResponse(str(project.total_target))
+    if sum_donations_of_project["total_price"] >= project.total_target*(25/100):
+
+        return HttpResponse("Sorry,You can't delete this project because its donations exceeds 25% of total target")
+
+    else:
+        project.delete()
+        return HttpResponse("Done")
+
+
+
+
+
+
+
+
+
+
+
+
+
