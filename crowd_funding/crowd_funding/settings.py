@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'comments.apps.CommentsConfig',
     'projects.apps.ProjectsConfig',
+    'django_countries'
 ]
 
 MIDDLEWARE = [
@@ -70,7 +71,7 @@ TEMPLATES = [
         },
     },
 ]
-
+AUTH_USER_MODEL = 'users.User'
 WSGI_APPLICATION = 'crowd_funding.wsgi.application'
 
 
@@ -82,8 +83,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'crowd_funding',
         'HOST': 'localhost',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'ghada',
+        'PASSWORD': 'Ghada109@',
     }
 }
 
