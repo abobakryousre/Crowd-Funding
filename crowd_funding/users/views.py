@@ -48,5 +48,26 @@ def check_password(request):
             return JsonResponse({"isPasswordCorrect": False})
     else:
         return HttpResponse("Page Not Found!");
+
+
 def delete_account(request):
-    return render(request, 'users/index.html')
+    return redirect('index')
+
+def change_password(request):
+    if request.method == "GET":
+        return render(request, 'users/change_password.html')
+    else:
+        #User.objects.get(pk=request.user.pk)
+        current_user = User.objects.first()
+        user_password = current_user.password
+        if user_password == request.POST.get("old-password"):
+            if request.POST.get('password1') == request.POST.get('password2'):
+                current_user.password = request.POST.get("password1")
+                current_user.save()
+                return redirect('profile')
+            else:
+                context = {'error': "New Passwords Not match"}
+                return render(request, 'users/change_password.html', context)
+        else:
+            context = {'error': "Old Passwords Incorrect"}
+            return render(request, 'users/change_password.html', context)

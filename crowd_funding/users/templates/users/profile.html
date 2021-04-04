@@ -12,88 +12,97 @@
     <label>Countre</label>
     {{ current_user.country }}<br/><br/>
 
-    <img width="150px"  height="150px" src="{{ current_user.profile_picutre.url }}" /><br/><br/>
+    <img width="150px" height="150px" src="{{ current_user.profile_picutre.url }}"/><br/><br/>
 
-        <label>Moblie Number</label>
+    <label>Moblie Number</label>
     {{ current_user.mobile_phone }}<br/>
-        <label>Birth Date</label>
+    <label>Birth Date</label>
     {{ current_user.birth_date }}<br/><br/><br/>
 
-    <a class="btn btn-info" href="#">Change Password</a><br/>
+    <a class="btn btn-info" href="{% url 'change-password' %}">Change Password</a><br/>
     <a class="btn btn-primary" href="{% url 'edit-profile' %}">Edit Profile</a><br/>
-    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAccount" data-bs-whatever="test">Confirm deleting</button>
+    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAccount"
+            data-bs-whatever="test">Delete Account
+    </button>
     <div class="modal fade" id="deleteAccount" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="deleteAccount">Deleting Account Confirmation</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <form>
-          <div class="mb-3">
-            <label for="recipient-name" class="col-form-label">Enter Your Password:</label>
-            <input type="password" class="form-control" id="password">
-          </div>
-            <div class="mb-3">
-            <div id="errors-message">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteAccount">Deleting Account Confirmation</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="recipient-name" class="col-form-label">Enter Your Password:</label>
+                            <input type="password" class="form-control" id="password">
+                        </div>
+                        <div class="mb-3">
+                            <div id="errors-message">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button id="close-modal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close
+                    </button>
+                    <button type="button" class="btn btn-danger" onclick="checkPassword()">Delete</button>
+                </div>
             </div>
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button id="close-modal" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-danger" onclick="checkPassword()">Delete</button>
-      </div>
+        </div>
     </div>
-  </div>
-</div>
     <form method="post" action="{% url 'delete-account' %}">
-    {% csrf_token %}
-        <button id="submit-deleteAccount" hidden="hidden" type="submit" ></button>
+        {% csrf_token %}
+        <button id="submit-deleteAccount" hidden="hidden" type="submit"></button>
     </form>
     <script>
-    function sendAjaxRequestToCheckPassword(password){
-        $.ajax({
-           url: "{% url 'check-password' %}",
-            type: 'get',
-            data: {
-               'password': password
-            },
-            success: function (response){
-               if (response.isPasswordCorrect == true){
-                   deleteAccount();
-               }else{
-                    let error_message_location = document.getElementById('errors-message');
-                    let error_message = document.createElement('p')
-                    error_message.textContent = "Password is not correct !";
-                    error_message_location.appendChild(error_message)
+        function sendAjaxRequestToCheckPassword(password) {
 
-               }
-            }
-        });
-    }
-    function checkPassword(){
-        let password_field = document.getElementById('password');
-        sendAjaxRequestToCheckPassword(password_field.value);
-        clearTheModal();
+            $.ajax({
+                url: "{% url 'check-password' %}",
+                type: 'get',
+                data: {
+                    'password': password
+                },
+                success: function (response) {
+                    if (response.isPasswordCorrect == true) {
+                        deleteAccount();
+                    } else {
+                        let error_message_location = document.getElementById('errors-message');
+                        let error_message = document.createElement('p')
+                        error_message.textContent = "Password is not correct !";
+                        error_message_location.appendChild(error_message)
+
+                    }
+                }
+            })
+
+        }
+
+        function checkPassword() {
+            let password_field = document.getElementById('password');
+            sendAjaxRequestToCheckPassword(password_field.value);
+            clearTheModal();
 
 
-    }
-    function clearTheModal(){
-        let error_message_location = document.getElementById('errors-message');
+        }
+
+        function clearTheModal() {
+            let error_message_location = document.getElementById('errors-message');
             error_message_location.innerHTML = "";
-        let password_field = document.getElementById('password');
-        password_field.value = "";
-    }
-    function deleteAccount(){
-        let closeModalButton = document.getElementById('close-modal');
-        let submitDeleteAccount = document.getElementById('submit-deleteAccount');
-        closeModalButton.click();
-        submitDeleteAccount.click();
-    }
-    let modal = document.getElementById('deleteAccount')
-    modal.addEventListener('hidden.bs.modal', clearTheModal())
+            let password_field = document.getElementById('password');
+            password_field.value = "";
+        }
+
+        function deleteAccount() {
+            let closeModalButton = document.getElementById('close-modal');
+            let submitDeleteAccount = document.getElementById('submit-deleteAccount');
+            closeModalButton.click();
+            submitDeleteAccount.click();
+        }
+
+        let modal = document.getElementById('deleteAccount')
+        modal.addEventListener('hidden.bs.modal', clearTheModal())
     </script>
 
 {% endblock %}
