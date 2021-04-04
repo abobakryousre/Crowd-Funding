@@ -5,10 +5,19 @@ from users.models import User
 #to get all the project comments 
 your projectInstanc.comments_set.all()
 """
+
+class Category(models.Model):
+    category_name = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.category_name
+
+
+
 class Projects(models.Model):
     title = models.CharField(max_length=50, null=False)
     details = models.TextField()
-    category = models.CharField(max_length=50)
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
     total_target = models.FloatField(null=False)
     created_at = models.DateTimeField(auto_now_add=True)
     start_time = models.DateField(auto_now=False, auto_now_add=False, null=False)
@@ -31,3 +40,5 @@ class Donation(models.Model):
 
     def __str__(self):
         return str(self.name)
+
+
