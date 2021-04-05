@@ -2,10 +2,41 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>login </title>
 </head>
 <body>
-<h1>log in </h1>
 
+
+
+  <form method="POST" action="{% url 'loginform' %}" enctype="multipart/form-data">
+      {% csrf_token %}
+    {%  for field in formlogin %}
+       <p>
+          {{ field.label_tag }}
+           {{field}}
+           {% if field.help_text %}
+           <small style="color:gray;">
+               {{field.help_text}}
+           </small>
+           {% endif %}
+           {% for error in field.errors %}
+            <p style="color:red;">
+               {{error}}
+           </p>
+           {% endfor %}
+
+         {% if formlogin.non_field_errors %}
+           <div style="color:red;">
+               <p>
+                   {{ formlogin.non_field_errors }}
+               </p>
+
+           </div>
+         {% endif %}
+       </p>
+
+   {% endfor %}
+      <button type="submit"> log in </button>
+  </form>
 </body>
 </html>

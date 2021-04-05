@@ -21,10 +21,11 @@ from django.urls import include, path
 
 import users
 from django.urls import path
-from users.views import registerpage #,checkformdata
+from users.views import registerpage, loginform  # ,checkformdata
 
 urlpatterns = [
-  # path('', registerpage),
-  path('',registerpage, name='checkdata'),
+    # path('', registerpage),
+    path('reg', registerpage, name='checkdata'),
+    path('loginnn',loginform, name='loginform'),
 
- ]
+]
