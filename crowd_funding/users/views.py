@@ -77,8 +77,52 @@ def display_category(request):
         category_id = request.GET.get('category_id')
         category = Category.objects.filter(pk=category_id)[0]
         projects = category.projects_set.all()
+        # set projects image
+        images = []
+        for project in projects:
+            image = project.images_set.first().path.url
+            images.append(image)
         projectsModels_to_json =  serializers.serialize('json', projects,)
+        images_to_json = json.dumps(images)
 
-        return JsonResponse({"projects": projectsModels_to_json})
+        return JsonResponse({ "projects": projectsModels_to_json, 'images': images_to_json })
+    else:
+        return HttpResponse("Page Not Found!");
+
+def search_for_projects(request):
+    if request.is_ajax():
+        query = request.GET.get('query')
+        #convert the query from string to array
+        query = query.split(" ")
+        if query == "@":
+            all_projects = Projects.objects.all()
+        else:
+            all_matched_tags = Tags.objects.filter(tag_name__in=query)
+            projects_by_tag = []
+            if all_matched_tags:
+                for tag in all_matched_tags:
+                    projects_by_tag.append(tag.project)
+
+            projects_by_title = Projects.objects.filter(title__in=query)
+
+            # convert the query set to array
+            all_projects = list(projects_by_tag) + list(projects_by_title)
+            # remove the duplicated projects
+            all_projects = list( dict.fromkeys(all_projects))
+
+        # set projects image
+        images = []
+        for project in all_projects:
+            image = project.images_set.first().path.url
+            images.append(image)
+
+        # convert Django Model Object to JSON string
+
+        projects_models_to_json = serializers.serialize('json', all_projects,)
+        images_to_json = json.dumps(images)
+
+        print(projects_models_to_json)
+        print(images_to_json)
+        return JsonResponse({ "projects": projects_models_to_json, 'images': images_to_json })
     else:
         return HttpResponse("Page Not Found!");

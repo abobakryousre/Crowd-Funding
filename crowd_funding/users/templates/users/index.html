@@ -2,12 +2,22 @@
 {% block title %} Home {% endblock %}
 {% load static %}
 {% block content %}
+    {# Searchbar start #}
     <div class="container mt-5">
-        <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
+        <div class="d-flex">
+            <input id="searchbar" class="form-control me-2" type="search" placeholder="Search by tag or title"
+                   aria-label="Search">
+            <button class="btn btn-outline-success" onclick="submitQuery()">Search</button>
+        </div>
     </div>
+    {# sheatchbar end #}
+
+
+    {# search result start #}
+    <div class="row justify-content-center" id="search-result"></div>
+    {# search result end #}
+
+
     <dev class="row">
         <dev class="col-md-1"></dev>
         {# Categories start #}
@@ -47,8 +57,8 @@
 
                             {% for project in highest_projects %}
                                 <div class="carousel-item {% if forloop.first %} active {% endif %} ">
-                                    <img width="200px" height="300px" src="{{ project.images_set.first.path.url }}"
-                                         class="d-block w-100" alt="">
+                                    <a href="{% url 'project_details' project.id %}"><img width="200px" height="300px" src="{{ project.images_set.first.path.url }}"
+                                         class="d-block w-100" alt=""></a>
                                     <div class="carousel-caption d-none d-md-block">
                                         <h5>{{ project.title }}</h5>
                                         <p>{{ project.details }}</p>
@@ -82,7 +92,7 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ project.title }}</h5>
                         <p class="card-text">{{ project.details }}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <a href="{% url 'project_details' project.id %}" class="btn btn-primary">More Details</a>
                     </div>
                 </div>
 
@@ -101,39 +111,64 @@
             $.ajax({
                 url: "{% url 'display-category' %}",
                 type: 'get',
+                dataType: 'json',
                 data: {
                     'category_id': category_id
                 },
                 success: appendProjects
-            })
+            });
         }
 
         function appendProjects(response) {
-            let projects = response['projects'];
-            let projects_toJson = JSON.parse(projects)
+            let projects_toJson = JSON.parse(response['projects'])
+            let project_images = JSON.parse(response['images']);
+            let category_projects_location = document.getElementById('categories');
 
-            for (project of projects_toJson) {
-                console.log(project.fields);
-                console.log("**********************")
-                insertProject(project.fields);
+            for (let index = 0; index < projects_toJson.length; index++) {
+                insertProject(category_projects_location, projects_toJson[index].fields, project_images[index]);
             }
-
 
         }
 
-        function insertProject(project) {
-            let category_projects_location = document.getElementById('categories');
-
-            category_projects_location.innerHTML += `
+        function insertProject(location, project, project_image = "") {
+            location.innerHTML += `
             <div class="card col-md-1 " style="width: 18rem;">
-                    <img src=" {% static 'users/images/301d4432918ccd3.jpg' %} " class="card-img-top" alt="...">
+                    <img src=" ${project_image} " class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">${project.title}</h5>
                         <p class="card-text">${project.details}</p>
-                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                        <a href="projects/${project.id}" class="btn btn-primary">More Details</a>
                     </div>
                 </div>
             `
+        }
+
+        function submitQuery() {
+            let query = document.getElementById('searchbar').value;
+            let searchResultLocation = document.getElementById('search-result');
+
+            {#cleare the search result location and the search bar#}
+            searchResultLocation.innerHTML = "";
+            document.getElementById('searchbar').value = "";
+
+            $.ajax({
+                url: "{% url 'search-for-projects' %}",
+                type: 'get',
+                dataType: 'json',
+                data: {
+                    'query': query
+                },
+                success: appendSearchResult
+            });
+        }
+
+        function appendSearchResult(response) {
+            let searchResultLocation = document.getElementById('search-result');
+            let projects = JSON.parse(response['projects']);
+            let project_images = JSON.parse(response['images']);
+            for (let index = 0; index < projects.length; index++) {
+                insertProject(searchResultLocation, projects[index].fields, project_images[index]);
+            }
         }
     </script>
 {% endblock %}

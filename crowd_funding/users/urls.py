@@ -20,7 +20,7 @@ from django.urls import include, path
 
 import users
 from users.views import *  # ,checkformdata
-from users.views import display_category, index
+from users.views import display_category, index, search_for_projects
 
 urlpatterns = [
         # path('', registerpage),
@@ -31,4 +31,5 @@ path('loginn', loginPage, name="login"),
     # path('loginsite/',loginform, name='loginform'),
     path('', index),
     path('display-category/', display_category, name='display-category'),
+    path('search-for-projects', search_for_projects, name='search-for-projects'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
