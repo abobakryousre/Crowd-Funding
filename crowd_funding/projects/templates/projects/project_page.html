@@ -86,30 +86,34 @@
             <div class="col-md-7"></div>
         </div>
         <div class="row justify-content-center">
-                <div class="col-md-6">
-                     <form method="post">
-                        {{ comment_form.as_p }}
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                    </form>
-                </div>
-                <div class="col-md-3"></div>
+            <div class="col-md-6">
+                 <form method="post">
+                    {{ comment_form.as_p }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
             </div>
-            <br>
-            {% for comment in comments %}
-                <div class="row justify-content-center">
-                    <div class="col-md-6">
-                        <h6 class="fw-bold">{{ comment.user }}</h6>
+            <div class="col-md-3"></div>
+        </div>
+        <br>
+        {% for comment in comments %}
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <h6 class="fw-bold">{{ comment.user }}</h6>
+                    {% if comment.reportedcomment %}
+                        <p class="text-muted">comment has been reported.</p>
+                    {% else %}
                         <h6>{{ comment }}</h6>
                         {% if comment.user.id == 1 %}
                             <a href="#" class="link-secondary">Delete</a>
                         {% endif %}
                         <a href="#" class="link-secondary">Report</a>
-                        <hr>
-                    </div>
-                    <div class="col-md-3"></div>
+                    {% endif %}
+                    <hr>
                 </div>
-            {% endfor %}
+                <div class="col-md-3"></div>
+            </div>
+        {% endfor %}
     </div>
 
 {% endblock  %}
