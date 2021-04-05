@@ -13,7 +13,7 @@
   </div>
   <form method="post" enctype="multipart/form-data" class="ml-5">
     {% csrf_token %}
-    <!-- <input type='hidden' name="project"  id="id_project"  value="{{ project.id }}" />  -->
+
     {% for field in donate_form %}
     <div class="row">
       <div class="col-md-12">
@@ -30,7 +30,7 @@
       </div>
     </div>
     {% endfor %}
-    <!--    end new 3-->
+
     <button type="submit">Submit</button>
   </form>
 </div>

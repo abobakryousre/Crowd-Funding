@@ -89,13 +89,13 @@ def project_details(request, id):
     project = Projects.objects.get(id=id)
     project_category = Category.objects.get(id=project.category_id)
 
-    # projectimage = project.path.first()
-    # if projectimage != None:
-    #     projectimage = projectimage.picture.url
-    #     picturesObjects = project.projectpictures_set.all()
-    #     pictures = []
-    #     for picture in picturesObjects:
-    #         pictures.append(picture.picture.url)
+    projectimage = project.images_set.first()
+    if projectimage != None:
+        projectimage = projectimage.path.url
+        picturesObjects = project.images_set.all()
+        pictures = []
+        for picture in picturesObjects:
+            pictures.append(picture.path.url)
 
 
     # Checking on Donations
@@ -110,8 +110,7 @@ def project_details(request, id):
 
     context = {
         "project": project,
-
-
+        "pictures": pictures,
         "total_target": total_target,
         "amount": amount,
         "comments": comments,
