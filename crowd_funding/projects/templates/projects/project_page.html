@@ -88,6 +88,9 @@
                         <a href="#" class="link-secondary">Delete</a>
                     {% endif %}
                     <a href="#" class="link-secondary">Report</a>
+                    {% if comment.reportedcomment %}
+                        <p class="text-muted">comment has been reported</p>
+                    {% endif %}
                     <hr>
                 </div>
             </div>

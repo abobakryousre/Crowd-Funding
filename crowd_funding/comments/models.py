@@ -6,7 +6,7 @@ from users.models import User
 
 """
  you should first to have a commint to report it,
- to check if the comment is reported or not use hasattr method -> hasattr(the objectInstance, 'reported_comment')
+ to check if the comment is reported or not use hasattr method -> hasattr(the objectInstance, 'reportedcomment')
 
  to get ReportedComment object -> objectInstance.reportedcomment
  to get the report count  -> objectInstance.reportedcomment.report_count
