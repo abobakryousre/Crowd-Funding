@@ -27,8 +27,8 @@ class UserAccountManager(UserManager):
             password=password
         )
         user.is_admin = True
-        user.is_superuser=True
-        user.is_staff=True
+        user.is_superuser = True
+        user.is_staff = True
 
         user.save(using=self._db)
         return user
@@ -40,25 +40,24 @@ class User(AbstractUser):
     last_name = models.CharField(max_length=100)
     username = models.CharField(max_length=100, unique=False)
     email = models.EmailField(verbose_name="email", max_length=254, unique=True)
-    # country = models.CharField(max_length=100)
+
     country = CountryField(blank=True, null=True)
-    profile_picutre = models.ImageField(upload_to="users_images/", blank=True, null=True)
+    profile_picutre = models.ImageField(upload_to="users_images/", blank=True, null=True,default="users_images/1.png")
     phone_number = models.CharField(
         max_length=16,
         blank=True,
         null=True,
         validators=[
             RegexValidator(
-                regex=r'(201)[0-9]{9}$',
+                regex=r'(01)[0-9]{9}$',
                 message="Phone number must be entered in the egyption format"
             ),
         ],
     )
-    birth_date = models.DateField(auto_now=False, auto_now_add=False,null=True)
+    birth_date = models.DateField(auto_now=False, auto_now_add=False, null=True)
     is_admin = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     is_staff = models.BooleanField(default=False)
-
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = ['username']
