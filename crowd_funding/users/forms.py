@@ -17,11 +17,11 @@ class createuserform(UserCreationForm):
             ),
         ],
     )
-    profile_picutre = forms.ImageField( )
+    # profile_picutre = forms.ImageField( )
 
     class Meta:
         model = User
-        fields = ["first_name", "last_name", "password1", "password2","phone_number","profile_picutre"]
+        fields = ("first_name", "last_name","email", "password1", "password2","phone_number","profile_picutre")
 
 #
 #
