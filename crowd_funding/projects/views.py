@@ -1,16 +1,15 @@
 from django.shortcuts import render
-
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
 import datetime
 import math
 from django.db.models import Avg, Count, Q, Sum
-
 from comments.models import Comments
+from comments.forms import CommentForm
 from .models import Projects, Images, Donation ,Rating
-
 from django.forms import modelformset_factory
 from projects.forms import ProjectForm, PictureForm, DonationForm
+from users.models import User
 
 
 def createProject(request):
@@ -83,6 +82,7 @@ def index(request):
 def project_details(request, id):
     add_rate = 0
     project = Projects.objects.get(id=id)
+    comments = Comments.objects.filter(project=project)
 
     # projectimage = project.path.first()
     # if projectimage != None:
@@ -99,17 +99,32 @@ def project_details(request, id):
     donations = Donation.objects.filter(project_id=id)
     for donation in donations:
         amount = amount + donation.amount
-
-    # Getting All Comments
-    comments = Comments.objects.filter(project_id=id)
-
-    context = {
-        "project": project,
-
-
-        "total_target": total_target,
-        "amount": amount,
-        "comments": comments,
-
-    }
+    if request.method == "GET":
+        comment_form = CommentForm()
+        context = {
+            "project": project,
+            "total_target": total_target,
+            "amount": amount,
+            "comments": comments,
+            "comment_form": comment_form
+        }
+    else:
+        comment_form = CommentForm(data=request.POST)
+        if comment_form.is_valid():
+            # Create Comment object but don't save to database yet
+            new_comment = comment_form.save(commit=False)
+            # Assign the current post to the comment
+            new_comment.project = project
+            new_comment.user = User.objects.get(id=1)
+            # Save the comment to the database
+            new_comment.save()
+        else:
+            comment_form = CommentForm()
+        context = {
+            "project": project,
+            "total_target": total_target,
+            "amount": amount,
+            "comments": comments,
+            "comment_form": comment_form
+        }
     return render(request, 'projects/project_page.html/', context)

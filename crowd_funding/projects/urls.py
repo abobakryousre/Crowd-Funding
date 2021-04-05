@@ -5,7 +5,6 @@ from django.urls import path
 from .views import createProject, projectDonate, index, project_details
 
 urlpatterns = [
-    # path('', ),
     path('<int:id>', project_details, name="project_details"),
     path('create', createProject, name="create_project"),
     path('donate/<int:id>', projectDonate, name="donate_project"),
