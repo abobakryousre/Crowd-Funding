@@ -11,6 +11,7 @@ from .models import Projects, Images, Donation ,Rating,Tags
 
 from django.forms import modelformset_factory
 from projects.forms import ProjectForm, PictureForm, DonationForm
+from .models.projects import Category
 
 
 def createProject(request):
@@ -86,6 +87,7 @@ def index(request):
 def project_details(request, id):
     add_rate = 0
     project = Projects.objects.get(id=id)
+    project_category = Category.objects.get(id=project.category_id)
 
     # projectimage = project.path.first()
     # if projectimage != None:
@@ -113,6 +115,7 @@ def project_details(request, id):
         "total_target": total_target,
         "amount": amount,
         "comments": comments,
+        "project_category":project_category
 
     }
     return render(request, 'projects/project_page.html/', context)
