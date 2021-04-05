@@ -107,7 +107,7 @@
                         {% if comment.user.id == 1 %}
                             <a href="#" class="link-secondary">Delete</a>
                         {% endif %}
-                        <a href="#" class="link-secondary">Report</a>
+                        <a href="{% url 'comments:report_comment' project.id comment.id %}" class="link-secondary">Report</a>
                     {% endif %}
                     <hr>
                 </div>
