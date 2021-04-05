@@ -30,7 +30,22 @@
       </div>
     </div>
     {% endfor %}
-    
+    <div class="form-group">
+                <label for="tags">Tags</label>
+            </div>
+
+            <div class="form-group">
+                <input
+                    type="text"
+                    name="project_tags"
+                    class="form-control"
+                    data-role="tagsinput"
+                    id="tags"
+                    required
+                />
+                <small id="tagsError" class="form-text text-danger"></small>
+            </div>
+
     <div class="row">
         <div class="col-md-12">
             <h3> Upload Images </h3>

@@ -7,7 +7,7 @@ import math
 from django.db.models import Avg, Count, Q, Sum
 
 from comments.models import Comments
-from .models import Projects, Images, Donation ,Rating
+from .models import Projects, Images, Donation ,Rating,Tags
 
 from django.forms import modelformset_factory
 from projects.forms import ProjectForm, PictureForm, DonationForm
@@ -33,6 +33,9 @@ def createProject(request):
                     photo = Images(
                         project=project_form, path=image)
                     photo.save()
+
+            for tag in request.POST["project_tags"].split(","):
+                Tags(project=project_form, tag_name=tag).save()
 
             # user profile page
             return redirect("projects_index")
