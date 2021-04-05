@@ -72,7 +72,7 @@
         {% endif %}
         {# highestProjects end #}
     </dev>
-    <div class="container justify-content-center" id="categories"></div>
+    <div class="row justify-content-center " id="categories"></div>
     {# latestProject start #}
     {% if latest_projects %}
         <div class="row justify-content-center">
@@ -91,10 +91,49 @@
     {% endif %}
     {# highestProjects end #}
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
     <script>
 
         function displayCategoryProjects(category_id) {
+            let category_projects_location = document.getElementById('categories');
+            category_projects_location.innerHTML = "";
+            $.ajax({
+                url: "{% url 'display-category' %}",
+                type: 'get',
+                data: {
+                    'category_id': category_id
+                },
+                success: appendProjects
+            })
+        }
+
+        function appendProjects(response) {
+            let projects = response['projects'];
+            let projects_toJson = JSON.parse(projects)
+
+            for (project of projects_toJson) {
+                console.log(project.fields);
+                console.log("**********************")
+                insertProject(project.fields);
+            }
+
+
+        }
+
+        function insertProject(project) {
+            let category_projects_location = document.getElementById('categories');
+
+            category_projects_location.innerHTML += `
+            <div class="card col-md-1 " style="width: 18rem;">
+                    <img src=" {% static 'users/images/301d4432918ccd3.jpg' %} " class="card-img-top" alt="...">
+                    <div class="card-body">
+                        <h5 class="card-title">${project.title}</h5>
+                        <p class="card-text">${project.details}</p>
+                        <a href="#" class="btn btn-primary">Go somewhere</a>
+                    </div>
+                </div>
+            `
         }
     </script>
 {% endblock %}

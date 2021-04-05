@@ -18,6 +18,7 @@
     </content>
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     <orderEntry type="jdk" jdkName="Python 3.8 (crowd-funding)" jdkType="Python SDK" />
 =======
     <orderEntry type="jdk" jdkName="Python 3.9 (crowd-funding)" jdkType="Python SDK" />
@@ -25,6 +26,9 @@
 =======
     <orderEntry type="jdk" jdkName="Python 3.8 (project)" jdkType="Python SDK" />
 >>>>>>> feat(view-project): rebase from branch feature-create-project
+=======
+    <orderEntry type="jdk" jdkName="Python 3.8 (crowd_funding)" jdkType="Python SDK" />
+>>>>>>> feat(home-page-layout): display  category's project  when click on it
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="PyDocumentationSettings">

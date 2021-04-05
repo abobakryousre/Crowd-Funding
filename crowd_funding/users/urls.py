@@ -16,19 +16,19 @@ Including another URLconf
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
 from django.urls import include, path
 
 import users
-from django.urls import path
 from users.views import *  # ,checkformdata
+from users.views import display_category, index
 
 urlpatterns = [
-    # path('', registerpage),
+        # path('', registerpage),
 path('loginn', loginPage, name="login"),
 
     path('reg', UserRegisterView, name='checkdata'),
     path('home',index,name='home')
     # path('loginsite/',loginform, name='loginform'),
-
-]
+    path('', index),
+    path('display-category/', display_category, name='display-category'),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -2,6 +2,7 @@
 <project version="4">
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.8 (crowd-funding)" project-jdk-type="Python SDK" />
 =======
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.9 (crowd-funding)" project-jdk-type="Python SDK" />
@@ -9,6 +10,9 @@
 =======
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.8 (project)" project-jdk-type="Python SDK" />
 >>>>>>> feat(view-project): rebase from branch feature-create-project
+=======
+  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.8 (crowd_funding)" project-jdk-type="Python SDK" />
+>>>>>>> feat(home-page-layout): display  category's project  when click on it
   <component name="PyCharmProfessionalAdvertiser">
     <option name="shown" value="true" />
   </component>
