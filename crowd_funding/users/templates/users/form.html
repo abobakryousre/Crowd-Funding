@@ -8,26 +8,11 @@
 
 
 
-  <form method="POST" action="{% url 'checkdata' %}" enctype="multipart/form-data">
+  <form method="POST" action="" enctype="multipart/form-data">
       {% csrf_token %}
-    {%  for field in formregister %}
-       <p>
-          {{ field.label_tag }}
-           {{field}}
-           {% if field.help_text %}
-           <small style="color:gray;">
-               {{field.help_text}}
-           </small>
-           {% endif %}
-           {% for error in field.errors %}
-            <p style="color:red;">
-               {{error}}
-           </p>
-           {% endfor %}
-       </p>
-
-   {% endfor %}
+       {{ form.as_p }}
       <input type="submit" name="sign in">
+      <div class="mt-4"> <div class="d-flex justify-content-center links"> Already have an account? <a href="{% url 'login' %}" class="ml-2">Login</a> </div> </div>
   </form>
 </body>
 </html>
