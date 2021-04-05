@@ -6,7 +6,7 @@ import math
 from django.db.models import Avg, Count, Q, Sum
 from comments.models import Comments
 from comments.forms import CommentForm
-from .models import Projects, Images, Donation ,Rating, Tags
+from .models import Projects, Images, Donation,Rating, Tags
 from django.forms import modelformset_factory
 from projects.forms import ProjectForm, PictureForm, DonationForm
 from .models.projects import Category
@@ -23,8 +23,6 @@ def createProject(request):
         if form.is_valid() and formset.is_valid:
             project_form = form.save(commit=False)
             project_form.save()
-            # field = project_form.cleaned_data['tags']
-            # tags =  request.POST['tags'].split(',')
             form.save_m2m()
 
             for pictureForm in formset.cleaned_data:
@@ -38,7 +36,7 @@ def createProject(request):
                 Tags(project=project_form, tag_name=tag).save()
 
             # user profile page
-            return redirect("projects_index")
+            return redirect("project_details", project_form.id)
             # return HttpResponse("project added and redirect to user profile")
     else:
         picture_form = ImageFormSet(queryset=Images.objects.none())
@@ -59,7 +57,6 @@ def projectDonate(request, id):
                 Q(project_id=id) & Q(user_id=request.POST['user'])).count()
             print(result)
             if (result > 0):
-                print("hjhjhj")
                 obj = Donation.objects.filter(Q(project_id=id) & Q(
                     user_id=request.POST['user'])).first()
                 amount_value = getattr(obj, 'amount')
@@ -70,7 +67,7 @@ def projectDonate(request, id):
                 donate_form.save()
 
             print(result)
-            return redirect("projects_index")
+            return redirect("project_details", project.id)
             # return HttpResponse("donations has been added and redirect to
             # user profile")
     else:

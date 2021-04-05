@@ -1,5 +1,5 @@
 from django.contrib import admin
-from projects.models import Projects
+from projects.models import Projects, Tags
 from projects.models.projects import Category
 from projects.models import Images
 # Register your models here.
@@ -7,3 +7,4 @@ from projects.models import Images
 admin.site.register(Projects)
 admin.site.register(Category)
 admin.site.register(Images)
+admin.site.register(Tags)

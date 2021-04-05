@@ -8,7 +8,7 @@ urlpatterns = [
     path('<int:id>', project_details, name="project_details"),
     path('create', createProject, name="create_project"),
     path('donate/<int:id>', projectDonate, name="donate_project"),
-     path('index', index, name="projects_index"),
+    path('index', index, name="projects_index"),
 
 
 ] + static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
