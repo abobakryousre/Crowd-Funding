@@ -6,9 +6,10 @@ import math
 from django.db.models import Avg, Count, Q, Sum
 from comments.models import Comments
 from comments.forms import CommentForm
-from .models import Projects, Images, Donation ,Rating
+from .models import Projects, Images, Donation ,Rating, Tags
 from django.forms import modelformset_factory
 from projects.forms import ProjectForm, PictureForm, DonationForm
+from .models.projects import Category
 from users.models import User
 
 
@@ -32,6 +33,9 @@ def createProject(request):
                     photo = Images(
                         project=project_form, path=image)
                     photo.save()
+
+            for tag in request.POST["project_tags"].split(","):
+                Tags(project=project_form, tag_name=tag).save()
 
             # user profile page
             return redirect("projects_index")
@@ -83,14 +87,15 @@ def project_details(request, id):
     add_rate = 0
     project = Projects.objects.get(id=id)
     comments = Comments.objects.filter(project=project)
+    project_category = Category.objects.get(id=project.category_id)
 
-    # projectimage = project.path.first()
-    # if projectimage != None:
-    #     projectimage = projectimage.picture.url
-    #     picturesObjects = project.projectpictures_set.all()
-    #     pictures = []
-    #     for picture in picturesObjects:
-    #         pictures.append(picture.picture.url)
+    projectimage = project.images_set.first()
+    if projectimage != None:
+        projectimage = projectimage.path.url
+        picturesObjects = project.images_set.all()
+        pictures = []
+        for picture in picturesObjects:
+            pictures.append(picture.path.url)
 
 
     # Checking on Donations
@@ -99,13 +104,16 @@ def project_details(request, id):
     donations = Donation.objects.filter(project_id=id)
     for donation in donations:
         amount = amount + donation.amount
+
     if request.method == "GET":
         comment_form = CommentForm()
         context = {
             "project": project,
+            "pictures": pictures,
             "total_target": total_target,
             "amount": amount,
             "comments": comments,
+            "project_category": project_category,
             "comment_form": comment_form
         }
     else:
@@ -122,9 +130,11 @@ def project_details(request, id):
             comment_form = CommentForm()
         context = {
             "project": project,
+            "pictures": pictures,
             "total_target": total_target,
             "amount": amount,
             "comments": comments,
+            "project_category": project_category,
             "comment_form": comment_form
         }
     return render(request, 'projects/project_page.html/', context)

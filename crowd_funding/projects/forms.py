@@ -21,7 +21,7 @@ class ProjectForm(ModelForm):
 
 
 class PictureForm(ModelForm):
-    # pic = forms.ImageField(label='Upload Images')
+
     class Meta:
         model = Images
         fields = ['path']
