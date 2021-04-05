@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from projects.models import Projects, Rating
+from projects.models.projects import Category
 
 from users.forms import SignUpForm
 
@@ -61,9 +62,11 @@ def index(request):
     latest_five_projects = Projects.objects.all().order_by('-created_at')[:5]
     # TODO: list of 5 projects selected by admin
     # TODO: each category and display  it's projects with ajax request
+    categories = Category.objects.all()
     # TODO: search bar, with projects tag, and title.
     context = {
         'highest_projects': highest_rated_projects,
-        'latest_projects': latest_five_projects
+        'latest_projects': latest_five_projects,
+        'categories': categories
     }
     return render(request, 'users/index.html', context)
