@@ -48,6 +48,12 @@
                           <p><h4><span>Category:</span> </h4>{{ project_category}}</p>
                         <p><h4><span>Details :</span> </h4>{{ project.details }}</p>
                         <h5><span>start date:</span></h5><h7>{{project.start_time}}</h7>
+                        <ul>Tags
+            {% for tag in project.tags_set.all %}
+            <li>{{tag.tag_name}}</li>
+            {% endfor %}
+            </ul>
+
                         {% comment %} <h5><span>end date:</span>{{project.end_time}}</h5> {% endcomment %}
                         <h5><span>End date:</span></h5><h7>{{project.end_time}}</h7>
                     
