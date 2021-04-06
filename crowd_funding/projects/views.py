@@ -11,6 +11,7 @@ from django.forms import modelformset_factory
 from projects.forms import ProjectForm, PictureForm, DonationForm
 from .models.projects import Category
 from users.models import User
+from comments.forms import ReportCommentForm
 
 
 def createProject(request):
@@ -104,6 +105,7 @@ def project_details(request, id):
 
     if request.method == "GET":
         comment_form = CommentForm()
+        report_comment_form = ReportCommentForm()
         context = {
             "project": project,
             "pictures": pictures,
@@ -111,8 +113,10 @@ def project_details(request, id):
             "amount": amount,
             "comments": comments,
             "project_category": project_category,
-            "comment_form": comment_form
+            "comment_form": comment_form,
+            "report_comment_form": report_comment_form,
         }
+        return render(request, 'projects/project_page.html/', context)
     else:
         comment_form = CommentForm(data=request.POST)
         if comment_form.is_valid():
@@ -125,6 +129,7 @@ def project_details(request, id):
             new_comment.save()
         else:
             comment_form = CommentForm()
+        # report_comment_form = ReportCommentForm()
         context = {
             "project": project,
             "pictures": pictures,
@@ -132,6 +137,7 @@ def project_details(request, id):
             "amount": amount,
             "comments": comments,
             "project_category": project_category,
-            "comment_form": comment_form
+            "comment_form": comment_form,
+            # "report_comment_form": report_comment_form,
         }
-    return render(request, 'projects/project_page.html/', context)
+    return redirect("project_details", project.id)

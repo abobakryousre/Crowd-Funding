@@ -103,11 +103,34 @@
                     {% if comment.reportedcomment %}
                         <p class="text-muted">comment has been reported.</p>
                     {% else %}
-                        <h6>{{ comment }}</h6>
-                        {% if comment.user.id == 1 %}
-                            <a href="#" class="link-secondary">Delete</a>
-                        {% endif %}
-                        <a href="{% url 'comments:report_comment' project.id comment.id %}" class="link-secondary">Report</a>
+                        <div id="{{ comment.id }}">
+                            <h6>{{ comment }}</h6>
+                            {% if comment.user.id == 1 %}
+                                <a href="#" class="link-secondary">Delete</a>
+                            {% endif %}
+                            <a href="" data-bs-toggle="modal" data-bs-target="#report_comment_modal_{{ comment.id }}" class="link-secondary">Report</a>
+                        </div>
+                        <div class="modal fade" id="report_comment_modal_{{ comment.id }}" tabindex="-1" aria-labelledby="reportCommentModal" aria-hidden="true">
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Report Comment</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                              </div>
+                              <div class="modal-body">
+                                  <form id="report-form" action="{% url 'comments:report_comment' project.id comment.id %}" data-project="{{ project.id }}" data-comment="{{ comment.id }}" method="post">
+                                        {{ report_comment_form.as_p }}
+                                        {% csrf_token %}
+                                        <div id="results"></div>
+                                    <button type="submit" class="btn btn-primary">Report</button>
+                                  </form>
+                              </div>
+                              <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
                     {% endif %}
                     <hr>
                 </div>
@@ -116,7 +139,9 @@
         {% endfor %}
     </div>
 
-{% endblock  %}
-{% block js %}
 
+
+{% endblock  %}
+{% block scripts %}
+    <script src="{% static 'projects/js/main.js' %}"></script>
 {% endblock  %}
