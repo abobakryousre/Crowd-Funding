@@ -41,6 +41,7 @@ class ReportedComment(models.Model):
         Comments, on_delete=models.CASCADE, primary_key=True)
 
     def incrementOne(self):
-        self.report_count+= 1
+        self.report_count += 1
+        
     def __str__(self):
-        return str(self.report_count)
+        return "comment: " + self.comment.message + " ,report: " + self.report_message
