@@ -1,5 +1,5 @@
 from django.db.models import Sum
-from django.http import JsonResponse
+from django.http import JsonResponse, Http404
 from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
 from projects.models import Donation, Images, Projects
 
@@ -84,22 +84,46 @@ def change_password(request):
             return render(request, 'users/change_password.html', context)
 
 def deleteItem(request,pk):
-    sum_donations_of_project = Donation.objects.values('project_id').order_by('project_id').annotate(total_price=Sum('amount')).get(project_id=pk)
+
 
     project = Projects.objects.get(id=pk)
+    try:
+        sum_donations_of_project = Donation.objects.values('project_id').order_by('project_id').annotate(
+            total_price=Sum('amount')).get(project_id=pk)
+        if sum_donations_of_project["total_price"] >= project.total_target * (25 / 100):
+            return redirect('user-projects')
 
-   # return HttpResponse(str(project.total_target))
-    if sum_donations_of_project["total_price"] >= project.total_target*(25/100):
-
-
-    #return HttpResponse("Sorry,You can't delete this project because its donations exceeds 25% of total target")
-       #messages.info(request, 'Your password has been changed successfully!')
-       return redirect('profile')
-    else:
+    except Donation.DoesNotExist:
         project.delete()
-        return HttpResponse("Done")
+        return redirect('user-projects')
 
 
+# return HttpResponse(str(project.total_target))
+   #  if sum_donations_of_project.exists():
+   #      if sum_donations_of_project["total_price"] >= project.total_target * (25 / 100):
+   #          return redirect('user-projects')
+   #      else:
+   #          project.delete()
+   #          return redirect('user-projects')
+   #
+   #  else:
+   #      project.delete()
+   #      return redirect('user-projects')
+
+
+
+
+
+
+def show_user_projects(request):
+    projects_of_specific_user = Projects.objects.filter(user_id=1)
+
+    context = {
+               "projects": projects_of_specific_user,
+
+               }
+
+    return render(request, 'users/projects_of_user.html', context)
 
 
 

@@ -1,0 +1,41 @@
+{% extends "users/base.html" %} {% block title %} Profile {% endblock %}
+{% load static %} {% block content %}
+<body style="text-align:center">
+<div class="container justify-content-center">
+        <div class="container justify-content-center">
+            <img src="{% static 'users/icons/project.svg' %}" width="70" class="d-inline"/>
+            <h1 class="font-italic d-inline text-center">Your Projects</h1>
+        </div>
+        <br/><br/>
+
+        {% for project in projects %}
+
+            <div class="card text-center" style="width: 18rem; display: inline-block">
+                <img
+                        class="card-img-top"
+                        src="{{ project.images_set.first.path.url }}"
+                        alt="Card image cap"
+                />
+                <div class="card-body">
+                    <h5 class="card-title">{{ project.title }}</h5>
+                    <p class="card-text">{{ project.details }}</p>
+                </div>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><b>Category: </b>{{ project.category }}</li>
+                    <li class="list-group-item">
+                        <b>Total Target: </b>{{ project.total_target }}
+                    </li>
+                    <li class="list-group-item"><b>Created At: </b>{{ project.created_at }}</li>
+                    <li class="list-group-item"><b>Start Time: </b>{{ project.start_time }}</li>
+                    <li class="list-group-item"><b>End Time: </b>{{ project.end_time }}</li>
+                </ul>
+                <div class="card-body">
+                    <a class="btn btn-danger" href="{% url 'deleteItem' project.id %}">Delete</a>
+                </div>
+            </div>
+
+        {% endfor %}
+
+</div>
+</body>
+{% endblock %}
