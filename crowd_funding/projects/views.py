@@ -1,15 +1,17 @@
-from django.shortcuts import render
-from django.shortcuts import redirect, render
-from django.http import HttpResponse
 import datetime
 import math
-from django.db.models import Avg, Count, Q, Sum
-from comments.models import Comments
+
 from comments.forms import CommentForm
-from .models import Projects, Images, Donation ,Rating
+from comments.models import Comments
+from django.db.models import Avg, Count, Q, Sum
 from django.forms import modelformset_factory
-from projects.forms import ProjectForm, PictureForm, DonationForm
+from django.http import HttpResponse
+from django.shortcuts import redirect, render
 from users.models import User
+
+from projects.forms import DonationForm, PictureForm, ProjectForm
+
+from .models import Donation, Images, Projects, Rating
 
 
 def createProject(request):
