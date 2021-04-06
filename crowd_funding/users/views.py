@@ -18,8 +18,8 @@ def UserRegisterView(request):
         form = SignUpForm(request.POST, request.FILES)
         if form.is_valid():
             user = form.save()
-            username = form.cleaned_data.get('username')
-            messages.success(request, 'Account was created for ' + username)
+            # username = form.cleaned_data.get('frist_name')
+            # messages.success(request, 'Account was created for ' + username)
 
             return redirect('login')
 
