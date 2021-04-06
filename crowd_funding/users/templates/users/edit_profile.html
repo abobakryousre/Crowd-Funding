@@ -6,7 +6,7 @@
   method="post"
   enctype="multipart/form-data"
 >
-  <div>
+  <div class="container">
        {% csrf_token %}
     {{ user_profile.as_p }}
     </div>
