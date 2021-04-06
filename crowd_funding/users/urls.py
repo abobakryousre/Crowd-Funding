@@ -4,7 +4,7 @@ from django.conf.urls.static import static
 from django.urls import path
 
 from .views import (change_password, check_password, delete_account,
-                    deleteItem, edit_profile, index, view_profile, show_user_projects)
+                    deleteItem, edit_profile, index, view_profile, show_user_projects, show_user_donations)
 
 urlpatterns = [
     path('', index, name="index"),
@@ -15,4 +15,5 @@ urlpatterns = [
     path('profile/change-password', change_password, name='change-password'),
     url(r'^deleteItem/(?P<pk>\d+)$', deleteItem,name='deleteItem'),
     path('profile/my-projects', show_user_projects, name="user-projects"),
+    path('profile/my-donations', show_user_donations, name="user-donations"),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
