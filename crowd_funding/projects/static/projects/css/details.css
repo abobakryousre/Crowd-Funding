@@ -1,0 +1,149 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,600,700|Trade+Winds&display=swap");
+
+body{
+background-color:rgba(12, 99, 150, 0.349);
+}
+
+
+h1{
+  text-align:center;
+  color:rgba(16, 16, 61, 0.767);
+}
+
+button {
+  background-color: rgba(16, 16, 61, 0.767);
+  border:0;
+  outline:none;
+  padding:8px 20px;
+  margin-top: 10px;
+  text-transform:uppercase;
+  color:whitesmoke;
+}
+button:hover{
+  background-color:whitesmoke;
+  color:  rgba(16, 16, 61, 0.767);
+  border: 5px solid rgba(16, 16, 61, 0.767) !important;
+
+}
+
+label,p,h3{ color:rgba(16, 16, 61, 0.767);
+font-weight:bold;
+font-size:20px;
+
+}
+
+textarea , input ,select ,.form-control
+{
+   background-color:whitesmoke;
+   color:  rgba(16, 16, 61, 0.767);
+   border-radius: 4px;
+    width:30%;
+    border-radius:5px;
+    margin:5px;
+}
+
+
+input:hover , textarea:hover ,select:hover{
+  background-color:rgba(5, 47, 71, 0.349);
+  color:  rgba(16, 16, 61, 0.767);
+  font-weight: bold;
+  font-size: 20px;
+}
+
+
+
+
+
+
+
+.alert-success{
+  background-color:rgba(5, 47, 71, 0.349);
+  color:  rgba(16, 16, 61, 0.767);
+  font-weight: bold;
+  font-size: 20px;
+  border-radius:20px;
+  width: 100%;
+}
+
+.col-form-label{
+  color:rgba(16, 16, 61, 0.767);
+}
+
+
+
+
+
+ fieldset
+{
+border: 10px solid rgba(16, 16, 61, 0.767) !important;
+margin: 0;
+min-width: 0;
+padding: 10px;
+position: relative;
+border-radius:10px;
+background-color:whitesmoke;
+padding-left:10px!important;
+}
+
+
+
+.panel-container{
+overflow-y: scroll;
+  overflow-x: hidden;
+  max-height: 240px;
+  min-height: 330px;
+  padding: 20px;
+}
+.panel-container ul li a{
+color: whitesmoke;
+text-decoration: none;
+font-size: 20px;
+font-weight: bold;
+}
+
+.panel-container ul {
+list-style-type: none;
+}
+
+.delete_group , .delete_member_group ,.custom-delete-friend{
+  background-color:#990f0a;
+  padding:8px 8px;
+  text-transform:uppercase;
+  color:whitesmoke;
+  border-radius: 30px;
+  text-decoration:none;
+}
+.delete_group:hover , .delete_member_group:hover ,.custom-delete-friend:hover{
+  background-color:whitesmoke;
+  color: #990f0a;
+  border: 5px solid#990f0a !important;
+  text-decoration:none;
+
+}
+
+.single-group-list a:hover{
+  background-color:whitesmoke;
+  color: rgba(8, 92, 8, 0.589);
+  border: 5px solid rgba(8, 92, 8, 0.589)!important;
+  text-decoration:none;
+}
+
+.single-group-list a {
+  background-color:rgba(8, 92, 8, 0.589);
+  padding:8px 8px;
+  text-transform:uppercase;
+  color:whitesmoke;
+  border-radius: 30px;
+  text-decoration:none;
+}
+
+.custom-input{
+  width: 100%  !important;
+}
+
+
+
+.single-friend {
+  background:#7f7f7f;
+  background:rgba(255,255,255,0.5);
+}
