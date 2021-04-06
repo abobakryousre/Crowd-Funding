@@ -17,8 +17,13 @@ class ProjectForm(ModelForm):
         widgets = {
             'start_time': DateInput(),
             'end_time': DateInput(),
-            'user': forms.HiddenInput()
+            'user': forms.HiddenInput(),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(ProjectForm, self).__init__(*args, **kwargs)
+        for visible in self.visible_fields():
+            visible.field.widget.attrs['class'] = 'blue-field-area'
 
 
 # class PictureForm(ModelForm):

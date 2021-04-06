@@ -14,7 +14,7 @@
     </div>
   </div>
   <form method="post" enctype="multipart/form-data" class="ml-5">
-    <p>Note: use comma separted for multiple tags </p>
+    <p class="blue-text">Note: use comma separted for multiple tags </p>
     {% csrf_token %} 
     {% for field in project_form %}
     <div class="row">
@@ -22,7 +22,7 @@
         <div class="form-group">
           <div class="row">
             <div class="col-md-2">
-              <label class="control-label"> {% if field.label != "User" %} {{ field.label }}: {% endif %} </label>
+              <label class="control-label blue-text"> {% if field.label != "User" %} {{ field.label }}: {% endif %} </label>
             </div>
             <div class="col-md-10">
               {{ field }}
@@ -35,14 +35,14 @@
       <div class="row">
 
         <div class="col-md-2" >
-                <label for="tags">Tags :</label>
+                <label class="blue-text" for="tags">Tags :</label>
         </div>
             <div class="col-md-10" >
 
                 <input
                     type="text"
                     name="project_tags"
-                    class="form-control"
+                    class="form-control blue-field-area"
                     data-role="tagsinput"
                     id="tags"
                     required
@@ -58,13 +58,13 @@
 
       <div class="row">
           <div class="col-md-2" >
-                <label for="projectImages">Project Images :</label>
+                <label class="blue-text" for="projectImages">Project Images :</label>
                </div>
           <div class="col-md-10" >
                 <input
                     type="file"
                     name="project_images[]"
-                    class="form-control"
+                    class="form-control blue-field-area"
                     id="projectImages"
                     multiple
                     required
