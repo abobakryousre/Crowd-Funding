@@ -18,14 +18,13 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 
-import users
-from users.views import *  # ,checkformdata
-from users.views import home
+from .views import home
+from .views import authentication as auth
+
 
 urlpatterns = [
-    path('loginn', loginPage, name="login"),
-    path('reg', UserRegisterView, name='checkdata'),
-    path('', home.index, name='home'),
+    path('loginn', auth.loginPage, name="login"),
+    path('reg', auth.UserRegisterView, name='checkdata'),
     path('display-category', home.display_category, name='display-category'),
     path('search-for-projects', home.search_for_projects, name='search-for-projects'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
