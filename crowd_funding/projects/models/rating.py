@@ -14,7 +14,9 @@ class Rating(models.Model):
     four_star = models.IntegerField(default=0)
     five_star = models.IntegerField(default=0)
     #projcet mas many rating
-    project = models.ForeignKey(Projects, on_delete=models.CASCADE)
+    project = models.OneToOneField(Projects, on_delete=models.CASCADE, primary_key=True)
 
     def getAvarageStar(self):
         return (self.one_star + self.two_star + self.three_star + self.four_star + self.five_star ) / 5
+    def __str__(self):
+        return self.project.title
