@@ -80,4 +80,30 @@ function report_comment(projectId, commentId) {
         }
     });
 };
-console.log('yes');
+
+$('#report-project-form').on('submit', function(event) {
+    event.preventDefault();
+    report_project($(this).data('project'));
+});
+
+function report_project(projectId, commentId) {
+    $.ajax({
+        url: projectId + "/report",
+        type: "post",
+        data: { report: $('#report-project-message').val() },
+
+        success : function(json) {
+            $('#report-message').val('');
+            const reportModal = document.querySelector('#report_project_modal_' + json.project_id);
+            let modal = bootstrap.Modal.getInstance(reportModal);
+            modal.hide();
+            $('#reported_project_' + json.project_id).append("<p class=\"text-muted\">project has been reported.</p>");
+        },
+
+        error : function(xhr, errMsg, err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>");
+            console.log(xhr.status + ": " + xhr.responseText);
+        }
+    });
+};

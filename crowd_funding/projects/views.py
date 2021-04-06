@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from django.shortcuts import redirect, render
 from django.http import HttpResponse
@@ -6,12 +8,14 @@ import math
 from django.db.models import Avg, Count, Q, Sum
 from comments.models import Comments
 from comments.forms import CommentForm
-from .models import Projects, Images, Donation,Rating, Tags
+from .models import Projects, Images, Donation, Rating, Tags
 from django.forms import modelformset_factory
 from projects.forms import ProjectForm, PictureForm, DonationForm
 from .models.projects import Category
 from users.models import User
 from comments.forms import ReportCommentForm
+from .forms import ReportProjectForm
+from .models.reported_project import ReportedProject
 
 
 def createProject(request):
@@ -43,7 +47,7 @@ def createProject(request):
         picture_form = ImageFormSet(queryset=Images.objects.none())
         project_form = ProjectForm(
 
-            initial={"user":  request.session['_auth_user_id']})
+            initial={"user": request.session['_auth_user_id']})
 
         return render(request, 'projects/create_project.html/',
                       {'project_form': project_form, 'picture_form': picture_form})
@@ -76,9 +80,9 @@ def projectDonate(request, id):
             initial={"project": id, "user": request.session['_auth_user_id']})
         return render(request, 'projects/donate_project.html/', {'donate_form': donate_form, "project": project})
 
+
 def index(request):
     return render(request, 'projects/donate_project.html/')
-
 
 
 def project_details(request, id):
@@ -95,7 +99,6 @@ def project_details(request, id):
         for picture in picturesObjects:
             pictures.append(picture.path.url)
 
-
     # Checking on Donations
     total_target = project.total_target * 0.25
     amount = 0
@@ -106,6 +109,7 @@ def project_details(request, id):
     if request.method == "GET":
         comment_form = CommentForm()
         report_comment_form = ReportCommentForm()
+        report_project_form = ReportProjectForm()
         context = {
             "project": project,
             "pictures": pictures,
@@ -115,6 +119,7 @@ def project_details(request, id):
             "project_category": project_category,
             "comment_form": comment_form,
             "report_comment_form": report_comment_form,
+            "report_project_form": report_project_form,
         }
         return render(request, 'projects/project_page.html/', context)
     else:
@@ -141,3 +146,18 @@ def project_details(request, id):
             # "report_comment_form": report_comment_form,
         }
     return redirect("project_details", project.id)
+
+
+def report_project(request, project_id):
+    project = Projects.objects.get(id=project_id)
+    if request.method == 'POST':
+        report_message = request.POST.get('report')
+
+        response_data = {}
+        ReportedProject.objects.create(project=project, report_message=report_message)
+
+        response_data['result'] = "report successful"
+        response_data['project_id'] = project.id
+
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+    return HttpResponse("Reported")

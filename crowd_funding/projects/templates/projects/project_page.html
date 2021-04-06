@@ -33,10 +33,35 @@
                     <p class="text-center">no picture avalible</p>
                 {%endif%}
             </div>
-            <div class="col-md-3">
+            <div class="col-md-3" id="reported_project_{{ project.id }}">
                 <a href ="{% url 'donate_project' project.id %}" class='btn btn-primary mt-5 mb-3'>
                     Donate Project
                 </a>
+                <a href="" class='btn btn-primary mt-5 mb-3' data-bs-toggle="modal" data-bs-target="#report_project_modal_{{ project.id }}">Report</a>
+                <div class="modal fade" id="report_project_modal_{{ project.id }}" tabindex="-1" aria-labelledby="reportProjectModal" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Report Project</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+                      <div class="modal-body">
+                          <form id="report-project-form" action="" data-project="{{ project.id }}" method="post">
+                                {{ report_project_form.as_p }}
+                                {% csrf_token %}
+                                <div id="results"></div>
+                            <button type="submit" class="btn btn-primary">Report</button>
+                          </form>
+                      </div>
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {% if project.reportedproject %}
+                    <p class="text-muted">project has been reported.</p>
+                {% endif %}
             </div>
         </div>
         <div class="row justify-content-center">

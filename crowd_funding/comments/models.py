@@ -42,6 +42,6 @@ class ReportedComment(models.Model):
 
     def incrementOne(self):
         self.report_count += 1
-        
+
     def __str__(self):
         return "comment: " + self.comment.message + " ,report: " + self.report_message
