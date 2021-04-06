@@ -1,6 +1,6 @@
 import json
 
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from projects.models import Projects
 from .models import Comments, ReportedComment
 from django.http import HttpResponse
@@ -22,3 +22,11 @@ def report_comment(request, project_id, comment_id):
 
         return HttpResponse(json.dumps(response_data), content_type="application/json")
     return HttpResponse("Reported")
+
+
+def delete_comment(request, project_id, comment_id):
+    project = Projects.objects.get(id=project_id)
+    comment = Comments.objects.filter(project=project).get(id=comment_id)
+    comment.delete()
+
+    return redirect("project_details", project.id)
