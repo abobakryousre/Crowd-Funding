@@ -53,15 +53,23 @@
 
           </div>
 
-    <div class="row">
-        <div class="col-md-12">
-            <h3> Upload Images </h3>
-        </div>
-    </div>
-    {{ picture_form.management_form }}
-    {% for form in picture_form %}
-    {{ form  }} <br />
-    {% endfor %}
+
+
+
+      <div class="form-group">
+                <!-- use dropzone plugin here in real project design -->
+                <label for="projectImages">Project Images</label>
+                <input
+                    type="file"
+                    name="project_images[]"
+                    class="form-control"
+                    id="projectImages"
+                    multiple
+                    required
+                />
+                <small id="imagesError" class="form-text text-danger"></small>
+            </div>
+
 
     <button class="btn" type="submit">Submit</button>
   </form>
