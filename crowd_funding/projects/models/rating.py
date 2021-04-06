@@ -19,7 +19,7 @@ class Rating(models.Model):
     # user = models.ForeignKey(User, on_delete=models.CASCADE)
 
     def get_average_rating(self):
-        return (self.one_star + self.two_star + self.three_star + self.four_star + self.five_star ) / 5
+        return (self.one_star + self.two_star + self.three_star + self.four_star + self.five_star) / 5
 
 
 class Rate(models.Model):
@@ -29,4 +29,4 @@ class Rate(models.Model):
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name + \
-               " ,rate: " + self.rate + " on project: " + self.project.title
+               " ,rate: " + str(self.rate) + " on project: " + self.project.title

@@ -86,7 +86,7 @@ $('#report-project-form').on('submit', function(event) {
     report_project($(this).data('project'));
 });
 
-function report_project(projectId, commentId) {
+function report_project(projectId) {
     $.ajax({
         url: projectId + "/report",
         type: "post",
@@ -109,8 +109,39 @@ function report_project(projectId, commentId) {
 };
 
 $(document).ready(function(){
+    $("input[type='radio']").click(function(){
+        var sim = $("input[type='radio']:checked").val();
+        //alert(sim);
+        if (sim < 3) {
+            $('.myratings').css('color','red');
+            $(".myratings").text(sim); }
+        else{
+            $('.myratings').css('color','green');
+            $(".myratings").text(sim);
+        }
+        let project_id = $(".rating").data('project');
+        let user_id = $(".rating").data('user');
+        rate_project($(".rating").data('project'), $(".rating").data('user'));
+    });
+});
 
-$("input[type='radio']").click(function(){
-var sim = $("input[type='radio']:checked").val();
-//alert(sim);
-if (sim<3) { $('.myratings').css('color','red'); $(".myratings").text(sim); }else{ $('.myratings').css('color','green'); $(".myratings").text(sim); } }); });
+function rate_project(projectId, userId) {
+    $.ajax({
+        url: projectId + "/rate",
+        type: "post",
+        data: { rating: $("input[type='radio']:checked").val(), user: userId },
+
+        success : function(json) {
+            console.log("yessss");
+            console.log(json.average_rating);
+            $('#average-rating').replaceWith(`<p class=\"text-muted\" id=\"average-rating\"> has average rating of: ${json.average_rating}</p>`)
+            $("input[type='radio']").attr('disabled', 'disabled');
+        },
+
+        error : function(xhr, errMsg, err) {
+            $('#results').html("<div class='alert-box alert radius' data-alert>Oops! We have encountered an error: "+errmsg+
+                " <a href='#' class='close'>&times;</a></div>");
+            console.log(xhr.status + ": " + xhr.responseText);
+        }
+    });
+};

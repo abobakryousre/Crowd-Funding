@@ -44,6 +44,7 @@ label {
     float: right
 }
 
+/*.rated>[id^="star"]:checked~label,*/
 .rating>[id^="star"]:checked~label,
 .rating:not(:checked)>label:hover,
 .rating:not(:checked)>label:hover~label {

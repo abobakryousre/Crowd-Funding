@@ -16,6 +16,7 @@ from users.models import User
 from comments.forms import ReportCommentForm
 from .forms import ReportProjectForm
 from .models.reported_project import ReportedProject
+from .models.rating import Rate
 
 
 def createProject(request):
@@ -90,6 +91,7 @@ def project_details(request, id):
     project = Projects.objects.get(id=id)
     comments = Comments.objects.filter(project=project)
     project_category = Category.objects.get(id=project.category_id)
+    user = User.objects.get(id=1)
 
     projectimage = project.images_set.first()
     if projectimage != None:
@@ -106,6 +108,23 @@ def project_details(request, id):
     for donation in donations:
         amount = amount + donation.amount
 
+    # check if user rated the project
+    try:
+        rate = Rate.objects.get(project=project, user=user)
+        is_rated = True
+        rating = rate.rate
+    except Rate.DoesNotExist:
+        is_rated = False
+        rating = 0
+
+    # get the average rating for the project
+    try:
+        project.rating
+    except Rating.DoesNotExist:
+        Rating.objects.create(project=project)
+
+    average_rating = project.rating.get_average_rating()
+
     if request.method == "GET":
         comment_form = CommentForm()
         report_comment_form = ReportCommentForm()
@@ -117,6 +136,9 @@ def project_details(request, id):
             "amount": amount,
             "comments": comments,
             "project_category": project_category,
+            "is_rated": is_rated,
+            "rating": rating,
+            "average_rating": average_rating,
             "comment_form": comment_form,
             "report_comment_form": report_comment_form,
             "report_project_form": report_project_form,
@@ -142,6 +164,9 @@ def project_details(request, id):
             "amount": amount,
             "comments": comments,
             "project_category": project_category,
+            "is_rated": is_rated,
+            "rating": rating,
+            "average_rating": average_rating,
             "comment_form": comment_form,
             # "report_comment_form": report_comment_form,
         }
@@ -161,3 +186,36 @@ def report_project(request, project_id):
 
         return HttpResponse(json.dumps(response_data), content_type="application/json")
     return HttpResponse("Reported")
+
+
+def rate_project(request, project_id):
+    project = Projects.objects.get(id=project_id)
+    if request.method == 'POST':
+        rating = request.POST.get('rating')
+        user = User.objects.get(id=request.POST.get('user'))
+
+        response_data = {}
+        Rate.objects.create(project=project, user=user, rate=rating)
+
+        try:
+            project.rating
+        except Rating.DoesNotExist:
+            Rating.objects.create(project=project)
+
+        if rating == '1':
+            project.rating.one_star += 1
+        elif rating == '2':
+            project.rating.two_star += 1
+        elif rating == '3':
+            project.rating.three_star += 1
+        elif rating == '4':
+            project.rating.four_star += 1
+        elif rating == '5':
+            project.rating.five_star += 1
+
+        project.rating.save()
+        response_data['result'] = "rating successful"
+        response_data['average_rating'] = project.rating.get_average_rating()
+
+        return HttpResponse(json.dumps(response_data), content_type="application/json")
+    return HttpResponse("Rated")

@@ -72,18 +72,26 @@
                     <p class="text-muted">project has been reported.</p>
                 {% endif %}
                 <div class="card card-rating">
-                    <div class="card-body text-center card-rating-body"> <span class="myratings">4.5</span>
+                    <div class="card-body text-center card-rating-body">
+                        <span class="myratings">
+                            {% if is_rated == True %}
+                                {{ rating }}
+                            {% else %}
+                                No rating
+                            {% endif %}
+                        </span>
+                        <p class="text-muted" id="average-rating"> has average rating of: {{ average_rating }}</p>
                         <h4 class="mt-1">Rate The Project</h4>
-                        <fieldset class="rating">
-                            <input type="radio" id="star5" name="rating" value="5" />
+                        <fieldset class="rating {% if is_rated == True %} rated {% endif %}" data-project="{{ project.id }}" data-user="{{ 1 }}">
+                            <input type="radio" id="star5" name="rating" value="5" {% if is_rated == True %} disabled {% endif %} {% if rating == 5 %} checked {% endif %}/>
                             <label class="full" for="star5" title="Awesome - 5 stars"></label>
-                            <input type="radio" id="star4" name="rating" value="4" />
+                            <input type="radio" id="star4" name="rating" value="4" {% if is_rated == True %} disabled {% endif %} {% if rating == 4 %} checked {% endif %}/>
                             <label class="full" for="star4" title="Pretty good - 4 stars"></label>
-                            <input type="radio" id="star3" name="rating" value="3" />
+                            <input type="radio" id="star3" name="rating" value="3" {% if is_rated == True %} disabled {% endif %} {% if rating == 3 %} checked {% endif %} />
                             <label class="full" for="star3" title="Meh - 3 stars"></label>
-                            <input type="radio" id="star2" name="rating" value="2" />
+                            <input type="radio" id="star2" name="rating" value="2" {% if is_rated == True %} disabled {% endif %} {% if rating == 2 %} checked {% endif %} />
                             <label class="full" for="star2" title="Kinda bad - 2 stars"></label>
-                            <input type="radio" id="star1" name="rating" value="1" />
+                            <input type="radio" id="star1" name="rating" value="1" {% if is_rated == True %} disabled {% endif %} {% if rating == 1 %} checked {% endif %} />
                             <label class="full" for="star1" title="Sucks big time - 1 star"></label>
                             <input type="radio" class="reset-option" name="rating" value="reset" />
                         </fieldset>
