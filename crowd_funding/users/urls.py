@@ -20,16 +20,12 @@ from django.urls import include, path
 
 import users
 from users.views import *  # ,checkformdata
-from users.views import display_category, index, search_for_projects
+from users.views import home
 
 urlpatterns = [
-        # path('', registerpage),
-path('loginn', loginPage, name="login"),
-
+    path('loginn', loginPage, name="login"),
     path('reg', UserRegisterView, name='checkdata'),
-    path('home',index,name='home')
-    # path('loginsite/',loginform, name='loginform'),
-    path('', index),
-    path('display-category/', display_category, name='display-category'),
-    path('search-for-projects', search_for_projects, name='search-for-projects'),
+    path('', home.index, name='home'),
+    path('display-category', home.display_category, name='display-category'),
+    path('search-for-projects', home.search_for_projects, name='search-for-projects'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
