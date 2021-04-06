@@ -64,10 +64,13 @@ def index(request):
     # TODO: each category and display  it's projects with ajax request
     categories = Category.objects.all()
     # TODO: search bar, with projects tag, and title.
+    selected_project = Projects.objects.filter(selected=True)[:5];
+
     context = {
         'highest_projects': highest_rated_projects,
         'latest_projects': latest_five_projects,
-        'categories': categories
+        'categories': categories,
+        'selected_projects': selected_project
     }
     return render(request, 'users/index.html', context)
 
@@ -82,17 +85,19 @@ def display_category(request):
         for project in projects:
             image = project.images_set.first().path.url
             images.append(image)
-        projectsModels_to_json =  serializers.serialize('json', projects,)
+        projectsModels_to_json = serializers.serialize('json', projects, )
         images_to_json = json.dumps(images)
-
-        return JsonResponse({ "projects": projectsModels_to_json, 'images': images_to_json })
+        category_name = json.dumps(category.category_name)
+        return JsonResponse(
+            {"projects": projectsModels_to_json, 'images': images_to_json, 'category_name': category_name})
     else:
         return HttpResponse("Page Not Found!");
+
 
 def search_for_projects(request):
     if request.is_ajax():
         query = request.GET.get('query')
-        #convert the query from string to array
+        # convert the query from string to array
         query = query.split(" ")
         if query == "@":
             all_projects = Projects.objects.all()
@@ -108,7 +113,7 @@ def search_for_projects(request):
             # convert the query set to array
             all_projects = list(projects_by_tag) + list(projects_by_title)
             # remove the duplicated projects
-            all_projects = list( dict.fromkeys(all_projects))
+            all_projects = list(dict.fromkeys(all_projects))
 
         # set projects image
         images = []
@@ -117,12 +122,8 @@ def search_for_projects(request):
             images.append(image)
 
         # convert Django Model Object to JSON string
-
-        projects_models_to_json = serializers.serialize('json', all_projects,)
+        projects_models_to_json = serializers.serialize('json', all_projects, )
         images_to_json = json.dumps(images)
-
-        print(projects_models_to_json)
-        print(images_to_json)
-        return JsonResponse({ "projects": projects_models_to_json, 'images': images_to_json })
+        return JsonResponse({"projects": projects_models_to_json, 'images': images_to_json})
     else:
         return HttpResponse("Page Not Found!");
