@@ -1,7 +1,7 @@
-
+{% extends "users/base.html" %} {% block title %} Profile {% endblock %}
 {% load static %} {% block content %}
-<!DOCTYPE html>
 <html>
+
 <head>
 	<title>Profile Card</title>
 	<!-- Font Awesome -->
@@ -13,7 +13,7 @@
 <!-- Material Design Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.19.1/css/mdb.min.css" rel="stylesheet">
 </head>
-<body class="bg-light">
+<body class="bg-white">
 	<div class="container">
      	<div class="row d-flex justify-content-center">
             <div class="col-md-10 mt-5 pt-5">
@@ -31,73 +31,52 @@
             		</div>
             		<div class="col-sm-8 bg-white rounded-right">
                     	<h3 class="mt-3 text-center">Information</h3>
-                    	<hr class="bg-primary mt-0 w-25">
+                        <br>
+
                    		<div class="row">
                         	<div class="col-sm-6">
                             	<p class="font-weight-bold">Email:</p>
-                           		<h6 class=" text-muted">nick32@gmail.com</h6>
+                           		<h6 class=" text-muted">{{ current_user.email }}</h6>
                         	</div>
                         	<div class="col-sm-6">
-                            	<p class="font-weight-bold">Phone:</p>
-                           		<h6 class="text-muted">+921234567890</h6>
+                            	<p class="font-weight-bold">Mobile Number:</p>
+                           		<h6 class="text-muted">{{ current_user.mobile_phone }}</h6>
                         	</div>
+                            <div class="col-sm-6">
+                            	<p class="font-weight-bold">Country:</p>
+                           		<h6 class="text-muted">{{ current_user.country }}</h6>
+                        	</div>
+                            <div class="col-sm-6">
+                            	<p class="font-weight-bold">Birth Date:</p>
+                           		<h6 class="text-muted">{{ current_user.birth_date }}</h6>
+                        	</div>
+
                     	</div>
-                    		<h4 class="mt-3">Projects</h4>
+
                     		<hr class="bg-primary">
                    		<div class="row">
                         	<div class="col-sm-6">
-                           		<p class="font-weight-bold">Recent</p>
-                          	  	<h6 class="text-muted">School Web</h6>
+                           		<a class="btn btn-info" href="{% url 'change-password' %}">Change Password</a>
+                          	  	<a class="btn btn-info" href="{% url 'edit-profile' %}">Edit Profile</a>
                         	</div>
                         	<div class="col-sm-6">
-                            	<p class="font-weight-bold">Most Viewed</p>
-                            	<h6 class="text-muted">Dinoter husainm</h6>
-                        	</div>
+                            	<a class="btn btn-warning" href="">Your Projects</a>
+                                <a class="btn btn-warning" href="">Your Donations</a>
+
+
                     	</div>
-                	   	<hr class="bg-primary">
-                	    <ul class="list-unstyled d-flex justify-content-center mt-4">
-            	        	<li><a href="#!"><i class="fab fa-facebook-f px-3 h4 text-info"></i></a></li>
-        	            	<li><a href="#!"><i class="fab fa-youtube px-3 h4 text-info"></i></a></li>
-    	                	<li><a href="#!"><i class="fab fa-twitter px-3 h4 text-info"></i></a></li>
-	               		</ul>  
+
               		</div>
+                        <hr class="bg-primary">
+                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAccount" data-bs-whatever="test" >Delete Account</button>
+
+</div>
+
              	</div>
             </div>
         </div>
 	</div>
-</body>
-</html>
-
-
-
-
-
-    <label>Email</label>
-    {{ current_user.email }}<br/>
-    <label>Countre</label>
-    {{ current_user.country }}<br/><br/>
-
-   
-
-    <label>Moblie Number</label>
-    {{ current_user.mobile_phone }}<br/>
-    <label>Birth Date</label>
-    {{ current_user.birth_date }}<br/><br/><br/>
-
-    <a class="btn btn-info" href="{% url 'change-password' %}">Change Password</a
-    ><br/>
-    <a class="btn btn-primary" href="{% url 'edit-profile' %}">Edit Profile</a
-    ><br/>
-    <button
-            type="button"
-            class="btn btn-danger"
-            data-bs-toggle="modal"
-            data-bs-target="#deleteAccount"
-            data-bs-whatever="test"
-    >
-        Delete Account
-    </button>
-    <div
+<div
             class="modal fade"
             id="deleteAccount"
             tabindex="-1"
@@ -107,7 +86,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteAccount">
+                    <h5 class="modal-title" id=exampleModalLabel">
                         Deleting Account Confirmation
                     </h5>
                     <button
@@ -150,6 +129,7 @@
         {% csrf_token %}
         <button id="submit-deleteAccount" hidden="hidden" type="submit"></button>
     </form>
+
     <script>
         function sendAjaxRequestToCheckPassword(password) {
             $.ajax({
@@ -198,71 +178,8 @@
     </script>
     </div>
 
+</body>
+</html>
 
-    <div class="container justify-content-center">
-        <div class="container justify-content-center">
-            <img src="{% static 'users/icons/project.svg' %}" width="70" class="d-inline"/>
-            <h1 class="font-italic d-inline text-center">Your Projects</h1>
-        </div>
-        <br/><br/>
 
-        {% for project in projects %}
-
-            <div class="card text-center" style="width: 18rem; display: inline-block">
-                <img
-                        class="card-img-top"
-                        src="{{ project.images_set.first.path.url }}"
-                        alt="Card image cap"
-                />
-                <div class="card-body">
-                    <h5 class="card-title">{{ project.title }}</h5>
-                    <p class="card-text">{{ project.details }}</p>
-                </div>
-                <ul class="list-group list-group-flush">
-                    <li class="list-group-item"><b>Category: </b>{{ project.category }}</li>
-                    <li class="list-group-item">
-                        <b>Total Target: </b>{{ project.total_target }}
-                    </li>
-                    <li class="list-group-item"><b>Created At: </b>{{ project.created_at }}</li>
-                    <li class="list-group-item"><b>Start Time: </b>{{ project.start_time }}</li>
-                    <li class="list-group-item"><b>End Time: </b>{{ project.end_time }}</li>
-                </ul>
-                <div class="card-body">
-                    <a
-                            href="{% url 'deleteItem' project.id %}"
-                            class="btn btn-danger btn-sm"
-                            role="button"
-                            style="width: 16px"
-                    >x</a
-                    >
-                </div>
-            </div>
-
-        {% endfor %}
-        <br/><br/><br/><br/>
-
-        <div class="container align-items-center">
-            <img src="{% static 'users/icons/donate.svg' %}" width="70" class="d-inline"/>
-            <h1 class="font-italic d-inline">Your Donations</h1>
-        </div>
-        <br/><br/>
-
-        <table class="table">
-            <thead class="thead-dark">
-            <tr>
-                <th scope="col">Project Name</th>
-                <th scope="col">Amount</th>
-            </tr>
-            </thead>
-            <tbody>
-            {% for d in donations %}
-                <tr>
-                    <td>{{ d.project.title }}</td>
-                    <td>{{ d.amount }}</td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    </div>
-{% endblock %}
- Font Awesome
+ {% endblock %}
