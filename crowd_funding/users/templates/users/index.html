@@ -17,6 +17,52 @@
     <div class="row justify-content-center" id="search-result"></div>
     {# search result end #}
 
+    {# selected projects  start #}
+    <div class="row justify-content-center">
+        <h2 class="text-center mt-5 " style="color: green; font-weight: bold">Recommended Projects</h2>
+        {% if selected_projects %}
+            <dev class="col-md-5">
+                <div class="container border mt-5 mb-5">
+                    <div id="carouselExampleCaptions2" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            {% for project in selected_projects %}
+                                <button type="button" data-bs-target="#carouselExampleCaptions2"
+                                        data-bs-slide-to="{{ forloop.counter0 }}"
+                                        {% if forloop.first %} class="active"  {% endif %}
+                                        aria-label="Slide {{ forloop.counter }}"></button>
+                            {% endfor %}
+                        </div>
+                        <div class="carousel-inner">
+
+                            {% for project in selected_projects %}
+                                <div class="carousel-item {% if forloop.first %} active {% endif %} ">
+                                    <a href="{% url 'project_details' project.id %}"><img width="200px" height="300px"
+                                                                                          src="{{ project.images_set.first.path.url }}"
+                                                                                          class="d-block w-100" alt=""></a>
+                                    <div class="carousel-caption d-none d-md-block">
+                                        <h5>{{ project.title }}</h5>
+                                        <p>{{ project.details }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions2"
+                                data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions2"
+                                data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </dev>
+        {% endif %}
+
+    </div>
+    {# selected projects end #}
 
     <dev class="row">
         <dev class="col-md-1"></dev>
@@ -28,8 +74,8 @@
                 {% for category in categories %}
 
                     <li class="list-group-item d-flex justify-content-between align-items-center">
-                        <a style="cursor: pointer;"
-                           onclick="displayCategoryProjects({{ category.id }})">{{ category.category_name }}</a>
+                        <b style="cursor: pointer;"
+                           onclick="displayCategoryProjects({{ category.id }})">{{ category.category_name }}</b>
                         <span class="badge bg-primary rounded-pill">{{ category.projects_set.all.count }}</span>
                     </li>
                 {% endfor %}
@@ -40,10 +86,11 @@
         <dev class="col-md-1"></dev>
 
         {# highestProjects start #}
-
         {% if highest_projects %}
+
             <dev class="col-md-5">
-                <div class="container border mt-5 mb-5">
+                <h2 class="text-center  " style="color: green; font-weight: bold">Highest Rated Projects</h2>
+                <div class="container border mt-3 mb-5">
                     <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
                         <div class="carousel-indicators">
                             {% for project in highest_projects %}
@@ -57,8 +104,9 @@
 
                             {% for project in highest_projects %}
                                 <div class="carousel-item {% if forloop.first %} active {% endif %} ">
-                                    <a href="{% url 'project_details' project.id %}"><img width="200px" height="300px" src="{{ project.images_set.first.path.url }}"
-                                         class="d-block w-100" alt=""></a>
+                                    <a href="{% url 'project_details' project.id %}"><img width="200px" height="300px"
+                                                                                          src="{{ project.images_set.first.path.url }}"
+                                                                                          class="d-block w-100" alt=""></a>
                                     <div class="carousel-caption d-none d-md-block">
                                         <h5>{{ project.title }}</h5>
                                         <p>{{ project.details }}</p>
@@ -82,10 +130,18 @@
         {% endif %}
         {# highestProjects end #}
     </dev>
+
+
+
+    {# projects by categroy start #}
     <div class="row justify-content-center " id="categories"></div>
+    {# projects by categroy end #}
     {# latestProject start #}
+
     {% if latest_projects %}
         <div class="row justify-content-center">
+            <h2 class="text-center mt-5 " style="color: blue; font-weight: bold">Latest Created Projects</h2>
+
             {% for project in latest_projects %}
                 <div class="card col-md-1 " style="width: 18rem;">
                     <img src="{{ project.images_set.first.path.url }}" class="card-img-top" alt="...">
@@ -106,8 +162,9 @@
     <script>
 
         function displayCategoryProjects(category_id) {
+
             let category_projects_location = document.getElementById('categories');
-            category_projects_location.innerHTML = "";
+
             $.ajax({
                 url: "{% url 'display-category' %}",
                 type: 'get',
@@ -122,7 +179,11 @@
         function appendProjects(response) {
             let projects_toJson = JSON.parse(response['projects'])
             let project_images = JSON.parse(response['images']);
+            let category_name = JSON.parse(response['category_name'])
             let category_projects_location = document.getElementById('categories');
+            category_projects_location.innerHTML = ` <h2 class="text-center mt-5 " style="color: blue; font-weight: bold">
+                                                     ${category_name} Projects</h2>
+                                                    `;
 
             for (let index = 0; index < projects_toJson.length; index++) {
                 insertProject(category_projects_location, projects_toJson[index].fields, project_images[index]);
@@ -130,7 +191,7 @@
 
         }
 
-        function insertProject(location, project, project_image = "") {
+        function insertProject(location, project, project_image) {
             location.innerHTML += `
             <div class="card col-md-1 " style="width: 18rem;">
                     <img src=" ${project_image} " class="card-img-top" alt="...">
