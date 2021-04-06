@@ -56,9 +56,11 @@
 
 
 
-      <div class="form-group">
-                <!-- use dropzone plugin here in real project design -->
-                <label for="projectImages">Project Images</label>
+      <div class="row">
+          <div class="col-md-2" >
+                <label for="projectImages">Project Images :</label>
+               </div>
+          <div class="col-md-10" >
                 <input
                     type="file"
                     name="project_images[]"
@@ -68,8 +70,9 @@
                     required
                 />
                 <small id="imagesError" class="form-text text-danger"></small>
-            </div>
+          </div>
 
+       </div>
 
     <button class="btn" type="submit">Submit</button>
   </form>

@@ -69,7 +69,7 @@ def projectDonate(request, id):
 
             print(result)
             return redirect("project_details", project.id)
-          
+
     else:
         donate_form = DonationForm(
             initial={"project": id, "user": request.session['_auth_user_id']})
