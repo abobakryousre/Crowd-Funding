@@ -13,6 +13,5 @@ urlpatterns = [
     path('profile/check-password', check_password, name="check-password"),
     path('delete-account/', delete_account, name='delete-account'),
     path('profile/change-password', change_password, name='change-password'),
-    url(r'^profile$',index ),
     url(r'^deleteItem/(?P<pk>\d+)$', deleteItem,name='deleteItem'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

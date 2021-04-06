@@ -5,6 +5,7 @@ from projects.models import Donation, Images, Projects
 
 from .forms import UserProfile
 from .models import User
+from django.contrib import messages
 
 # from projects.models.projects import Donation
 
@@ -90,8 +91,10 @@ def deleteItem(request,pk):
    # return HttpResponse(str(project.total_target))
     if sum_donations_of_project["total_price"] >= project.total_target*(25/100):
 
-        return HttpResponse("Sorry,You can't delete this project because its donations exceeds 25% of total target")
 
+    #return HttpResponse("Sorry,You can't delete this project because its donations exceeds 25% of total target")
+       #messages.info(request, 'Your password has been changed successfully!')
+       return redirect('profile')
     else:
         project.delete()
         return HttpResponse("Done")
