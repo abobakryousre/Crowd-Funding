@@ -15,6 +15,7 @@ from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+# BASE_DIR=os.path.dirname(os.path.dirname(os.path))
 
 
 # Quick-start development settings - unsuitable for production
@@ -41,6 +42,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'comments.apps.CommentsConfig',
     'projects.apps.ProjectsConfig',
+    'django_countries'
 ]
 
 MIDDLEWARE = [
@@ -66,11 +68,12 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media'
             ],
         },
     },
 ]
-
+AUTH_USER_MODEL = 'users.User'
 WSGI_APPLICATION = 'crowd_funding.wsgi.application'
 
 
@@ -82,8 +85,8 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'crowd_funding',
         'HOST': 'localhost',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'ghada',
+        'PASSWORD': 'Ghada109@',
     }
 }
 
@@ -128,6 +131,6 @@ STATIC_URL = '/static/'
 
 # incase static  paht doesn't work, will try tihs
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+# STATICFILES_DIRS = [ os.path.join(BASE_DIR, 'static') ]
 MEDIA_URL = "/media/"
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -18,12 +18,17 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 from django.urls import include, path
-# from users
+
 import users
-from users import urls
+from django.urls import path
+from users.views import *  # ,checkformdata
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
-    path('users/', include('users.urls'))
+    # path('', registerpage),
+path('loginn', loginPage, name="login"),
+
+    path('reg', UserRegisterView, name='checkdata'),
+    path('home',index,name='home')
+    # path('loginsite/',loginform, name='loginform'),
+
 ]
-urlpatterns += static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)
