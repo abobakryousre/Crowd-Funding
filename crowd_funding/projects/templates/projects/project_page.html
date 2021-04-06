@@ -95,11 +95,9 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <ul class="list-group">Tags
-                    {% for tag in project.tags_set.all %}
-                        <li class="list-group-item">{{tag.tag_name}}</li>
-                    {% endfor %}
-                </ul>
+                {% for tag in project.tags_set.all %}
+                    <span class="badge rounded-pill bg-info text-dark">{{tag.tag_name}}</span>
+                {% endfor %}
             </div>
             <div class="col-md-3"></div>
         </div>
