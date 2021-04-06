@@ -110,21 +110,21 @@
         </div>
         <div class="row justify-content-center">
             <div class="col-md-6">
-                <p>{{ project.details }}</p>
+                <p>Details: <span class="details-value">{{ project.details }}</span></p>
             </div>
             <div class="col-md-3"></div>
         </div>
         <div class="row justify-content-center">
             <div class="col-md-6">
-                Target: {{ project.total_target }} |
-                Start Date: {{ project.start_time }} |
-                End Date: {{ project.end_time }}
+               <P> Target: <span class="details-value"> {{ project.total_target }} </span> </P>
+                <p>Start Date:<span class="details-value">  {{ project.start_time }}  </span> </P>
+               <p> End Date: <span class="details-value"> {{ project.end_time }} </span> </p>
             </div>
             <div class="col-md-3"></div>
         </div>
         <div class="row justify-content-center">
             <div class="col-md-6">
-                Category: {{ project_category }}
+              <p> Category: <span class="details-value">{{ project_category }}</span> </p>
             </div>
             <div class="col-md-3"></div>
         </div>
@@ -196,8 +196,6 @@
             </div>
         {% endfor %}
     </div>
-
-
 
 {% endblock  %}
 {% block scripts %}

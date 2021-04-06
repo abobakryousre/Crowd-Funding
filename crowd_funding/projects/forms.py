@@ -21,10 +21,10 @@ class ProjectForm(ModelForm):
         }
 
 
-class PictureForm(ModelForm):
-    class Meta:
-        model = Images
-        fields = ['path']
+# class PictureForm(ModelForm):
+#     class Meta:
+#         model = Images
+#         fields = ['path']
 
 
 class DonationForm(ModelForm):

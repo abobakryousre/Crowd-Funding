@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Montserrat:400,600,700|Trade+Winds&display=swap");
 @import url(https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 @import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
 
@@ -95,4 +96,70 @@ label {
 .card-rating-body {
     flex: 1 1 auto;
     padding: 1.25rem
+}
+
+body{
+background-color:rgba(12, 99, 150, 0.349);
+}
+
+
+h1{
+  text-align:center;
+  color:rgba(16, 16, 61, 0.767);
+}
+
+.btn , a {
+  background-color: rgba(16, 16, 61, 0.767);
+  border:0;
+  outline:none;
+  padding:8px 20px;
+  margin-top: 10px;
+  text-transform:uppercase;
+  color:whitesmoke;
+
+}
+.btn:hover , a:hover{
+  background-color:whitesmoke;
+  color:  rgba(16, 16, 61, 0.767);
+  border: 5px solid rgba(16, 16, 61, 0.767) !important;
+
+}
+a{
+text-decoration:none;
+}
+
+label,p,h3,h4
+{ color:rgba(16, 16, 61, 0.767);
+font-weight:bold;
+font-size:21px;
+
+}
+
+textarea , input ,select ,.form-control
+{
+   background-color:whitesmoke;
+   color:  rgba(16, 16, 61, 0.767);
+   border-radius: 4px;
+    width:30%;
+    border-radius:5px;
+    margin:5px;
+}
+
+
+input:hover , textarea:hover ,select:hover{
+  background-color:rgba(5, 47, 71, 0.349);
+  color:  rgba(16, 16, 61, 0.767);
+  font-weight: bold;
+  font-size: 20px;
+}
+
+
+.link-secondary{
+color:whitesmoke;
+}
+
+.details-value{
+color:rgb(0, 57, 77);
+font-weight:bold;
+
 }

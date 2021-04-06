@@ -10,48 +10,49 @@ from comments.models import Comments
 from comments.forms import CommentForm
 from .models import Projects, Images, Donation, Rating, Tags
 from django.forms import modelformset_factory
-from projects.forms import ProjectForm, PictureForm, DonationForm
+from projects.forms import ProjectForm,  DonationForm
 from .models.projects import Category
 from users.models import User
 from comments.forms import ReportCommentForm
 from .forms import ReportProjectForm
 from .models.reported_project import ReportedProject
 from .models.rating import Rate
+from django.core.files.storage import FileSystemStorage
+
 
 
 def createProject(request):
-    ImageFormSet = modelformset_factory(
-        Images, form=PictureForm, extra=3)
+
     if request.method == 'POST':
         form = ProjectForm(request.POST)
-        formset = ImageFormSet(request.POST, request.FILES,
-                               queryset=Images.objects.none())
-        if form.is_valid() and formset.is_valid:
+
+        if form.is_valid():
             project_form = form.save(commit=False)
             project_form.save()
             form.save_m2m()
 
-            for pictureForm in formset.cleaned_data:
-                if pictureForm:
-                    image = pictureForm['path']
-                    photo = Images(
-                        project=project_form, path=image)
-                    photo.save()
+
+
+            for _img in request.FILES.getlist('project_images[]'):
+                FileSystemStorage(location='/images')
+                photo = Images(
+                            project=project_form, path=_img)
+                photo.save()
 
             for tag in request.POST["project_tags"].split(","):
                 Tags(project=project_form, tag_name=tag).save()
 
             # user profile page
             return redirect("project_details", project_form.id)
-            # return HttpResponse("project added and redirect to user profile")
+
     else:
-        picture_form = ImageFormSet(queryset=Images.objects.none())
+
         project_form = ProjectForm(
 
             initial={"user": request.session['_auth_user_id']})
 
         return render(request, 'projects/create_project.html/',
-                      {'project_form': project_form, 'picture_form': picture_form})
+                      {'project_form': project_form})
 
 
 def projectDonate(request, id):
@@ -74,8 +75,7 @@ def projectDonate(request, id):
 
             print(result)
             return redirect("project_details", project.id)
-            # return HttpResponse("donations has been added and redirect to
-            # user profile")
+
     else:
         donate_form = DonationForm(
             initial={"project": id, "user": request.session['_auth_user_id']})
