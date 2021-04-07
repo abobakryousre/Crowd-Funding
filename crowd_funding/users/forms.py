@@ -1,4 +1,5 @@
 from django import forms
+from django.core.validators import RegexValidator
 
 from users.models import User
 
@@ -6,17 +7,16 @@ from users.models import User
 class UserProfile(forms.ModelForm):
     class Meta:
         model = User
-        fields = ['first_name', 'last_name', 'country', 'profile_picutre', 'mobile_phone', 'birth_date']
+        fields = ['first_name', 'last_name', 'country', 'profile_picutre', 'phone_number' ,'birth_date']
+        widgets = {
+            "first_name": forms.TextInput(attrs={ 'class': 'form-control' }),
+            "last_name": forms.TextInput(attrs={ 'class': 'form-control' }),
+            "country": forms.Select(attrs={ 'class': 'form-select' }),
+            "profile_picutre": forms.FileInput(attrs={ 'class': 'form-control' }),
+            'phone_number': forms.TextInput(attrs={ 'class': 'form-control' }),
+            "birth_date": forms.DateInput(attrs={ 'class': 'form-control' })
 
-    widgets = {
-        "first_name": forms.TextInput(attrs={ 'class': 'form-control' }),
-        "last_name": forms.TextInput(attrs={ 'class': 'form-control' }),
-        "country": forms.Select(attrs={ 'class': 'form-control' }),
-        "profile_picutre": forms.FileInput(attrs={ 'class': 'form-control' }),
-        "mobile_phone": forms.NumberInput(attrs={ 'class': 'form-control' }),
-        "birth_date": forms.DateInput(attrs={ 'class': 'form-control' }),
-
-    }
+        }
 from django import forms
 from django.contrib.auth import authenticate
 from django.contrib.auth.forms import UserCreationForm

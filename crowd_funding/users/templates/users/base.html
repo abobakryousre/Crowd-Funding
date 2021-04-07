@@ -26,13 +26,13 @@
             </ul>
             <ul class="nav justify-content-end">
                   <li class="nav-item">
-                    <a class="nav-link active" aria-current="page" href="{% url 'profile' %}"><img src="https://i.ibb.co/SK3QN1j/unknown-image.jpg" alt="" width="30" height="24"></a>
+                    <a class="nav-link active" aria-current="page" href="{% url 'profile' %}"><img src="{{ user.profile_picutre.url }}" alt="" width="30" height="24"></a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="{% url 'profile' %}">Name</a>
+                    <a style="color: blue" class="nav-link" href="{% url 'profile' %}">{{ user.first_name }}</a>
                   </li>
                   <li class="nav-item">
-                    <a class="nav-link" href="#">Logout</a>
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
                   </li>
             </ul>
         </div>

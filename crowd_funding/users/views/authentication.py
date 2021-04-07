@@ -10,13 +10,14 @@ from users.forms import SignUpForm
 
 #fun of registration
 def UserRegisterView(request):
-
-
     if request.method == 'POST':
         form = SignUpForm(request.POST, request.FILES)
         if form.is_valid():
-            user = form.save()
+            form.save()
             return redirect('login')
+        else:
+            context = {'form': form}
+            return render(request, 'users/form.html', context)
 
     form = SignUpForm()
     context = {'form': form}
