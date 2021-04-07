@@ -28,7 +28,7 @@ class Rating(models.Model):
 class Rate(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     project = models.ForeignKey(Projects, on_delete=models.CASCADE)
-    rate = models.IntegerField(default=0);
+    rate = models.IntegerField(default=0)
 
     def __str__(self):
         return self.user.first_name + " " + self.user.last_name + \

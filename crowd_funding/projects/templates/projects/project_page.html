@@ -82,7 +82,7 @@
                         </span>
                         <p class="text-muted" id="average-rating"> has average rating of: {{ average_rating }}</p>
                         <h4 class="mt-1">Rate The Project</h4>
-                        <fieldset class="rating {% if is_rated == True %} rated {% endif %}" data-project="{{ project.id }}" data-user="{{ 1 }}">
+                        <fieldset class="rating {% if is_rated == True %} rated {% endif %}" data-project="{{ project.id }}" data-user="{{ user_id }}">
                             <input type="radio" id="star5" name="rating" value="5" {% if is_rated == True %} disabled {% endif %} {% if rating == 5 %} checked {% endif %}/>
                             <label class="full" for="star5" title="Awesome - 5 stars"></label>
                             <input type="radio" id="star4" name="rating" value="4" {% if is_rated == True %} disabled {% endif %} {% if rating == 4 %} checked {% endif %}/>
@@ -157,16 +157,17 @@
         {% for comment in comments %}
             <div class="row justify-content-center">
                 <div class="col-md-6">
-                    <h6 class="fw-bold">{{ comment.user }}</h6>
+                    <h6 class="fw-bold">{{ comment.user.first_name }} {{ comment.user.last_name }}</h6>
                     {% if comment.reportedcomment %}
                         <p class="text-muted">comment has been reported.</p>
                     {% else %}
                         <div id="{{ comment.id }}">
                             <h6>{{ comment }}</h6>
-                            {% if comment.user.id == 1 %}
+                            {% if comment.user.id == user_id %}
                                 <a href="{% url 'comments:delete_comment' project.id comment.id %}" class="link-secondary">Delete</a>
+                            {% else %}
+                                <a href="" data-bs-toggle="modal" data-bs-target="#report_comment_modal_{{ comment.id }}" class="link-secondary">Report</a>
                             {% endif %}
-                            <a href="" data-bs-toggle="modal" data-bs-target="#report_comment_modal_{{ comment.id }}" class="link-secondary">Report</a>
                         </div>
                         <div class="modal fade" id="report_comment_modal_{{ comment.id }}" tabindex="-1" aria-labelledby="reportCommentModal" aria-hidden="true">
                           <div class="modal-dialog modal-dialog-centered">
