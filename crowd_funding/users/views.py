@@ -1,11 +1,11 @@
+from django.contrib import messages
 from django.db.models import Sum
-from django.http import JsonResponse, Http404
+from django.http import Http404, JsonResponse
 from django.shortcuts import HttpResponse, get_object_or_404, redirect, render
 from projects.models import Donation, Images, Projects
 
 from .forms import UserProfile
 from .models import User
-from django.contrib import messages
 
 # from projects.models.projects import Donation
 
@@ -120,13 +120,3 @@ def show_user_donations(request):
                }
 
     return render(request, 'users/donations_of_user.html', context)
-
-
-
-
-
-
-
-
-
-

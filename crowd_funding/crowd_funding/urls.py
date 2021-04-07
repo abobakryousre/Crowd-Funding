@@ -15,16 +15,20 @@ Including another URLconf
 """
 from typing import List, Union
 
+# from users
+import users
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from users.views import index
+from users import urls
+from users.views import home, index
 
 urlpatterns = [
+
     path('admin/', admin.site.urls),
-    path('', index, name="index"),
-    path('user/', include('users.urls')),
+    path('', home.index, name='index'),
+    path('users/', include('users.urls')),
     path('projects/', include('projects.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

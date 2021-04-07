@@ -12,6 +12,6 @@ class Images(models.Model):
     #project has many images
     project = models.ForeignKey(Projects, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.path
+    # def __str__(self):
+    #     return self.path
     

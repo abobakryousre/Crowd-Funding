@@ -1,0 +1,170 @@
+{% extends 'projects/layout.html' %}
+{% load static %}
+{% block title %}
+    {{  project.title }}
+{% endblock %}
+
+{% block content %}
+    <div class="mt-3">
+        <h3 class="text-center fw-bold">{{ project.title }}</h3>
+    </div>
+    <div class="container flex-grow-1">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                {%if pictures%}
+                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">
+                        <div class="col-12">
+                            <div id="carousel" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                      {%for picture in pictures%}
+                                    <div class="carousel-item {%if forloop.first%} active {%endif%}">
+                                        <img class="d-block w-100"  src="{{  picture}}" alt="First slide" height="442" width="1042">
+                                    </div>
+                                    {%endfor%}
+
+                                </div>
+                                <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">
+                                    <span style="color:black;font-size:25px" aria-hidden="true"></span>
+                                </a>
+                                <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">
+                                    <span style="color:black;font-size:25px" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {% else %}
+                    <p class="text-center">no picture avalible</p>
+                {%endif%}
+            </div>
+            <div class="col-md-3">
+                <p></p>
+                <a href ="{% url 'donate_project' project.id %}" class='btn btn-primary mt-5 mb-3'>
+                    Donate Project
+                </a>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <p class="text-center">
+                    {{ project.user.first_name }} {{ project.user.last_name }} is organizing this fundraiser.
+                </p>
+                <hr>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <p>{{ project.details }}</p>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                Target: {{ project.total_target }} |
+                Start Date: {{ project.start_time }} |
+                End Date: {{ project.end_time }}
+            </div>
+        </div>
+        <br>
+        <div class="row justify-content-center">
+            <div class="col-md-2">
+                <h4 class="fw-light">Comments:</h4>
+            </div>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                 <form method="post">
+                    {{ comment_form.as_p }}
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-primary">Submit</button>
+                </form>
+            </div>
+        </div>
+        <br>
+        {% for comment in comments %}
+            <div class="row justify-content-center">
+                <div class="col-md-6">
+                    <h6 class="fw-bold">{{ comment.user }}</h6>
+                    <h6>{{ comment }}</h6>
+                    {% if comment.user.id == 1 %}
+                        <a href="#" class="link-secondary">Delete</a>
+                    {% endif %}
+                    <a href="#" class="link-secondary">Report</a>
+                    <hr>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{#    <h2 class="head text-center fw-bold">{{ project.title }}</h2>#}
+{#    <div class="container flex-grow-1">#}
+{#        <div class="row justify-content-center">#}
+{#            <div class="col-md-6">#}
+{#                {%if pictures%}#}
+{#                    <div id="carouselExampleControls" class="carousel slide" data-ride="carousel">#}
+{#                        <div class="col-12">#}
+{#                            <div id="carousel" class="carousel slide" data-ride="carousel">#}
+{#                                <div class="carousel-inner">#}
+{#                                      {%for picture in pictures%}#}
+{#                                    <div class="carousel-item {%if forloop.first%} active {%endif%}">#}
+{#                                        <img class="d-block w-100"  src="{{  picture}}" alt="First slide" height="442" width="1042">#}
+{#                                    </div>#}
+{#                                    {%endfor%}#}
+{##}
+{#                                </div>#}
+{#                                <a class="carousel-control-prev" href="#carousel" role="button" data-slide="prev">#}
+{#                                    <span style="color:black;font-size:25px" aria-hidden="true"></span>#}
+{#                                </a>#}
+{#                                <a class="carousel-control-next" href="#carousel" role="button" data-slide="next">#}
+{#                                    <span style="color:black;font-size:25px" aria-hidden="true"></span>#}
+{#                                </a>#}
+{#                            </div>#}
+{#                        </div>#}
+{#                    </div>#}
+{#                {% else %}#}
+{#                    <p>no picture avalible</p>#}
+{#                {%endif%}#}
+{#                    <a href ="{% url 'donate_project' project.id %}" class='btn btn-primary mt-5 mb-3'>#}
+{#                        Donate Project#}
+{#                    </a>#}
+{#            </div>#}
+{#        </div>#}
+{#        <div class="row justify-content-center">#}
+{#            <div class="col-md-6">#}
+{#                <p class="text-center">#}
+{#                    {{ project.user.first_name }} {{ project.user.last_name }} is organizing this fundraiser.#}
+{#                </p>#}
+{#                <hr>#}
+{#                <h4><span>project owner :</span> {{ project.user.first_name }} {{ project.user.last_name }}</h4>#}
+{#                <h3><span>project target :</span>{{project.total_target}}</h3>#}
+{##}
+{#                <p><h4><span>Details :</span> </h4> {{ project.details }} </p>#}
+{#                <h5><span>start date:</span></h5><h7>{{project.start_time}}</h7>#}
+{#                {% comment %} <h5><span>end date:</span>{{project.end_time}}</h5> {% endcomment %}#}
+{#                <h5><span>End date:</span></h5><h7>{{project.end_time}}</h7>#}
+{#            </div>#}
+{#            <div class="col-md-3">#}
+{#                <div class="actions">#}
+{#                    <button type="submit"  class="report waves-effect waves-light  yellow darken-2 btn mb-1" style="width:100% ; border-radius:15px;"> Report project</button>#}
+{#                    <br>#}
+{#                    {% if amount < target%}#}
+{#                        <form method="POST" action="{% url 'cancel_project' project.id %}">#}
+{#                            {% csrf_token %}#}
+{#                            <button type="submit"  class="cancel waves-effect waves-light text-white red lighten-2 btn"#}
+{#                                    style="width:100% ; border-radius:15px;"> Cancel project </button>#}
+{#                        </form>#}
+{#                    {% endif %}#}
+{#                </div>#}
+{#            </div>#}
+{#            <div class="projectDetails col-12">#}
+{#                 <div>#}
+{#                        {% comment %} {%for tag in project.tags.all %}#}
+{#                        <span class="tag">#{{ tag }}</span>#}
+{#                        {%endfor%}#}
+{#                    </div>#}
+{#                    <ul>#}
+{#                    <li> {{ project.tags}}</li>#}
+{#                    </ul> {% endcomment %}#}
+{##}
+{#                </div>#}
+{#            </div>#}
+{#        </div>#}
+{#    </div>#}
+{% endblock  %}

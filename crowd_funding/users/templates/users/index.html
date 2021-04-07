@@ -1,138 +1,231 @@
-{% extends "users/base.html" %}
-{% block title %} Home {% endblock %}
-{% load static %}
-{% block content %}
-    <div class="container mt-5">
-        <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>
-    </div>
-    <dev class="row">
-         <dev class="col-md-1"></dev>
-        <dev class="col-md-3">
-           <ul class="list-group mt-5">
-               <li class="list-group-item "><strong  style="background: green; color: white; font-size: large">Category</strong></li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Category one
-                <span class="badge bg-primary rounded-pill">14</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Category two
-                <span class="badge bg-primary rounded-pill">2</span>
-              </li>
-              <li class="list-group-item d-flex justify-content-between align-items-center">
-                Category three
-                <span class="badge bg-primary rounded-pill">1</span>
-              </li>
-            </ul>
-        </dev>
-        <dev class="col-md-1"></dev>
-        <dev class="col-md-5">
-                <div class="container border mt-5 mb-5">
-        <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 3"></button>
-                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4" aria-label="Slide 3"></button>
-            </div>
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img width="200px" height="300px" src="{% static 'users/images/301d4432918ccd3.jpg' %}" class="d-block w-100" alt=""/>
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>First slide label</h5>
-                        <p>Some representative placeholder content for the first slide.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img width="200px" height="300px" src="{% static 'users/images/301d4432918ccd3.jpg' %}" class="d-block w-100" alt=""/>
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Second slide label</h5>
-                        <p>Some representative placeholder content for the second slide.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img width="200px" height="300px" src="{% static 'users/images/301d4432918ccd3.jpg' %}" class="d-block w-100" alt=""/>
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>Third slide label</h5>
-                        <p>Some representative placeholder content for the third slide.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img width="200px" height="300px" src="" class="d-block w-100" alt=""/>
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>4'th slide label</h5>
-                        <p>Some representative placeholder content for the third slide.</p>
-                    </div>
-                </div>
-                <div class="carousel-item">
-                    <img width="200px" height="300px"    src="{% static 'users/images/301d4432918ccd3.jpg' %}" class="d-block w-100" alt=""/>
-                    <div class="carousel-caption d-none d-md-block">
-                        <h5>5'th slide label</h5>
-                        <p>Some representative placeholder content for the third slide.</p>
-                    </div>
-                </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Previous</span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
-                <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                <span class="visually-hidden">Next</span>
-            </button>
+{% extends "users/base.html" %} {% block title %} Home {% endblock %} {% load
+static %} {% block content %} {# Searchbar start #}
+<div class="container mt-5">
+  <div class="d-flex">
+    <input
+      id="searchbar"
+      class="form-control me-2"
+      type="search"
+      placeholder="Search by tag or title, @ for all projects"
+      aria-label="Search"
+    />
+    <button class="btn btn-outline-success" onclick="submitQuery()">
+      Search
+    </button>
+  </div>
+</div>
+{# sheatchbar end #} {# search result start #}
+<div class="row justify-content-center" id="search-result"></div>
+{# search result end #} {# selected projects start #}
+<div class="row justify-content-center">
+  <h2 class="text-center mt-5" style="color: green; font-weight: bold">
+    Recommended Projects
+  </h2>
+  {% if selected_projects %}
+  <dev class="col-md-5">
+    <div class="container border mt-5 mb-5">
+      <div
+        id="carouselExampleCaptions2"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-indicators">
+          {% for project in selected_projects %}
+          <button
+            type="button"
+            data-bs-target="#carouselExampleCaptions2"
+            data-bs-slide-to="{{ forloop.counter0 }}"
+            {%
+            if
+            forloop.first
+            %}
+            class="active"
+            {%
+            endif
+            %}
+            aria-label="Slide {{ forloop.counter }}"
+          ></button>
+          {% endfor %}
         </div>
+        <div class="carousel-inner">
+          {% for project in selected_projects %}
+          <div class="carousel-item {% if forloop.first %} active {% endif %}">
+            <a href="{% url 'project_details' project.id %}"
+              ><img
+                width="200px"
+                height="300px"
+                src="{{ project.images_set.first.path.url }}"
+                class="d-block w-100"
+                alt=""
+            /></a>
+            <div class="carousel-caption d-none d-md-block">
+              <h5>{{ project.title }}</h5>
+              <p>{{ project.details }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleCaptions2"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleCaptions2"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
     </div>
-        </dev>
-    </dev>
+  </dev>
+  {% endif %}
+</div>
+{# selected projects end #}
 
-        <div class="row justify-content-center">
-            <div class="card col-md-2 " style="width: 18rem;">
-                <img src="{% static 'users/images/301d4432918ccd3.jpg' %}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card col-md-1 " style="width: 18rem;">
-                <img src="{% static 'users/images/301d4432918ccd3.jpg' %}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card col-md-1" style="width: 18rem;">
-                <img src="{% static 'users/images/301d4432918ccd3.jpg' %}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card col-md-1" style="width: 18rem;">
-                <img src="{% static 'users/images/301d4432918ccd3.jpg' %}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
-            <div class="card col-md-1" style="width: 18rem;">
-                <img src="{% static 'users/images/301d4432918ccd3.jpg' %}" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
-                        card's content.</p>
-                    <a href="#" class="btn btn-primary">Go somewhere</a>
-                </div>
-            </div>
+<dev class="row">
+  <dev class="col-md-1"></dev>
+  {# Categories start #}
+  <dev class="col-md-3">
+    <ul class="list-group mt-5">
+      <li class="list-group-item">
+        <strong style="background: green; color: white; font-size: large"
+          >Category</strong
+        >
+      </li>
+      {% for category in categories %}
+
+      <li
+        class="list-group-item d-flex justify-content-between align-items-center"
+      >
+        <b
+          style="cursor: pointer"
+          onclick="displayCategoryProjects({{ category.id }})"
+          >{{ category.category_name }}</b
+        >
+        <span class="badge bg-primary rounded-pill"
+          >{{ category.projects_set.all.count }}</span
+        >
+      </li>
+      {% endfor %}
+    </ul>
+  </dev>
+  {# Categories end #}
+  <dev class="col-md-1"></dev>
+
+  {# highestProjects start #} {% if highest_projects %}
+
+  <dev class="col-md-5">
+    <h2 class="text-center" style="color: green; font-weight: bold">
+      Highest Rated Projects
+    </h2>
+    <div class="container border mt-3 mb-5">
+      <div
+        id="carouselExampleCaptions"
+        class="carousel slide"
+        data-bs-ride="carousel"
+      >
+        <div class="carousel-indicators">
+          {% for project in highest_projects %}
+          <button
+            type="button"
+            data-bs-target="#carouselExampleCaptions"
+            data-bs-slide-to="{{ forloop.counter0 }}"
+            {%
+            if
+            forloop.first
+            %}
+            class="active"
+            {%
+            endif
+            %}
+            aria-label="Slide {{ forloop.counter }}"
+          ></button>
+          {% endfor %}
         </div>
+        <div class="carousel-inner">
+          {% for project in highest_projects %}
+          <div class="carousel-item {% if forloop.first %} active {% endif %}">
+            <a href="{% url 'project_details' project.id %}"
+              ><img
+                width="200px"
+                height="300px"
+                src="{{ project.images_set.first.path.url }}"
+                class="d-block w-100"
+                alt=""
+            /></a>
+            <div class="carousel-caption d-none d-md-block">
+              <h5>{{ project.title }}</h5>
+              <p>{{ project.details }}</p>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+        <button
+          class="carousel-control-prev"
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="prev"
+        >
+          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Previous</span>
+        </button>
+        <button
+          class="carousel-control-next"
+          type="button"
+          data-bs-target="#carouselExampleCaptions"
+          data-bs-slide="next"
+        >
+          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+          <span class="visually-hidden">Next</span>
+        </button>
+      </div>
+    </div>
+  </dev>
+  {% endif %} {# highestProjects end #}
+</dev>
+
+{# projects by categroy start #}
+<div class="row justify-content-center" id="categories"></div>
+{# projects by categroy end #} {# latestProject start #} {% if latest_projects
+%}
+<div class="row justify-content-center">
+  <h2 class="text-center mt-5" style="color: blue; font-weight: bold">
+    Latest Created Projects
+  </h2>
+
+  {% for project in latest_projects %}
+  <div class="card col-md-1" style="width: 18rem">
+    <img
+      src="{{ project.images_set.first.path.url }}"
+      class="card-img-top"
+      alt="..."
+    />
+    <div class="card-body">
+      <h5 class="card-title">{{ project.title }}</h5>
+      <p class="card-text">{{ project.details }}</p>
+      <a href="{% url 'project_details' project.id %}" class="btn btn-primary"
+        >More Details</a
+      >
+    </div>
+  </div>
+
+  {% endfor %}
+</div>
+{% endif %} {# highestProjects end #}
+
+<script
+  src="https://code.jquery.com/jquery-3.6.0.min.js"
+  integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+  crossorigin="anonymous"
+></script>
+
+<script src="{% static 'users/js/homepage.js' %}"></script>
 {% endblock %}
