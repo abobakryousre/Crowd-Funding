@@ -88,16 +88,16 @@ def change_password(request):
     else:
         return redirect('login')
 
-def deleteItem(request,pk):
+def deleteItem(request):
     if request.user.is_authenticated:
+        pk = request.GET.get('project_id')
         project = Projects.objects.get(id=pk)
         try:
             sum_donations_of_project = Donation.objects.values('project_id').order_by('project_id').annotate(
                 total_price=Sum('amount')).get(project_id=pk)
 
             if sum_donations_of_project["total_price"] >= project.total_target * (25 / 100):
-
-               return redirect('user-projects')
+               JsonResponse({"deleted": False})
 
         except Donation.DoesNotExist:
             project.delete()
