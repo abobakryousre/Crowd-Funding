@@ -192,7 +192,7 @@
             </h2>
 
             {% for project in latest_projects %}
-                <div class="card col-md-1" style="width: 18rem">
+                <div class="card col-md-1 me-3" style="width: 18rem">
                     <img
                             src="{{ project.images_set.first.path.url }}"
                             class="card-img-top"
@@ -210,7 +210,8 @@
             {% endfor %}
         </div>
     {% endif %} {# highestProjects end #}
-
+{% endblock %}
+{% block scripts %}
     <script
             src="https://code.jquery.com/jquery-3.6.0.min.js"
             integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
