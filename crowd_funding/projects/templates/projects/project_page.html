@@ -46,7 +46,9 @@
                 <a href ="{% url 'donate_project' project.id %}" class='btn btn-primary mb-3'>
                     Donate Project
                 </a>
-                <a href="" class='btn btn-primary mb-3' data-bs-toggle="modal" data-bs-target="#report_project_modal_{{ project.id }}">Report</a>
+                {% if not is_reported %}
+                    <a id="report-link" href="" class='btn btn-primary mb-3' data-bs-toggle="modal" data-bs-target="#report_project_modal_{{ project.id }}">Report</a>
+                {% endif %}
                 <div class="modal fade" id="report_project_modal_{{ project.id }}" tabindex="-1" aria-labelledby="reportProjectModal" aria-hidden="true">
                   <div class="modal-dialog modal-dialog-centered">
                     <div class="modal-content">
@@ -69,7 +71,7 @@
                   </div>
                 </div>
                 {% if project.reportedproject %}
-                    <p class="text-muted">project has been reported.</p>
+                    <p class="text-muted" id="project-has-been-reported">project has been reported.</p>
                 {% endif %}
                 <div class="card card-rating">
                     <div class="card-body text-center card-rating-body">

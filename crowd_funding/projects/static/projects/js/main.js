@@ -93,11 +93,14 @@ function report_project(projectId) {
         data: { report: $('#report-project-message').val() },
 
         success : function(json) {
+            $('#report-link').remove();
             $('#report-message').val('');
             const reportModal = document.querySelector('#report_project_modal_' + json.project_id);
             let modal = bootstrap.Modal.getInstance(reportModal);
             modal.hide();
-            $('#reported_project_' + json.project_id).append("<p class=\"text-muted\">project has been reported.</p>");
+            if($('#project-has-been-reported').length === 0) {
+                $('#reported_project_' + json.project_id).append("<p class=\"text-muted\">project has been reported.</p>");
+            }
         },
 
         error : function(xhr, errMsg, err) {

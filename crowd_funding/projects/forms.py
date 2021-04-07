@@ -2,7 +2,7 @@ from django.forms import ModelForm
 from django import forms
 from django.db import models
 from .models import Projects, Images, Donation
-from .models.reported_project import ReportedProject
+from .models.reported_project import Report
 
 
 class DateInput(forms.DateInput):
@@ -41,7 +41,7 @@ class DonationForm(ModelForm):
 
 class ReportProjectForm(forms.ModelForm):
     class Meta:
-        model = ReportedProject
+        model = Report
         fields = ('report_message',)
         widgets = {
             'report_message': forms.Textarea(attrs={

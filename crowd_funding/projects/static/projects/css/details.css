@@ -166,3 +166,8 @@ color:rgb(0, 57, 77);
 font-weight:bold;
 
 }
+
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}

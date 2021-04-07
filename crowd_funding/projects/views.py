@@ -15,7 +15,7 @@ from .models.projects import Category
 from users.models import User
 from comments.forms import ReportCommentForm
 from .forms import ReportProjectForm
-from .models.reported_project import ReportedProject
+from .models.reported_project import ReportedProject, Report
 from .models.rating import Rate
 from django.core.files.storage import FileSystemStorage
 
@@ -129,6 +129,13 @@ def project_details(request, id):
 
         average_rating = project.rating.get_average_rating()
 
+        # check if user reported this project
+        try:
+            report = Report.objects.get(project=project, user=request.user)
+            is_reported = True
+        except Report.DoesNotExist:
+            is_reported = False
+
         if request.method == "GET":
             comment_form = CommentForm()
             report_comment_form = ReportCommentForm()
@@ -141,6 +148,7 @@ def project_details(request, id):
                 "comments": comments,
                 "project_category": project_category,
                 "is_rated": is_rated,
+                "is_reported": is_reported,
                 "rating": rating,
                 "average_rating": average_rating,
                 "comment_form": comment_form,
@@ -188,8 +196,15 @@ def report_project(request, project_id):
         report_message = request.POST.get('report')
 
         response_data = {}
-        ReportedProject.objects.create(project=project, report_message=report_message)
+        Report.objects.create(project=project, user=request.user, report_message=report_message)
 
+        try:
+            project.reportedproject
+        except ReportedProject.DoesNotExist:
+            ReportedProject.objects.create(project=project)
+
+        project.reportedproject.incrementOne()
+        project.reportedproject.save()
         response_data['result'] = "report successful"
         response_data['project_id'] = project.id
 
