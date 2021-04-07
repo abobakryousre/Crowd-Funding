@@ -22,6 +22,7 @@ class Projects(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     start_time = models.DateField(auto_now=False, auto_now_add=False, null=False)
     end_time = models.DateField(auto_now=False, auto_now_add=False, null=False)
+    selected = models.BooleanField(default=False)
     # user has multiple projects
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 

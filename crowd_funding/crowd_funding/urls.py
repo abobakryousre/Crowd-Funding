@@ -13,13 +13,24 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from typing import List, Union
+
+# from users
+import users
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import include, path
+from users.views import home, index
 
 urlpatterns = [
+
     path('admin/', admin.site.urls),
+    path('', home.index, name='index'),
+    path('users/', include('users.urls')),
     path('projects/', include('projects.urls')),
     path('projects/<int:project_id>/comments/', include('comments.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+
+
+# feat(user-profile): fix merge conflict with feature show projects, donations

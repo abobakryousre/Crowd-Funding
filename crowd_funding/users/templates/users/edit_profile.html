@@ -1,0 +1,21 @@
+{% extends "users/base.html" %}
+{% load static %}
+{% block content %}
+    <div >
+        <form
+                class="container "
+                action="{% url 'edit-profile' %}"
+                method="post"
+                enctype="multipart/form-data"
+        >
+
+            {% csrf_token %}
+            {{ user_profile.as_p }}
+            <p>Date Example: 2020-01-10</p>
+            <button class="btn btn-info" type="submit">Update</button>
+
+
+        </form>
+    </div>
+
+{% endblock %}
