@@ -13,14 +13,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from typing import List, Union
+
 # from users
 import users
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from users import urls
-from users.views import home
+from users.views import home, index
 
 urlpatterns = [
 
@@ -30,3 +31,6 @@ urlpatterns = [
     path('projects/', include('projects.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
+
+# feat(user-profile): fix merge conflict with feature show projects, donations

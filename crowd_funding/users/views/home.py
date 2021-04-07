@@ -1,38 +1,41 @@
 import json
 from django.forms.models import model_to_dict
 from django.core import serializers
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from projects.models import Projects, Rating, Tags
 from projects.models.projects import Category
 from django.http import JsonResponse, HttpResponse
 from django.db.models import Q
 
+from users.models import User
+
 
 # Create your views here.
 def index(request):
-
-    # get the highest 5 rate
-    highest_rate = Rating.objects.all().order_by('-five_star')[:5]
-    highest_rated_projects = []
-    for rate in highest_rate:
-        highest_rated_projects.append(rate.project)
-    # five-latest-projects
-    latest_five_projects = Projects.objects.all().order_by('-created_at')[:5]
-    categories = Category.objects.all()
-    # list of 5 projects selected by admin
-    selected_project = Projects.objects.filter(selected=True)[:5];
-
-    context = {
-        'highest_projects': highest_rated_projects,
-        'latest_projects': latest_five_projects,
-        'categories': categories,
-        'selected_projects': selected_project
-    }
-    return render(request, 'users/index.html', context)
-
+    if request.user.is_authenticated:
+        # get the highest 5 rate
+        highest_rate = Rating.objects.all().order_by('-five_star')[:5]
+        highest_rated_projects = []
+        for rate in highest_rate:
+            highest_rated_projects.append(rate.project)
+        # five-latest-projects
+        latest_five_projects = Projects.objects.all().order_by('-created_at')[:5]
+        categories = Category.objects.all()
+        # list of 5 projects selected by admin
+        selected_project = Projects.objects.filter(selected=True)[:5];
+        context = {
+            'highest_projects': highest_rated_projects,
+            'latest_projects': latest_five_projects,
+            'categories': categories,
+            'selected_projects': selected_project,
+         }
+        return render(request, 'users/index.html', context)
+    else:
+        return redirect('login')
 
 def display_category(request):
-    if request.is_ajax():
+
+    if request.user.is_authenticated and request.is_ajax():
         category_id = request.GET.get('category_id')
         category = Category.objects.filter(pk=category_id)[0]
         projects = category.projects_set.all()
@@ -52,16 +55,16 @@ def display_category(request):
         }
         return JsonResponse(context)
     else:
-        return HttpResponse("Page Not Found!");
+        return redirect('login')
 
 
 def search_for_projects(request):
-    if request.is_ajax():
+    if request.user.is_authenticated and request.is_ajax():
         query = request.GET.get('query')
         if query != "@":
             # convert the query from string separated with space  to array
             query = query.split(" ")
-            all_projects = Projects.objects.filter( Q(tags__tag_name__in=query) | Q(title__in=query) ).distinct();
+            all_projects = Projects.objects.filter(Q(tags__tag_name__in=query) | Q(title__in=query)).distinct();
         else:
             all_projects = Projects.objects.all()
         # set projects image
@@ -79,4 +82,4 @@ def search_for_projects(request):
         }
         return JsonResponse(context)
     else:
-        return HttpResponse("Page Not Found!");
+        return redirect('login')

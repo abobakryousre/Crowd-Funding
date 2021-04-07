@@ -1,8 +1,8 @@
+from django.contrib.auth.models import AbstractUser, UserManager
 from django.core.validators import RegexValidator
+from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django_countries.fields import CountryField
-from django.db import models
-from django.contrib.auth.models import AbstractUser, UserManager
 
 
 # create account manager
@@ -73,6 +73,3 @@ class User(AbstractUser):
 
     def has_module_perms(self, app_label):
         return True
-
-    # def __str__(self):
-    #     return self.first_name + self.last_name
