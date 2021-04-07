@@ -5,7 +5,11 @@ function sendAjaxRequestToCheckPassword(password) {
         data: {
             password: password,
         },
-        success: function (response) {
+        success: checkPasswordResponse
+    });
+}
+
+function checkPasswordResponse(response) {
             if (response.isPasswordCorrect == true) {
                 deleteAccount();
             } else {
@@ -16,9 +20,7 @@ function sendAjaxRequestToCheckPassword(password) {
                 error_message.textContent = "Password is not correct !";
                 error_message_location.appendChild(error_message);
             }
-        },
-    });
-}
+        }
 
 function checkPassword() {
     let password_field = document.getElementById("password");
@@ -42,3 +44,5 @@ function deleteAccount() {
 
 let modal = document.getElementById("deleteAccount");
 modal.addEventListener("hidden.bs.modal", clearTheModal());
+
+
