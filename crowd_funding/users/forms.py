@@ -14,7 +14,7 @@ class UserProfile(forms.ModelForm):
             "country": forms.Select(attrs={ 'class': 'form-select' }),
             "profile_picutre": forms.FileInput(attrs={ 'class': 'form-control' }),
             'phone_number': forms.TextInput(attrs={ 'class': 'form-control' }),
-            "birth_date": forms.DateInput(attrs={ 'class': 'form-control' })
+            "birth_date": forms.DateInput(attrs={ 'class': 'form-control', 'type': 'date'})
 
         }
 from django import forms

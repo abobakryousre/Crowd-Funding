@@ -1,29 +1,17 @@
 {% extends "users/base.html" %} {% block title %} Home {% endblock %} {% load static %} {% block content %}
-    {# Searchbar start #}
-    <div class="container mt-5">
-        <div class="d-flex">
-            <input
-                    id="searchbar"
-                    class="form-control me-2"
-                    type="search"
-                    placeholder="Search by tag or title, @ for all projects"
-                    aria-label="Search"
-            />
-            <button class="btn btn-outline-success" onclick="submitQuery()">
-                Search
-            </button>
-        </div>
-    </div>
-    {# sheatchbar end #} {# search result start #}
-    <div class="row justify-content-center" id="search-result"></div>
-    {# search result end #} {# selected projects start #}
-    <div class="row justify-content-center">
-        <h2 class="text-center mt-5" style="color: green; font-weight: bold">
-            Recommended Projects
-        </h2>
+
+    {# selected projects start #}
+    <style>
+    .carousel-item {
+        height: 20%;
+        width: fit-content;
+    }
+
+    </style>
+    <div class="row">
         {% if selected_projects %}
-            <dev class="col-md-5">
-                <div class="container border mt-5 mb-5">
+            <dev class="col-md-12">
+                <div class="mb-3">
                     <div
                             id="carouselExampleCaptions2"
                             class="carousel slide"
@@ -53,7 +41,7 @@
                                             class="d-block w-100"
                                             alt=""
                                     /></a>
-                                    <div class="carousel-caption d-none d-md-block">
+                                    <div class="container carousel-caption d-none d-md-block">
                                         <h5>{{ project.title }}</h5>
                                         <p>{{ project.details }}</p>
                                     </div>
@@ -84,6 +72,29 @@
         {% endif %}
     </div>
     {# selected projects end #}
+
+
+
+
+    {# Searchbar start #}
+    <div class="container mt-5">
+        <div class="d-flex">
+            <input
+                    id="searchbar"
+                    class="form-control me-2"
+                    type="search"
+                    placeholder="Search by tag or title, @ for all projects"
+                    aria-label="Search"
+            />
+            <button class="btn btn-outline-success" onclick="submitQuery()">
+                Search
+            </button>
+        </div>
+    </div>
+    {# sheatchbar end #} {# search result start #}
+    <div class="row justify-content-center" id="search-result"></div>
+    {# search result end #}
+
 
     <dev class="row">
         <dev class="col-md-1"></dev>
@@ -210,12 +221,5 @@
             {% endfor %}
         </div>
     {% endif %} {# highestProjects end #}
-
-    <script
-            src="https://code.jquery.com/jquery-3.6.0.min.js"
-            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
-            crossorigin="anonymous"
-    ></script>
-
     <script src="{% static 'users/js/homepage.js' %}"></script>
 {% endblock %}

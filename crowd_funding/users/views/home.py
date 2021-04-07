@@ -64,9 +64,9 @@ def search_for_projects(request):
         if query != "@":
             # convert the query from string separated with space  to array
             query = query.split(" ")
-            all_projects = Projects.objects.filter(Q(tags__tag_name__in=query) | Q(title__in=query)).distinct();
+            all_projects = Projects.objects.filter(Q(tags__tag_name__in=query) | Q(title__in=query)).distinct()[:10];
         else:
-            all_projects = Projects.objects.all()
+            all_projects = Projects.objects.all()[:10]
         # set projects image
         images = []
         for project in all_projects:

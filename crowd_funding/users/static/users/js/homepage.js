@@ -23,19 +23,20 @@ function appendProjects(response) {
                                                     `;
 
     for (let index = 0; index < projects_toJson.length; index++) {
-        insertProject(category_projects_location, projects_toJson[index].fields, project_images[index]);
+        insertProject(category_projects_location, projects_toJson[index].fields,projects_toJson[index].pk, project_images[index]);
     }
 
 }
 
-function insertProject(location, project, project_image) {
+function insertProject(location, project, project_pk, project_image) {
+
     location.innerHTML += `
-            <div class="card col-md-1 " style="width: 18rem;">
+            <div class="card col-md-1 mt-3 " style="width: 18rem;">
                     <img src=" ${project_image} " class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title">${project.title}</h5>
                         <p class="card-text">${project.details}</p>
-                        <a href="projects/${project.id}" class="btn btn-primary">More Details</a>
+                        <a href="projects/${project_pk}" class="btn btn-primary">More Details</a>
                     </div>
                 </div>
             `
@@ -67,6 +68,6 @@ function appendSearchResult(response) {
     let projects = JSON.parse(response['projects']);
     let project_images = JSON.parse(response['images']);
     for (let index = 0; index < projects.length; index++) {
-        insertProject(searchResultLocation, projects[index].fields, project_images[index]);
+        insertProject(searchResultLocation, projects[index].fields, projects[index].pk, project_images[index]);
     }
 }
