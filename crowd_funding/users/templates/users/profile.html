@@ -27,7 +27,7 @@
                                 src="{{ user.profile_picutre.url }}"
                         /></i>
                             <h2 class="font-weight-bold mt-4">{{ user.first_name }}&nbsp{{ user.last_name }} </h2>
-                            <i class="far fa-edit fa-2x mb-4"></i>
+                            <a class="far fa-edit fa-2x mb-4 edit-icon" href="{% url 'edit-profile' %}"></a>
                         </div>
                     </div>
                     <div class="col-sm-8 bg-white rounded-right">

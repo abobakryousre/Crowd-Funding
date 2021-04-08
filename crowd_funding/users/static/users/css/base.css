@@ -1,3 +1,8 @@
 html, body {
     height: 100%;
 }
+
+.edit-icon, .edit-icon:hover, .edit-icon:active {
+    text-decoration: none;
+    color: white;
+}

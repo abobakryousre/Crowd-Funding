@@ -63,7 +63,8 @@ def search_for_projects(request):
         query = request.GET.get('query')
         if query != "@":
             # convert the query from string separated with space  to array
-            query = query.split(" ")
+            query = query.split(",")
+            query = [q.lower() for q in query]
             all_projects = Projects.objects.filter(Q(tags__tag_name__in=query) | Q(title__in=query)).distinct();
         else:
             all_projects = Projects.objects.all()
