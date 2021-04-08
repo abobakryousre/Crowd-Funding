@@ -140,29 +140,29 @@ def project_details(request, id):
         except Report.DoesNotExist:
             is_reported = False
 
-            # get 4 similar projects according to tags
-            current_project_tags = Tags.objects.filter(project=project)
-            all_projects = Projects.objects.exclude(id=project.id).all()
+        # get 4 similar projects according to tags
+        current_project_tags = Tags.objects.filter(project=project)
+        all_projects = Projects.objects.exclude(id=project.id).all()
 
-            similar_projects_in_tags = []
+        similar_projects_in_tags = []
 
-            for p in all_projects:
-                if len(similar_projects_in_tags) >= 4:
-                    break
-                p_tags = Tags.objects.filter(project=p)
+        for p in all_projects:
+            if len(similar_projects_in_tags) >= 4:
+                break
+            p_tags = Tags.objects.filter(project=p)
 
-                for current_project_tag in current_project_tags:
-                    for p_tag in p_tags:
-                        if current_project_tag.tag_name == p_tag.tag_name:
-                            if p in similar_projects_in_tags:
-                                continue
-                            similar_projects_in_tags.append(p)
-                            print("project: ", p)
-                            print("current project tag: ", current_project_tag)
-                            print("project tag: ", p_tag)
-                            print("yes")
+            for current_project_tag in current_project_tags:
+                for p_tag in p_tags:
+                    if current_project_tag.tag_name == p_tag.tag_name:
+                        if p in similar_projects_in_tags:
+                            continue
+                        similar_projects_in_tags.append(p)
+                        print("project: ", p)
+                        print("current project tag: ", current_project_tag)
+                        print("project tag: ", p_tag)
+                        print("yes")
 
-            print(similar_projects_in_tags)
+        print(similar_projects_in_tags)
 
         if request.method == "GET":
             comment_form = CommentForm()

@@ -67,7 +67,36 @@
                         <hr>
                     </div>
                 </div>
-
+                <div class="row justify-content-center">
+                    <div class="col-md-6">
+                        <div class="mt-3">
+                            <h2 class="text-center fw-bold blue-header">Similar Projects</h2>
+                        </div>
+                    </div>
+                </div>
+                <div class="row justify-content-center">
+                    <div class="col-md-10">
+                        <div class="row row-cols-1 row-cols-md-3 g-4">
+                            {% for similar_project in similar_projects_in_tags %}
+                                <div class="card col-md-1 me-3 p-2" style="width: 13rem">
+                                    <img
+                                            src="{{ similar_project.images_set.first.path.url }}"
+                                            class="card-img-top"
+                                            style="height: 50%;"
+                                            alt="..."
+                                    />
+                                    <div class="card-body text-center">
+                                        <h5 class="card-title blue-text ">{{ similar_project.title }}</h5>
+                                        <a href="{% url 'project_details' similar_project.id %}" class="btn btn-primary"
+                                        style="font-size: 90%;">More Details</a
+                                        >
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <hr>
+                    </div>
+                </div>
                 <br>
                 <div class="row justify-content-center">
                     <div class="col-md-10">
@@ -145,7 +174,8 @@
                         <div class="progress mb-3" style="height: 5px;">
                             <div class="progress-bar bg-info w-{{ donations_percentage }}" role="progressbar"
                                  aria-valuemin="0"
-                                 aria-valuemax="100"></div>
+                                 aria-valuemax="100"
+                                 style="width: {{ donations_percentage }}%"></div>
                         </div>
                         <div class="mt-2 d-flex justify-content-around">
                             <i class="fas fa-calendar-plus"><span
