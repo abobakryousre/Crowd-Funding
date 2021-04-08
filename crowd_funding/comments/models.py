@@ -6,7 +6,7 @@ from users.models import User
 
 """
  you should first to have a commint to report it,
- to check if the comment is reported or not use hasattr method -> hasattr(the objectInstance, 'reported_comment')
+ to check if the comment is reported or not use hasattr method -> hasattr(the objectInstance, 'reportedcomment')
 
  to get ReportedComment object -> objectInstance.reportedcomment
  to get the report count  -> objectInstance.reportedcomment.report_count
@@ -41,6 +41,7 @@ class ReportedComment(models.Model):
         Comments, on_delete=models.CASCADE, primary_key=True)
 
     def incrementOne(self):
-        self.report_count+= 1
+        self.report_count += 1
+
     def __str__(self):
-        return str(self.report_count)
+        return "comment: " + self.comment.message + " ,report: " + self.report_message

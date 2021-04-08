@@ -29,8 +29,8 @@ urlpatterns = [
     path('', home.index, name='index'),
     path('users/', include('users.urls')),
     path('projects/', include('projects.urls')),
-
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    path('projects/<int:project_id>/comments/', include('comments.urls')),
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
 
 
 # feat(user-profile): fix merge conflict with feature show projects, donations

@@ -75,7 +75,7 @@
 				</div>
 				<div class="d-flex justify-content-center form_container">
 
-					<form method="POST" action="{% url 'checkdata' %}">
+					<form method="POST" action="{% url 'checkdata' %}" enctype="multipart/form-data">
 						{% csrf_token %}
 						<div class="input-group mb-3">
 							<div class="input-group-append">

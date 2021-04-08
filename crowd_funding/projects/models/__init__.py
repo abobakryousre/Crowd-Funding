@@ -1,7 +1,7 @@
 from .images import Images
 from .projects import Donation, Projects
-from .rating import Rating
-from .reported_project import ReportedProject
+from .rating import Rating, Rate
+from .reported_project import ReportedProject, Report
 from .tags import Tags
 
 """ 

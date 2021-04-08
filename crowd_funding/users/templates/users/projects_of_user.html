@@ -32,6 +32,7 @@
                 </ul>
                 <div class="card-body">
                     <button class="btn btn-danger" onclick="checkDonation({{ project.id }})">Delete</button>
+                    <a href="{% url 'project_details' project.id %}" class="btn btn-primary" >View</a>
                 </div>
             </div>
         {% endfor %}

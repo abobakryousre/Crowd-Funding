@@ -8,6 +8,7 @@ from projects.models import Donation, Images, Projects
 from users.forms import UserProfile
 from users.models import User
 
+
 # from projects.models.projects import Donation
 
 # Create your views here.
@@ -29,15 +30,16 @@ def edit_profile(request):
     else:
         return redirect('login')
 
+
 def view_profile(request):
     if request.user.is_authenticated:
         # get user information
-        projects_of_specific_user = Projects.objects.filter(user_id = request.user.pk)
-        donations=Donation.objects.select_related('project').filter(user_id= request.user.pk)
+        projects_of_specific_user = Projects.objects.filter(user_id=request.user.pk)
+        donations = Donation.objects.select_related('project').filter(user_id=request.user.pk)
 
         context = {
-        "projects":projects_of_specific_user,
-        "donations":donations
+            "projects": projects_of_specific_user,
+            "donations": donations
         }
 
         return render(request, 'users/profile.html', context)
@@ -47,7 +49,7 @@ def view_profile(request):
 
 def check_password(request):
     # check password before  delete the account
-    if  request.user.is_authenticated and request.is_ajax():
+    if request.user.is_authenticated and request.is_ajax():
         password = request.GET.get("password");
         user = authenticate(request, email=request.user.email, password=password)
         if user is not None:
@@ -66,6 +68,7 @@ def delete_account(request):
     else:
         return redirect('login')
 
+
 def change_password(request):
     if request.user.is_authenticated:
         if request.method == "GET":
@@ -75,7 +78,7 @@ def change_password(request):
             user = authenticate(request, email=request.user.email, password=request.POST.get('old-password'))
             if user is not None:
                 if request.POST.get('password1') == request.POST.get('password2'):
-                    current_user.set_password( request.POST.get("password1") )
+                    current_user.set_password(request.POST.get("password1"))
                     current_user.save()
                     update_session_auth_hash(request, current_user)
                     return redirect('profile')
@@ -88,6 +91,7 @@ def change_password(request):
     else:
         return redirect('login')
 
+
 def deleteItem(request):
     if request.user.is_authenticated:
         pk = request.GET.get('project_id')
@@ -97,34 +101,35 @@ def deleteItem(request):
                 total_price=Sum('amount')).get(project_id=pk)
 
             if sum_donations_of_project["total_price"] >= project.total_target * (25 / 100):
-               JsonResponse({"deleted": False})
+                return JsonResponse({"deleted": False})
 
         except Donation.DoesNotExist:
             project.delete()
-            return redirect('user-projects')
+            return JsonResponse({"deleted": True})
     else:
         return redirect('login')
 
 
 def show_user_projects(request):
     if request.user.is_authenticated:
-        projects_of_specific_user = Projects.objects.filter(user_id= request.user.pk)
+        projects_of_specific_user = Projects.objects.filter(user_id=request.user.pk)
 
         context = {
-                   "projects": projects_of_specific_user,
+            "projects": projects_of_specific_user,
 
-                   }
+        }
 
         return render(request, 'users/projects_of_user.html', context)
     else:
         return redirect('login')
 
+
 def show_user_donations(request):
     if request.user.is_authenticated:
         donations = Donation.objects.select_related('project').filter(user_id=request.user.pk)
         context = {
-                   "donations": donations
-                   }
+            "donations": donations
+        }
         return render(request, 'users/donations_of_user.html', context)
     else:
         return redirect('login')
