@@ -18,6 +18,36 @@ from .forms import ReportProjectForm
 from .models.reported_project import ReportedProject, Report
 from .models.rating import Rate
 from django.core.files.storage import FileSystemStorage
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+def index(request):
+    if request.user.is_authenticated:
+        query = request.GET.get('q')
+        if query and query  != "@":
+            # convert the query from string separated with space  to array
+            query = query.split(",")
+            query = [q.lower() for q in query]
+            all_projects = Projects.objects.filter(Q(tags__tag_name__in=query) | Q(title__in=query)).order_by("-id").distinct()
+        else:
+            all_projects = Projects.objects.all().order_by('-id')
+
+        paginator = Paginator(all_projects,4)  # 4 project per page
+        page = request.GET.get("page")
+        try:
+            projects = paginator.page(page)
+        except PageNotAnInteger:
+            projects = paginator.page(1)
+        except EmptyPage:
+            projects = paginator.page(paginator.num_pages)
+
+
+        context = {
+            'projects': projects,
+        }
+        return render(request, 'projects/index.html', context)
+    else:
+        return redirect('login')
+
 
 
 
@@ -67,7 +97,6 @@ def projectDonate(request, id):
             if form.is_valid():
                 result = Donation.objects.filter(
                     Q(project_id=id) & Q(user_id=request.POST['user'])).count()
-                print(result)
                 if (result > 0):
                     obj = Donation.objects.filter(Q(project_id=id) & Q(
                         user_id=request.POST['user'])).first()
@@ -78,7 +107,6 @@ def projectDonate(request, id):
                     donate_form = form.save(commit=False)
                     donate_form.save()
 
-                print(result)
                 return redirect("project_details", project.id)
 
         else:
@@ -89,8 +117,6 @@ def projectDonate(request, id):
         return redirect('login')
 
 
-def index(request):
-    return render(request, 'projects/donate_project.html/')
 
 
 def project_details(request, id):

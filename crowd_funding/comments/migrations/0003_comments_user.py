@@ -10,8 +10,8 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('comments', '0002_comments_project'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
+        ('comments', '0002_comments_project'),
     ]
 
     operations = [
