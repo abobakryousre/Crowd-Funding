@@ -82,3 +82,8 @@ color:rgb(0, 57, 77);
 font-weight:bold;
 
 }
+
+.blue-header {
+    color:rgba(16, 16, 61, 0.767);
+    font-weight:bold;
+}
