@@ -31,11 +31,11 @@ function appendProjects(response) {
 function insertProject(location, project, project_pk, project_image) {
 
     location.innerHTML += `
-            <div class="card col-md-1 me-3 mt-3 p-2" style="width: 16rem;">
+            <div class="card col-md-1 me-3 mt-3 p-2" style="width: 15rem;">
                     <img src=" ${project_image} " class="card-img-top" style="height: 50%;" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">${project.title}</h5>
-                        <p class="card-text">${project.details}</p>
+                        <h5 class="card-title blue-text">${project.title}</h5>
+                        <p class="card-text details-value">${project.details}</p>
                         <a href="projects/${project_pk}" class="btn btn-primary">More Details</a>
                     </div>
                 </div>
