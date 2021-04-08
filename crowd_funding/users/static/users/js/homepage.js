@@ -27,7 +27,7 @@ function appendProjects(response) {
         insertProject(category_projects_location, projects_toJson[index].fields,projects_toJson[index].pk, project_images[index]);
     }
 
-    category_projects_location.innerHTML += `<a  class="text-center col-md-3 btn btn-primary mt-2 mb-2 justify-content-center" href="/users/display-category?category_id=${category_id}">see all</a>\`
+    category_projects_location.innerHTML += `<div class="col-md-2 align-self-center"><a  class="text-center btn btn-primary mt-2 mb-2 justify-content-center" href="/users/display-category?category_id=${category_id}">see all</a></div>\`
                                                     `;
 
 }
@@ -73,7 +73,7 @@ function appendSearchResult(response) {
         insertProject(searchResultLocation, projects[index].fields, projects[index].pk, project_images[index]);
     }
     let query = document.getElementById('searchbar').value;
-    searchResultLocation.innerHTML += ` <a   class="text-center col-md-3 btn btn-primary mt-2 mb-2 justify-content-center" href="/projects/index?q=${query}">see all</a>`
+    searchResultLocation.innerHTML += ` <div class="col-md-2 align-self-center"><a class="text-center btn btn-primary mt-2 mb-2 justify-content-center" href="/projects/index?q=${query}">see all</a></div>`
     document.getElementById('searchbar').value = "";
 
 }
