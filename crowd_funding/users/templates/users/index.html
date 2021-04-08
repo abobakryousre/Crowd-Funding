@@ -2,15 +2,15 @@
 
     {# selected projects start #}
     <style>
-    .carousel-item {
-        height: 20%;
-        width: fit-content;
-    }
+        .carousel-item {
+            height: 50%;
+        {#width: 100%;#}
+        }
 
     </style>
     <div class="row">
         {% if selected_projects %}
-            <dev class="col-md-12">
+            <div class="col-md-12">
                 <div class="mb-3">
                     <div
                             id="carouselExampleCaptions2"
@@ -25,7 +25,7 @@
                                         data-bs-slide-to="{{ forloop.counter0 }}"
                                         {% if  forloop.first %}
                                         class="active"
-                                        {%  endif %}
+                                        {% endif %}
                                         aria-label="Slide {{ forloop.counter }}"
                                 ></button>
                             {% endfor %}
@@ -35,10 +35,9 @@
                                 <div class="carousel-item {% if forloop.first %} active {% endif %}">
                                     <a href="{% url 'project_details' project.id %}"
                                     ><img
-                                            width="200px"
-                                            height="300px"
                                             src="{{ project.images_set.first.path.url }}"
-                                            class="d-block w-100"
+                                            class="d-block"
+                                            style="height: 35rem; width: max-content;"
                                             alt=""
                                     /></a>
                                     <div class="container carousel-caption d-none d-md-block">
@@ -68,7 +67,7 @@
                         </button>
                     </div>
                 </div>
-            </dev>
+            </div>
         {% endif %}
     </div>
     {# selected projects end #}
@@ -77,18 +76,24 @@
 
 
     {# Searchbar start #}
-    <div class="container mt-5">
-        <div class="d-flex">
-            <input
-                    id="searchbar"
-                    class="form-control me-2"
-                    type="search"
-                    placeholder="Search by tag or title, @ for all projects"
-                    aria-label="Search"
-            />
-            <button class="btn btn-outline-success" onclick="submitQuery()">
-                Search
-            </button>
+    <div class="container d-flex flex-column mt-5 mb-3">
+        <div class="">
+            <div class="row justify-content-center">
+                <div class="col-md-9">
+                    <input
+                            id="searchbar"
+                            class="form-control me-2"
+                            type="search"
+                            placeholder="Search by tag or title, @ for all projects"
+                            aria-label="Search"
+                    />
+                </div>
+                <div class="col-md-3">
+                    <button class="btn btn-primary mt-0" onclick="submitQuery()">
+                        Search
+                    </button>
+                </div>
+            </div>
         </div>
     </div>
     {# sheatchbar end #} {# search result start #}
@@ -96,13 +101,12 @@
     {# search result end #}
 
 
-    <dev class="row">
-        <dev class="col-md-1"></dev>
+    <div class="row">
         {# Categories start #}
-        <dev class="col-md-3">
+        <div class="col-md-3">
             <ul class="list-group mt-5">
                 <li class="list-group-item">
-                    <h1 class="bg-info p-2" style="color: white; font-size: xxx-large"
+                    <h1 class="p-2" style="font-size: xxx-large"
                     >Category</h1
                     >
                 </li>
@@ -122,17 +126,17 @@
                     </li>
                 {% endfor %}
             </ul>
-        </dev>
+        </div>
         {# Categories end #}
-        <dev class="col-md-1"></dev>
+        <div class="col-md-1"></div>
 
         {# highestProjects start #} {% if highest_projects %}
 
-        <dev class="col-md-5">
-            <h2 class="text-center bg-info" style="font-weight: bold">
+        <div class="col-md-5">
+            <h2 class="text-center" style="font-weight: bold">
                 Highest Rated Projects
             </h2>
-            <div class="container border mt-3 mb-5">
+            <div class="container mt-3 mb-5">
                 <div
                         id="carouselExampleCaptions"
                         class="carousel slide"
@@ -189,16 +193,16 @@
                     </button>
                 </div>
             </div>
-        </dev>
+        </div>
     {% endif %} {# highestProjects end #}
-    </dev>
+    </div>
 
     {# projects by categroy start #}
     <div class="row justify-content-center" id="categories"></div>
     {# projects by categroy end #} {# latestProject start #}
     {% if latest_projects %}
         <div class="row justify-content-center">
-            <h2 class="text-center mt-5 bg-info" style="font-weight: bold">
+            <h2 class="text-center mt-5" style="font-weight: bold">
                 Latest Created Projects
             </h2>
 
