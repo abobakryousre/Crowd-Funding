@@ -43,7 +43,6 @@ def createProject(request):
 
                 # user profile page
                 return redirect("project_details", project_form.id)
-
         else:
 
             project_form = ProjectForm(
