@@ -1,11 +1,12 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,600,700|Trade+Winds&display=swap");
 @import url(https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 @import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
+@import url(https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap);
 
-/*body {*/
-/*    !*background-color: #D32F2F;*!*/
-/*    font-family: 'Calibri', sans-serif !important*/
-/*}*/
+body {
+    /*background-color: #D32F2F;*/
+    font-family: 'Calibri', sans-serif !important
+}
 html, body {
     height: 100%;
 }
@@ -23,7 +24,7 @@ label {
 
 .myratings {
     font-size: 50px;
-    color: green
+    color: green;
 }
 
 .rating>[id^="star"] {
@@ -173,4 +174,24 @@ font-weight:bold;
 a.disabled {
   pointer-events: none;
   cursor: default;
+}
+
+.reported_section {
+    margin-top:3%;
+}
+
+.description {
+    font-family: 'Roboto', sans-serif;
+}
+
+.desc-card {
+    border: 1px solid #d2d2dc;
+    border-radius: 11px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgb(249, 249, 250);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(212, 182, 212, 1);
+    box-shadow: 0px 0px 5px 0px rgb(161, 163, 164);
+}
+
+.desc-card:before {
+    opacity: 0.5;
 }
