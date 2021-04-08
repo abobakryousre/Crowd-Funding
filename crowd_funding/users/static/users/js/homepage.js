@@ -17,6 +17,7 @@ function appendProjects(response) {
     let projects_toJson = JSON.parse(response['projects'])
     let project_images = JSON.parse(response['images']);
     let category_name = JSON.parse(response['category_name'])
+    let category_id = JSON.parse(response['category_id'])
     let category_projects_location = document.getElementById('categories');
     category_projects_location.innerHTML = ` <h2 class="text-center mt-5 " style="color: blue; font-weight: bold">
                                                      ${category_name} Projects</h2>
@@ -25,6 +26,9 @@ function appendProjects(response) {
     for (let index = 0; index < projects_toJson.length; index++) {
         insertProject(category_projects_location, projects_toJson[index].fields,projects_toJson[index].pk, project_images[index]);
     }
+
+    category_projects_location.innerHTML += `<a  class="text-center col-md-3 btn btn-primary mt-2 mb-2 justify-content-center" href="/users/display-category?category_id=${category_id}">see all</a>\`
+                                                    `;
 
 }
 
@@ -46,10 +50,8 @@ function submitQuery() {
     let query = document.getElementById('searchbar').value;
     let searchResultLocation = document.getElementById('search-result');
 
-    // clear the search result location and the search bar
+    // clear the search result location
     searchResultLocation.innerHTML = "";
-    document.getElementById('searchbar').value = "";
-
     if (query) {
         $.ajax({
             url: "/users/search-for-projects",
@@ -70,4 +72,8 @@ function appendSearchResult(response) {
     for (let index = 0; index < projects.length; index++) {
         insertProject(searchResultLocation, projects[index].fields, projects[index].pk, project_images[index]);
     }
+    let query = document.getElementById('searchbar').value;
+    searchResultLocation.innerHTML += ` <a   class="text-center col-md-3 btn btn-primary mt-2 mb-2 justify-content-center" href="/projects/index?q=${query}">see all</a>`
+    document.getElementById('searchbar').value = "";
+
 }
