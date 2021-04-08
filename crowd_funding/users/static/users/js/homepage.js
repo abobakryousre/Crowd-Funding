@@ -17,6 +17,7 @@ function appendProjects(response) {
     let projects_toJson = JSON.parse(response['projects'])
     let project_images = JSON.parse(response['images']);
     let category_name = JSON.parse(response['category_name'])
+    let category_id = JSON.parse(response['category_id'])
     let category_projects_location = document.getElementById('categories');
     category_projects_location.innerHTML = ` <h2 class="text-center mt-5 " style="color: blue; font-weight: bold">
                                                      ${category_name} Projects</h2>
@@ -25,6 +26,9 @@ function appendProjects(response) {
     for (let index = 0; index < projects_toJson.length; index++) {
         insertProject(category_projects_location, projects_toJson[index].fields,projects_toJson[index].pk, project_images[index]);
     }
+
+    category_projects_location.innerHTML += `<a  class="text-center col-md-3 btn btn-primary mt-2 mb-2 justify-content-center" href="/users/display-category?category_id=${category_id}">see all</a>\`
+                                                    `;
 
 }
 
@@ -69,7 +73,7 @@ function appendSearchResult(response) {
         insertProject(searchResultLocation, projects[index].fields, projects[index].pk, project_images[index]);
     }
     let query = document.getElementById('searchbar').value;
-    searchResultLocation.innerHTML += `<a style="color: red" class="text-center" href="/projects/index?q=${query}">see all</a>`
+    searchResultLocation.innerHTML += ` <a   class="text-center col-md-3 btn btn-primary mt-2 mb-2 justify-content-center" href="/projects/index?q=${query}">see all</a>`
     document.getElementById('searchbar').value = "";
 
 }
