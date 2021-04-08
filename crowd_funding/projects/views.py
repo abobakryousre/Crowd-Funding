@@ -18,6 +18,30 @@ from .forms import ReportProjectForm
 from .models.reported_project import ReportedProject, Report
 from .models.rating import Rate
 from django.core.files.storage import FileSystemStorage
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
+def index(request):
+    query = request.GET.get('q')
+    if query and query  != "@":
+        # convert the query from string separated with space  to array
+        query = query.split(",")
+        query = [q.lower() for q in query]
+        all_projects = Projects.objects.filter(Q(tags__tag_name__in=query) | Q(title__in=query)).order_by("-id").distinct()
+    else:
+        all_projects = Projects.objects.all()
+
+    paginator = Paginator(all_projects,4)  # 4 project per page
+    page = request.GET.get("page")
+    try:
+        projects = paginator.page(page)
+    except PageNotAnInteger:
+        projects = paginator.page(1)
+    except EmptyPage:
+        projects = paginator.page(paginator.num_pages)
+    context = {
+        'projects': projects,
+    }
+    return render(request, 'projects/index.html', context)
 
 
 
@@ -85,8 +109,6 @@ def projectDonate(request, id):
         return redirect('login')
 
 
-def index(request):
-    return render(request, 'projects/donate_project.html/')
 
 
 def project_details(request, id):

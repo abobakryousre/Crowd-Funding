@@ -46,10 +46,8 @@ function submitQuery() {
     let query = document.getElementById('searchbar').value;
     let searchResultLocation = document.getElementById('search-result');
 
-    // clear the search result location and the search bar
+    // clear the search result location
     searchResultLocation.innerHTML = "";
-    document.getElementById('searchbar').value = "";
-
     if (query) {
         $.ajax({
             url: "/users/search-for-projects",
@@ -70,4 +68,8 @@ function appendSearchResult(response) {
     for (let index = 0; index < projects.length; index++) {
         insertProject(searchResultLocation, projects[index].fields, projects[index].pk, project_images[index]);
     }
+    let query = document.getElementById('searchbar').value;
+    searchResultLocation.innerHTML += `<a style="color: red" class="text-center" href="/projects/index?q=${query}">see all</a>`
+    document.getElementById('searchbar').value = "";
+
 }

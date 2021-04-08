@@ -1,13 +1,10 @@
 import json
-from django.forms.models import model_to_dict
 from django.core import serializers
 from django.shortcuts import render, redirect
-from projects.models import Projects, Rating, Tags
+from projects.models import Projects, Rating
 from projects.models.projects import Category
-from django.http import JsonResponse, HttpResponse
+from django.http import JsonResponse
 from django.db.models import Q
-
-from users.models import User
 
 
 # Create your views here.
@@ -22,22 +19,22 @@ def index(request):
         latest_five_projects = Projects.objects.all().order_by('-created_at')[:5]
         categories = Category.objects.all()
         # list of 5 projects selected by admin
-        selected_project = Projects.objects.filter(selected=True)[:5];
+        selected_project = Projects.objects.filter(selected=True)[:5]
         context = {
             'highest_projects': highest_rated_projects,
             'latest_projects': latest_five_projects,
             'categories': categories,
             'selected_projects': selected_project,
-         }
+        }
         return render(request, 'users/index.html', context)
     else:
         return redirect('login')
 
-def display_category(request):
 
+def display_category(request):
     if request.user.is_authenticated and request.is_ajax():
         category_id = request.GET.get('category_id')
-        category = Category.objects.filter(pk=category_id)[0]
+        category = Category.objects.get(pk=category_id)
         projects = category.projects_set.all()
         # set projects image
         images = []
@@ -57,6 +54,7 @@ def display_category(request):
     else:
         return redirect('login')
 
+# new one
 
 def search_for_projects(request):
     if request.user.is_authenticated and request.is_ajax():
@@ -65,9 +63,9 @@ def search_for_projects(request):
             # convert the query from string separated with space  to array
             query = query.split(",")
             query = [q.lower() for q in query]
-            all_projects = Projects.objects.filter(Q(tags__tag_name__in=query) | Q(title__in=query)).distinct();
+            all_projects = Projects.objects.filter(Q(tags__tag_name__in=query) | Q(title__in=query)).distinct()[:4]
         else:
-            all_projects = Projects.objects.all()[:10]
+            all_projects = Projects.objects.all()[:4]
         # set projects image
         images = []
         for project in all_projects:
