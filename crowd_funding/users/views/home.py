@@ -1,11 +1,12 @@
 import json
+
 from django.core import serializers
-from django.shortcuts import render, redirect
+from django.core.paginator import EmptyPage, PageNotAnInteger, Paginator
+from django.db.models import Q
+from django.http import JsonResponse
+from django.shortcuts import redirect, render
 from projects.models import Projects, Rating
 from projects.models.projects import Category
-from django.http import JsonResponse
-from django.db.models import Q
-from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
 
 def prepare_home_page():
