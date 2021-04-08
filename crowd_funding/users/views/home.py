@@ -67,7 +67,7 @@ def search_for_projects(request):
             query = [q.lower() for q in query]
             all_projects = Projects.objects.filter(Q(tags__tag_name__in=query) | Q(title__in=query)).distinct();
         else:
-            all_projects = Projects.objects.all()
+            all_projects = Projects.objects.all()[:10]
         # set projects image
         images = []
         for project in all_projects:

@@ -1,8 +1,8 @@
 {% extends "users/base.html" %} {% block title %} Profile {% endblock %}
 {% load static %} {% block content %}
-<body style="text-align:center">
+    <body style="text-align:center">
 
-<div class="container justify-content-center">
+    <div class="container justify-content-center">
         <div class="container justify-content-center">
             <img src="{% static 'users/icons/project.svg' %}" width="70" class="d-inline"/>
             <h1 class="font-italic d-inline text-center">Your Projects</h1>
@@ -31,12 +31,12 @@
                     <li class="list-group-item"><b>End Time: </b>{{ project.end_time }}</li>
                 </ul>
                 <div class="card-body">
-                    <a class="btn btn-danger" href="{% url 'deleteItem' project.id %}">Delete</a>
+                    <button class="btn btn-danger" onclick="checkDonation({{ project.id }})">Delete</button>
                 </div>
             </div>
-
         {% endfor %}
-
-</div>
-</body>
+        <script src="{% static 'users/js/delete_project.js' %}">
+        </script>
+    </div>
+    </body>
 {% endblock %}
