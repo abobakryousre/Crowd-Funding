@@ -28,7 +28,8 @@ urlpatterns = [
 path('loginn', loginPage, name="login"),
 
     path('reg', UserRegisterView, name='checkdata'),
-    path('home',index,name='home')
+    path('home',index,name='home'),
     # path('loginsite/',loginform, name='loginform'),
+     path('activate/<uidb64>/<token>', VerificationView.as_view(), name='activate'),
 
 ]

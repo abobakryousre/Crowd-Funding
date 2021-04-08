@@ -27,7 +27,7 @@ class SignUpForm(UserCreationForm):
 
     class Meta:
         model = User
-        fields = ("first_name", "last_name", "email", "password1", "password2", "phone_number", "profile_picutre")
+        fields = ("first_name", "last_name","username", "email", "password1", "password2", "phone_number", "profile_picutre")
 
 # class loginformauth(forms.ModelForm):
 #     password = forms.CharField(label='password')

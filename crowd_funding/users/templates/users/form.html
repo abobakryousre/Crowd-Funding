@@ -90,6 +90,13 @@
 							</div>
 							{{form.last_name}}
 						</div>
+
+						<div class="input-group mb-2">
+							<div class="input-group-append">
+								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
+							</div>
+							{{form.username}}
+						</div>
 						<div class="input-group mb-2">
 							<div class="input-group-append">
 								<span class="input-group-text"><i class="fas fa-envelope-square"></i></span>
@@ -152,10 +159,12 @@
 		var form_fields = document.getElementsByTagName('input')
 		form_fields[1].placeholder='enter frist name ..';
 		form_fields[2].placeholder='Enter Last name ..';
-		form_fields[3].placeholder='Enter Email ..';
-		form_fields[4].placeholder='Enter password...';
-		form_fields[5].placeholder='Re-enter Password...';
-		form_fields[6].placeholder='Your phone in egyption formate...';
+	    form_fields[3].placeholder='enter user name ..';
+
+		form_fields[4].placeholder='Enter Email ..';
+		form_fields[5].placeholder='Enter password...';
+		form_fields[6].placeholder='Re-enter Password...';
+		form_fields[7].placeholder='Your phone in egyption formate...';
 
 
 
