@@ -22,7 +22,7 @@ class ReportedProject(models.Model):
 
 
 class Report(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     project = models.ForeignKey(Projects, on_delete=models.CASCADE)
     report_message = models.TextField()
 
