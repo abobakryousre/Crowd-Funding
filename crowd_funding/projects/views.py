@@ -112,6 +112,9 @@ def project_details(request, id):
         for donation in donations:
             amount = amount + donation.amount
 
+        # compute percentage of total donations
+        donations_percentage = int((amount / project.total_target) * 100)
+
         # check if user rated the project
         try:
             rate = Rate.objects.get(project=project, user=user)
@@ -144,6 +147,7 @@ def project_details(request, id):
                 "project": project,
                 "pictures": pictures,
                 "total_target": total_target,
+                "donations_percentage": donations_percentage,
                 "amount": amount,
                 "comments": comments,
                 "project_category": project_category,
