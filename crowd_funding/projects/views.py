@@ -42,6 +42,9 @@ def createProject(request):
 
                 # user profile page
                 return redirect("project_details", project_form.id)
+            else:
+                return render(request, 'projects/create_project.html/',
+                              {'project_form': form})
 
         else:
 
@@ -50,7 +53,7 @@ def createProject(request):
                 initial={"user": request.user})
 
             return render(request, 'projects/create_project.html/',
-                          {'project_form': project_form})
+                          {'project_form':project_form})
     else:
         return redirect('login')
 
