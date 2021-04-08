@@ -44,7 +44,8 @@ class User(AbstractUser):
     email = models.EmailField(verbose_name="email", max_length=254, unique=True)
 
     country = CountryField(blank=True, null=True)
-    profile_picutre = models.ImageField(upload_to="users_images/", blank=True, null=True,default="users_images/1.png")
+    profile_picutre = models.ImageField(upload_to="users_images/", blank=True, null=True,
+                                        default="users_images/default_avatar.png")
     phone_number = models.CharField(
         max_length=16,
         blank=True,
