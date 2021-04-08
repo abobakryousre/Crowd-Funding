@@ -76,7 +76,11 @@
                 />
                 <small id="imagesError" class="form-text text-danger"></small>
           </div>
-
+{% if project_form.errors %}
+    <div class="alert alert-danger">
+        {{ project_form.errors }}
+    </div>
+{% endif %}
        </div>
 
     <button class="btn" type="submit">Submit</button>

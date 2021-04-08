@@ -18,7 +18,7 @@ function appendProjects(response) {
     let project_images = JSON.parse(response['images']);
     let category_name = JSON.parse(response['category_name'])
     let category_projects_location = document.getElementById('categories');
-    category_projects_location.innerHTML = ` <h2 class="text-center mt-5 " style="color: blue; font-weight: bold">
+    category_projects_location.innerHTML = ` <h2 class="text-center mt-5 blue-header">
                                                      ${category_name} Projects</h2>
                                                     `;
 
@@ -31,11 +31,11 @@ function appendProjects(response) {
 function insertProject(location, project, project_pk, project_image) {
 
     location.innerHTML += `
-            <div class="card col-md-1 me-3 mt-3" style="width: 18rem;">
-                    <img src=" ${project_image} " class="card-img-top" alt="...">
+            <div class="card col-md-1 me-3 mt-3 p-2" style="width: 15rem;">
+                    <img src=" ${project_image} " class="card-img-top" style="height: 50%;" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">${project.title}</h5>
-                        <p class="card-text">${project.details}</p>
+                        <h5 class="card-title blue-text">${project.title}</h5>
+                        <p class="card-text details-value">${project.details}</p>
                         <a href="projects/${project_pk}" class="btn btn-primary">More Details</a>
                     </div>
                 </div>
