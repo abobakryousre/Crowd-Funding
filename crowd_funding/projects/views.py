@@ -38,6 +38,7 @@ def createProject(request):
                     photo.save()
 
                 for tag in request.POST["project_tags"].split(","):
+                    tag = tag.strip()
                     Tags(project=project_form, tag_name=tag).save()
 
                 # user profile page
