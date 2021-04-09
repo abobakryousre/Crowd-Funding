@@ -1,0 +1,24 @@
+{% extends 'users/base.html' %}
+{% load static %}
+{% block title %}
+    {{ project.title }}
+{% endblock %}
+
+{% block styles %}
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'projects/css/details.css' %}" type="text/css">
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid flex-grow-1">
+        <div class="mt-5">
+            <h2 class="text-center description blue-header">Project Not Found</h2>
+        </div>
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <img src="{% static 'projects/imgs/404_notfound.png' %}" alt="404 not found" class="img-fluid">
+            </div>
+        </div>
+    </div>
+{% endblock %}
