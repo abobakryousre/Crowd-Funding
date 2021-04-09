@@ -90,7 +90,11 @@ def createProject(request):
 
 def projectDonate(request, id):
     if request.user.is_authenticated:
-        project = Projects.objects.get(id=id)
+        try:
+            project = Projects.objects.get(id=id)
+        except Projects.DoesNotExist:
+            return redirect("project_not_found")
+
         if request.method == 'POST':
             form = DonationForm(request.POST)
             if form.is_valid():
@@ -249,7 +253,11 @@ def project_details(request, id):
 
 
 def report_project(request, project_id):
-    project = Projects.objects.get(id=project_id)
+    try:
+        project = Projects.objects.get(id=project_id)
+    except Projects.DoesNotExist:
+        return redirect("project_not_found")
+
     if request.method == 'POST':
         report_message = request.POST.get('report')
 
@@ -271,7 +279,11 @@ def report_project(request, project_id):
 
 
 def rate_project(request, project_id):
-    project = Projects.objects.get(id=project_id)
+    try:
+        project = Projects.objects.get(id=project_id)
+    except Projects.DoesNotExist:
+        return redirect("project_not_found")
+
     if request.method == 'POST':
         rating = request.POST.get('rating')
         user = User.objects.get(id=request.POST.get('user'))
