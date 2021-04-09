@@ -1,0 +1,30 @@
+{% extends "users/base.html" %} {% block title %} Profile {% endblock %}
+{% load static %} {% block content %}
+    <body style="text-align:center">
+    <div class="container align-items-center">
+        <img src="{% static 'users/icons/donate.svg' %}" width="70" class="d-inline"/>
+        <h1 class="font-italic d-inline">Your Donations</h1>
+    </div>
+    <br/><br/>
+
+    <table class="table">
+        <thead class="thead-dark">
+        <tr>
+            <th scope="col">Project Name</th>
+            <th scope="col">Amount</th>
+            <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for d in donations %}
+            <tr>
+                <td>{{ d.project.title }}</td>
+                <td>{{ d.amount }}</td>
+                <td><a href="{% url 'project_details' d.project.id %}">View Project</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    </div>
+    </body>
+{% endblock %}

@@ -1,0 +1,309 @@
+{% extends "users/base.html" %} {% block title %} Home {% endblock %} {% load static %} {% block content %}
+
+    {# selected projects start #}
+    <style>
+        .carousel-item {
+            height: 50%;
+        {#width: 100%;#}
+        }
+
+    </style>
+    <div class="row justify-content-center">
+        {% if selected_projects %}
+            <div class="col-md-10">
+                <div class="mb-3">
+                    <div
+                            id="carouselExampleCaptions2"
+                            class="carousel slide"
+                            data-bs-ride="carousel"
+                    >
+                        <div class="carousel-indicators">
+                            {% for project in selected_projects %}
+                                <button
+                                        type="button"
+                                        data-bs-target="#carouselExampleCaptions2"
+                                        data-bs-slide-to="{{ forloop.counter0 }}"
+                                        {% if  forloop.first %}
+                                        class="active"
+                                        {% endif %}
+                                        aria-label="Slide {{ forloop.counter }}"
+                                ></button>
+                            {% endfor %}
+                        </div>
+                        <div class="carousel-inner">
+                            {% for project in selected_projects %}
+                                <div class="carousel-item {% if forloop.first %} active {% endif %}">
+                                    <a href="{% url 'project_details' project.id %}"
+                                    ><img
+                                            src="{{ project.images_set.first.path.url }}"
+                                            class="d-block"
+                                            style="height: 35rem; width: max-content;"
+                                            alt=""
+                                    /></a>
+                                    <div class="container carousel-caption d-none d-md-block">
+                                        <h5>{{ project.title }}</h5>
+                                        <p>{{ project.details }}</p>
+                                    </div>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <button
+                                class="carousel-control-prev"
+                                type="button"
+                                data-bs-target="#carouselExampleCaptions2"
+                                data-bs-slide="prev"
+                        >
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button
+                                class="carousel-control-next"
+                                type="button"
+                                data-bs-target="#carouselExampleCaptions2"
+                                data-bs-slide="next"
+                        >
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+        {% endif %}
+    </div>
+    {# selected projects end #}
+
+
+
+
+    {# Searchbar start #}
+    <div class="container d-flex flex-column mt-5 mb-3">
+        <div class="">
+            <div class="row justify-content-center">
+                <div class="col-md-9 ">
+                    <input
+                            id="searchbar"
+                            class="form-control me-2"
+                            type="search"
+                            placeholder="Search by tag or title, @ for all projects"
+                            aria-label="Search"
+                    />
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-primary mt-0" onclick="submitQuery()">
+                        Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {# sheatchbar end #} {# search result start #}
+    <div class="row justify-content-center" id="search-result"></div>
+    {# search result end #}
+
+
+    <div class="row justify-content-center">
+        {# Categories start #}
+        <div class="col-md-2">
+            <ul class="list-group mt-5">
+                <li class="list-group-item">
+                     <div class="col-md-1"></div>
+                    <h1 class="p-2 blue-header"
+                    >Category</h1
+                    >
+                </li>
+                {% for category in categories %}
+
+                    <li
+                            class="list-group-item d-flex justify-content-between align-items-center"
+                    >
+                        <b
+                                style="cursor: pointer"
+                                onclick="displayCategoryProjects({{ category.id }})"
+                                class="details-value"
+                        >{{ category.category_name }}</b
+                        >
+                        <span class="badge bg-primary rounded-pill"
+                        >{{ category.projects_set.all.count }}</span
+                        >
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
+        {# Categories end #}
+<!--        <div class="col-md-1"></div>-->
+
+        {# highestProjects start #} {% if highest_projects %}
+
+        <div class="col-md-5">
+            <h2 class="text-center blue-header">
+                Highest Rated Projects
+            </h2>
+            <div class="container mt-3 mb-5">
+                <div
+                        id="carouselExampleCaptions"
+                        class="carousel slide"
+                        data-bs-ride="carousel"
+                >
+                    <div class="carousel-indicators">
+                        {% for project in highest_projects %}
+                            <button
+                                    type="button"
+                                    data-bs-target="#carouselExampleCaptions"
+                                    data-bs-slide-to="{{ forloop.counter0 }}"
+                                    {% if forloop.first %}
+                                    class="active"
+                                    {% endif %}
+                                    aria-label="Slide {{ forloop.counter }}"
+                            ></button>
+                        {% endfor %}
+                    </div>
+                    <div class="carousel-inner">
+                        {% for project in highest_projects %}
+                            <div class="carousel-item {% if forloop.first %} active {% endif %}">
+                                <a href="{% url 'project_details' project.id %}"
+                                ><img
+                                        width="200px"
+                                        height="300px"
+                                        src="{{ project.images_set.first.path.url }}"
+                                        class="d-block w-100"
+                                        alt=""
+                                /></a>
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5>{{ project.title }}</h5>
+                                    <p>{{ project.details }}</p>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <button
+                            class="carousel-control-prev"
+                            type="button"
+                            data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide="prev"
+                    >
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button
+                            class="carousel-control-next"
+                            type="button"
+                            data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide="next"
+                    >
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+                 <div class="col-md-1 me-5 "></div>
+
+    {% endif %} {# highestProjects end #}
+    </div>
+
+    {# projects by categroy start #}
+    <div class="row justify-content-center" id="categories">
+        {% if projects %}
+            <div class="row justify-content-center mt-5">
+                {% for project in projects.object_list %}
+                    <div class="card col-md-2 me-3" style="width: 18rem;">
+                        <img
+                                src="{{ project.images_set.first.path.url }}"
+                                class="card-img-top"
+                                alt="..."
+                        />
+                        <div class="card-body">
+                            <h5 class="card-title">{{ project.title }}</h5>
+                            <p class="card-text">{{ project.details }}</p>
+                            <a href="{% url 'project_details' project.id %}" class="btn btn-primary"
+                            >More Details</a
+                            >
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% if projects.has_other_pages %}
+                <nav aria-label="Page navigation example mt-5 justify-content-center">
+                    <ul class="pagination justify-content-center mt-3">
+                        {% if projects.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page=
+                                        {{ projects.previous_page_number }}{% if request.GET.category_id %}&category_id={{ request.GET.category_id }}{% endif %}"
+                                   aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#!" aria-label="Previous">
+                                    <span aria-hidden="true">&laquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+
+                        {% for num in projects.paginator.page_range %}
+                            {% if projects.number == num %}
+                                <li class="page-item"><a class="page-link" href="#">{{ num }}</a></li>
+                            {% else %}
+                                <li class="page-item"><a class="page-link" href="?page=
+                                        {{ num }}{% if request.GET.category_id %}&category_id={{ request.GET.category_id }}{% endif %}">{{ num }}</a>
+                                </li>
+                            {% endif %}
+                        {% endfor %}
+
+                        {% if projects.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ projects.next_page_number }}{% if request.GET.category_id %}&category_id={{ request.GET.category_id }}{% endif %}"
+                                   aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% else %}
+                            <li class="page-item disabled">
+                                <a class="page-link" href="#" aria-label="Next">
+                                    <span aria-hidden="true">&raquo;</span>
+                                </a>
+                            </li>
+                        {% endif %}
+                    </ul>
+                </nav>
+            {% endif %}
+        {% endif %}
+    </div>
+    {# projects by categroy end #} {# latestProject start #}
+    {% if latest_projects %}
+        <div class="row justify-content-center">
+            <h2 class="text-center mt-5 blue-header" >
+                Latest Created Projects
+            </h2>
+
+            {% for project in latest_projects %}
+                <div class="card col-md-1 me-3 p-2" style="width: 15rem">
+                    <img
+                            src="{{ project.images_set.first.path.url }}"
+                            class="card-img-top"
+                            style="height: 50%;"
+                            alt="..."
+                    />
+                    <div class="card-body">
+                        <h5 class="card-title blue-text ">{{ project.title }}</h5>
+                        <p class="card-text details-value">{{ project.details }}</p>
+                        <a href="{% url 'project_details' project.id %}" class="btn btn-primary"
+                        >More Details</a
+                        >
+                    </div>
+                </div>
+
+            {% endfor %}
+        </div>
+    {% endif %} {# highestProjects end #}
+{% endblock %}
+{% block scripts %}
+    <script
+            src="https://code.jquery.com/jquery-3.6.0.min.js"
+            integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+            crossorigin="anonymous"
+    ></script>
+
+    <script src="{% static 'users/js/homepage.js' %}"></script>
+{% endblock %}
