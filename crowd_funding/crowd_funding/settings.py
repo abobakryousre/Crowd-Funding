@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 import os
 from pathlib import Path
+
 # from django.contrib import messages
 
 
@@ -157,5 +158,8 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = 'crowedfunding@gmail.com'
 EMAIL_HOST_PASSWORD = 'crowed109'
 # EMAIL_HOST_USER ='ghadar109@gmail.com'
-
 # EMAIL_HOST_PASSWORD = '01146358766'
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.AllowAllUsersModelBackend',
+]

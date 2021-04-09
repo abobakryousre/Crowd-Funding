@@ -52,6 +52,7 @@ def UserRegisterView(request):
             )
             email.send(fail_silently=False)
             messages.success(request, 'Account successfully created')
+            user.save()
             return redirect('login')
         else:
             context = {'form': form}
@@ -71,13 +72,15 @@ def loginPage(request):
         user = authenticate(request, email=email, password=password)
 
         if user is not None:
-            login(request, user)
-            return redirect('index')
+            if user.is_active:
+                login(request, user)
+                return redirect('index')
+            else:
+                messages.info(request, 'Please Activate Your Account To Continue ')
         else:
-            messages.info(request, 'Email OR password is incorrect')
+            messages.info(request, 'Email or Password is Incorrect')
 
-    context = {}
-    return render(request, 'users/login.html', context)
+    return render(request, 'users/login.html')
 
 #logout fun will used in bakr home page
 def logoutUser(request):
