@@ -19,7 +19,7 @@ function appendProjects(response) {
     let category_name = JSON.parse(response['category_name'])
     let category_id = JSON.parse(response['category_id'])
     let category_projects_location = document.getElementById('categories');
-    category_projects_location.innerHTML = ` <h2 class="text-center mt-5 " style="color: blue; font-weight: bold">
+    category_projects_location.innerHTML = ` <h2 class="text-center mt-5 blue-header">
                                                      ${category_name} Projects</h2>
                                                     `;
 
@@ -27,7 +27,7 @@ function appendProjects(response) {
         insertProject(category_projects_location, projects_toJson[index].fields,projects_toJson[index].pk, project_images[index]);
     }
 
-    category_projects_location.innerHTML += `<a  class="text-center col-md-3 btn btn-primary mt-2 mb-2 justify-content-center" href="/users/display-category?category_id=${category_id}">see all</a>\`
+    category_projects_location.innerHTML += `<div class="col-md-2 align-self-center"><a  class="text-center btn btn-primary mt-2 mb-2 justify-content-center" href="/users/display-category?category_id=${category_id}">see all</a></div>\`
                                                     `;
 
 }
@@ -35,11 +35,11 @@ function appendProjects(response) {
 function insertProject(location, project, project_pk, project_image) {
 
     location.innerHTML += `
-            <div class="card col-md-1 me-3 mt-3" style="width: 18rem;">
-                    <img src=" ${project_image} " class="card-img-top" alt="...">
+            <div class="card col-md-1 me-3 mt-3 p-2" style="width: 15rem;">
+                    <img src=" ${project_image} " class="card-img-top" style="height: 50%;" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title">${project.title}</h5>
-                        <p class="card-text">${project.details}</p>
+                        <h5 class="card-title blue-text">${project.title}</h5>
+                        <p class="card-text details-value">${project.details}</p>
                         <a href="projects/${project_pk}" class="btn btn-primary">More Details</a>
                     </div>
                 </div>
@@ -73,7 +73,7 @@ function appendSearchResult(response) {
         insertProject(searchResultLocation, projects[index].fields, projects[index].pk, project_images[index]);
     }
     let query = document.getElementById('searchbar').value;
-    searchResultLocation.innerHTML += ` <a   class="text-center col-md-3 btn btn-primary mt-2 mb-2 justify-content-center" href="/projects/index?q=${query}">see all</a>`
+    searchResultLocation.innerHTML += ` <div class="col-md-2 align-self-center"><a class="text-center btn btn-primary mt-2 mb-2 justify-content-center" href="/projects/index?q=${query}">see all</a></div>`
     document.getElementById('searchbar').value = "";
 
 }

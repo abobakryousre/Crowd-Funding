@@ -25,15 +25,16 @@
     {# sheatchbar end #} {# search result start #}
     <div class="row justify-content-center mt-5">
         {% for project in projects.object_list %}
-            <div class="card col-md-2 me-3" style="width: 18rem;">
+            <div class="card col-md-1 me-3 p-2" style="width: 15rem;">
                 <img
                         src="{{ project.images_set.first.path.url }}"
                         class="card-img-top"
                         alt="..."
+                        style="height: 50%;"
                 />
                 <div class="card-body">
-                    <h5 class="card-title">{{ project.title }}</h5>
-                    <p class="card-text">{{ project.details }}</p>
+                    <h5 class="card-title blue-text">{{ project.title }}</h5>
+                    <p class="card-text details-value">{{ project.details }}</p>
                     <a href="{% url 'project_details' project.id %}" class="btn btn-primary"
                     >More Details</a
                     >

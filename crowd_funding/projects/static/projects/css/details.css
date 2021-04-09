@@ -1,11 +1,13 @@
 @import url("https://fonts.googleapis.com/css?family=Montserrat:400,600,700|Trade+Winds&display=swap");
 @import url(https://netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css);
 @import url(http://fonts.googleapis.com/css?family=Calibri:400,300,700);
+@import url(https://fonts.googleapis.com/css2?family=Roboto:wght@100&display=swap);
 
-/*body {*/
-/*    !*background-color: #D32F2F;*!*/
-/*    font-family: 'Calibri', sans-serif !important*/
-/*}*/
+body {
+    /*background-color: #D32F2F;*/
+    font-family: 'Calibri', sans-serif !important
+}
+
 html, body {
     height: 100%;
 }
@@ -23,14 +25,14 @@ label {
 
 .myratings {
     font-size: 50px;
-    color: green
+    color: rgb(0, 57, 77);
 }
 
-.rating>[id^="star"] {
+.rating > [id^="star"] {
     display: none
 }
 
-.rating>label:before {
+.rating > label:before {
     margin: 5px;
     font-size: 2.25em;
     font-family: FontAwesome;
@@ -38,27 +40,27 @@ label {
     content: "\f005"
 }
 
-.rating>.half:before {
+.rating > .half:before {
     content: "\f089";
     position: absolute
 }
 
-.rating>label {
+.rating > label {
     color: #ddd;
     float: right
 }
 
 /*.rated>[id^="star"]:checked~label,*/
-.rating>[id^="star"]:checked~label,
-.rating:not(:checked)>label:hover,
-.rating:not(:checked)>label:hover~label {
+.rating > [id^="star"]:checked ~ label,
+.rating:not(:checked) > label:hover,
+.rating:not(:checked) > label:hover ~ label {
     color: #FFD700
 }
 
-.rating>[id^="star"]:checked+label:hover,
-.rating>[id^="star"]:checked~label:hover,
-.rating>label:hover~[id^="star"]:checked~label,
-.rating>[id^="star"]:checked~label:hover~label {
+.rating > [id^="star"]:checked + label:hover,
+.rating > [id^="star"]:checked ~ label:hover,
+.rating > label:hover ~ [id^="star"]:checked ~ label,
+.rating > [id^="star"]:checked ~ label:hover ~ label {
     color: #FFED85
 }
 
@@ -101,62 +103,64 @@ label {
     padding: 1.25rem
 }
 
-body{
+body {
     background-color: #E3F2FF;
 }
 
 
-h1{
-  text-align:center;
-  color:rgba(16, 16, 61, 0.767);
+h1 {
+    text-align: center;
+    color: rgba(16, 16, 61, 0.767);
 }
 
 .btn {
-  background-color: rgba(16, 16, 61, 0.767);
-  border:0;
-  outline:none;
-  padding:8px 20px;
-  margin-top: 10px;
-  text-transform:uppercase;
-  color:whitesmoke;
+    background-color: rgba(16, 16, 61, 0.767);
+    border: 0;
+    outline: none;
+    padding: 8px 20px;
+    margin-top: 10px;
+    text-transform: uppercase;
+    color: whitesmoke;
 
 }
-.btn:hover{
-  background-color:whitesmoke;
-  color:  rgba(16, 16, 61, 0.767);
-  /*border: 5px solid rgba(16, 16, 61, 0.767) !important;*/
+
+.btn:hover {
+    background-color: whitesmoke;
+    color: rgba(16, 16, 61, 0.767);
+    /*border: 5px solid rgba(16, 16, 61, 0.767) !important;*/
 
 }
+
 /*a{*/
 /*text-decoration:none;*/
 /*}*/
 
 .blue-header {
-    color:rgba(16, 16, 61, 0.767);
-    font-weight:bold;
+    color: rgba(16, 16, 61, 0.767);
+    font-weight: bold;
 }
 
 .blue-text {
-    color:rgba(16, 16, 61, 0.767);
-    font-weight:bold;
-    font-size:21px;
+    color: rgba(16, 16, 61, 0.767);
+    font-weight: bold;
+    font-size: 21px;
 }
 
 .blue-field-area {
-    background-color:whitesmoke;
-    color:  rgba(16, 16, 61, 0.767);
+    background-color: whitesmoke;
+    color: rgba(16, 16, 61, 0.767);
     border-radius: 4px;
-    width:30%;
-    border-radius:5px;
-    margin:5px;
+    width: 30%;
+    border-radius: 5px;
+    margin: 5px;
 }
 
 
-.blue-field-area:hover{
-  background-color:rgba(5, 47, 71, 0.349);
-  color:  rgba(16, 16, 61, 0.767);
-  font-weight: bold;
-  /*font-size: 20px;*/
+.blue-field-area:hover {
+    background-color: rgba(5, 47, 71, 0.349);
+    color: rgba(16, 16, 61, 0.767);
+    font-weight: bold;
+    /*font-size: 20px;*/
 }
 
 
@@ -164,13 +168,33 @@ h1{
 /*color:whitesmoke;*/
 /*}*/
 
-.details-value{
-color:rgb(0, 57, 77);
-font-weight:bold;
+.details-value {
+    color: rgb(0, 57, 77);
+    font-weight: bold;
 
 }
 
 a.disabled {
-  pointer-events: none;
-  cursor: default;
+    pointer-events: none;
+    cursor: default;
+}
+
+.reported_section {
+    margin-top: 3%;
+}
+
+.description {
+    font-family: 'Roboto', sans-serif;
+}
+
+.desc-card {
+    border: 1px solid #d2d2dc;
+    border-radius: 11px;
+    -webkit-box-shadow: 0px 0px 5px 0px rgb(249, 249, 250);
+    -moz-box-shadow: 0px 0px 5px 0px rgba(212, 182, 212, 1);
+    box-shadow: 0px 0px 5px 0px rgb(161, 163, 164);
+}
+
+.desc-card:before {
+    opacity: 0.5;
 }

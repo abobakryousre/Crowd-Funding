@@ -68,10 +68,14 @@ def createProject(request):
                     photo.save()
 
                 for tag in request.POST["project_tags"].split(","):
+                    tag = tag.strip()
                     Tags(project=project_form, tag_name=tag).save()
 
                 # user profile page
                 return redirect("project_details", project_form.id)
+            else:
+                return render(request, 'projects/create_project.html/',
+                              {'project_form': form})
 
         else:
 
@@ -138,6 +142,9 @@ def project_details(request, id):
         for donation in donations:
             amount = amount + donation.amount
 
+        # compute percentage of total donations
+        donations_percentage = int((amount / project.total_target) * 100)
+
         # check if user rated the project
         try:
             rate = Rate.objects.get(project=project, user=user)
@@ -162,6 +169,30 @@ def project_details(request, id):
         except Report.DoesNotExist:
             is_reported = False
 
+        # get 4 similar projects according to tags
+        current_project_tags = Tags.objects.filter(project=project)
+        all_projects = Projects.objects.exclude(id=project.id).all()
+
+        similar_projects_in_tags = []
+
+        for p in all_projects:
+            if len(similar_projects_in_tags) >= 4:
+                break
+            p_tags = Tags.objects.filter(project=p)
+
+            for current_project_tag in current_project_tags:
+                for p_tag in p_tags:
+                    if current_project_tag.tag_name == p_tag.tag_name:
+                        if p in similar_projects_in_tags:
+                            continue
+                        similar_projects_in_tags.append(p)
+                        print("project: ", p)
+                        print("current project tag: ", current_project_tag)
+                        print("project tag: ", p_tag)
+                        print("yes")
+
+        print(similar_projects_in_tags)
+
         if request.method == "GET":
             comment_form = CommentForm()
             report_comment_form = ReportCommentForm()
@@ -170,6 +201,7 @@ def project_details(request, id):
                 "project": project,
                 "pictures": pictures,
                 "total_target": total_target,
+                "donations_percentage": donations_percentage,
                 "amount": amount,
                 "comments": comments,
                 "project_category": project_category,
@@ -177,6 +209,7 @@ def project_details(request, id):
                 "is_reported": is_reported,
                 "rating": rating,
                 "average_rating": average_rating,
+                "similar_projects_in_tags": similar_projects_in_tags,
                 "comment_form": comment_form,
                 "report_comment_form": report_comment_form,
                 "report_project_form": report_project_form,
