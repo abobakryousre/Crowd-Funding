@@ -1,7 +1,7 @@
 {% extends 'users/base.html' %}
 {% load static %}
 {% block title %}
-    {{  project.title }}
+    {{ project.title }}
 {% endblock %}
 
 {% block styles %}
@@ -10,40 +10,45 @@
 
 
 {% block content %}
-<div class="container-fluid flex-grow-1 projectDetails">
-  <div class="row">
-    <div class="col-md-12 m-3">
-      <h1>
-        <span> Make Dontation to {{ project.title }} </span>
-      </h1>
-    </div>
-  </div>
-  <form method="post" enctype="multipart/form-data" class="ml-5">
-    {% csrf_token %}
-
-    {% for field in donate_form %}
-    <div class="row">
-      <div class="col-md-12">
-        <div class="form-group">
-          <div class="row">
-            <div class="col-md-2">
-              <label class="control-label"> {% if field.label == "Amount" %} {{ field.label }}: {% endif %} </label>
+    <div class="container-fluid flex-grow-1 projectDetails">
+        <div class="row">
+            <div class="col-md-12 m-3">
+                <h1 class="text-center">
+                    <span> Make Dontation to {{ project.title }} </span>
+                </h1>
             </div>
-            <div class="col-md-10">
-              {{ field }}
-            </div>
-          </div>
         </div>
-      </div>
+        <div class="row text-center justify-content-center">
+            <div class="col-md-12">
+                <form method="post" enctype="multipart/form-data" class="ml-5">
+                    {% csrf_token %}
+
+                    {% for field in donate_form %}
+                        <div class="row ">
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <div class="row justify-content-center">
+                                        <div class="col-md-2">
+                                            <label class="control-label"> {% if field.label == "Amount" %}
+                                                {{ field.label }}: {% endif %} </label>
+                                        </div>
+                                        <div class="col-md-2">
+                                            {{ field }}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+
+                    <button class="btn" type="submit">Submit</button>
+                </form>
+            </div>
+        </div>
     </div>
-    {% endfor %}
-
-    <button class="btn" type="submit">Submit</button>
-  </form>
-</div>
 
 
-{% endblock  %}
+{% endblock %}
 {% block js %}
 
-{% endblock  %}
+{% endblock %}

@@ -10,7 +10,7 @@ from comments.models import Comments
 from comments.forms import CommentForm
 from .models import Projects, Images, Donation, Rating, Tags
 from django.forms import modelformset_factory
-from projects.forms import ProjectForm,  DonationForm
+from projects.forms import ProjectForm, DonationForm
 from .models.projects import Category
 from users.models import User
 from comments.forms import ReportCommentForm
@@ -20,18 +20,20 @@ from .models.rating import Rate
 from django.core.files.storage import FileSystemStorage
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 
+
 def index(request):
     if request.user.is_authenticated:
         query = request.GET.get('q')
-        if query and query  != "@":
+        if query and query != "@":
             # convert the query from string separated with space  to array
             query = query.split(",")
             query = [q.lower() for q in query]
-            all_projects = Projects.objects.filter(Q(tags__tag_name__in=query) | Q(title__in=query)).order_by("-id").distinct()
+            all_projects = Projects.objects.filter(Q(tags__tag_name__in=query) | Q(title__in=query)).order_by(
+                "-id").distinct()
         else:
             all_projects = Projects.objects.all().order_by('-id')
 
-        paginator = Paginator(all_projects,4)  # 4 project per page
+        paginator = Paginator(all_projects, 4)  # 4 project per page
         page = request.GET.get("page")
         try:
             projects = paginator.page(page)
@@ -40,15 +42,12 @@ def index(request):
         except EmptyPage:
             projects = paginator.page(paginator.num_pages)
 
-
         context = {
             'projects': projects,
         }
         return render(request, 'projects/index.html', context)
     else:
         return redirect('login')
-
-
 
 
 def createProject(request):
@@ -64,7 +63,7 @@ def createProject(request):
                 for _img in request.FILES.getlist('project_images[]'):
                     FileSystemStorage(location='/images')
                     photo = Images(
-                                project=project_form, path=_img)
+                        project=project_form, path=_img)
                     photo.save()
 
                 for tag in request.POST["project_tags"].split(","):
@@ -91,7 +90,11 @@ def createProject(request):
 
 def projectDonate(request, id):
     if request.user.is_authenticated:
-        project = Projects.objects.get(id=id)
+        try:
+            project = Projects.objects.get(id=id)
+        except Projects.DoesNotExist:
+            return redirect("project_not_found")
+
         if request.method == 'POST':
             form = DonationForm(request.POST)
             if form.is_valid():
@@ -117,12 +120,13 @@ def projectDonate(request, id):
         return redirect('login')
 
 
-
-
 def project_details(request, id):
     if request.user.is_authenticated:
         add_rate = 0
-        project = Projects.objects.get(id=id)
+        try:
+            project = Projects.objects.get(id=id)
+        except Projects.DoesNotExist:
+            return redirect("project_not_found")
         comments = Comments.objects.filter(project=project)
         project_category = Category.objects.get(id=project.category_id)
         user = User.objects.get(id=request.user.pk)
@@ -248,9 +252,12 @@ def project_details(request, id):
         return redirect('login')
 
 
-
 def report_project(request, project_id):
-    project = Projects.objects.get(id=project_id)
+    try:
+        project = Projects.objects.get(id=project_id)
+    except Projects.DoesNotExist:
+        return redirect("project_not_found")
+
     if request.method == 'POST':
         report_message = request.POST.get('report')
 
@@ -272,7 +279,11 @@ def report_project(request, project_id):
 
 
 def rate_project(request, project_id):
-    project = Projects.objects.get(id=project_id)
+    try:
+        project = Projects.objects.get(id=project_id)
+    except Projects.DoesNotExist:
+        return redirect("project_not_found")
+
     if request.method == 'POST':
         rating = request.POST.get('rating')
         user = User.objects.get(id=request.POST.get('user'))
@@ -302,3 +313,7 @@ def rate_project(request, project_id):
 
         return HttpResponse(json.dumps(response_data), content_type="application/json")
     return HttpResponse("Rated")
+
+
+def project_not_found(request):
+    return render(request, 'projects/project_not_found.html')

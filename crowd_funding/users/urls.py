@@ -21,7 +21,6 @@ from django.urls import path
 from users.views import authentication as auth
 from users.views import home
 from users.views import user_profile as user
-from users.views import VerificationView
 
 urlpatterns = [
     path('login', auth.loginPage, name="login"),
@@ -37,6 +36,6 @@ urlpatterns = [
     url(r'^delete-project/', user.deleteItem,name='delete-project'),
     path('profile/my-projects', user.show_user_projects, name="user-projects"),
     path('profile/my-donations', user.show_user_donations, name="user-donations"),
-    path('activate/<uidb64>/<token>', VerificationView.as_view(), name='activate'),
+    path('activate/<uidb64>/<token>', auth.VerificationView.as_view(), name='activate'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
