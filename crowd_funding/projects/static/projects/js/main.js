@@ -116,10 +116,10 @@ $(document).ready(function(){
         var sim = $("input[type='radio']:checked").val();
         //alert(sim);
         if (sim < 3) {
-            $('.myratings').css('color','red');
+            // $('.myratings').css('color','red');
             $(".myratings").text(sim); }
         else{
-            $('.myratings').css('color','green');
+            // $('.myratings').css('color','green');
             $(".myratings").text(sim);
         }
         let project_id = $(".rating").data('project');

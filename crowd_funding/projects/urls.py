@@ -7,6 +7,7 @@ from .views import createProject, projectDonate, index, project_details, report_
 from .views import createProject, index, project_details, projectDonate, project_not_found
 
 urlpatterns = [
+    path('', index, name="projects_index"),
     path('<int:id>', project_details, name="project_details"),
     path('create', createProject, name="create_project"),
     path('donate/<int:id>', projectDonate, name="donate_project"),

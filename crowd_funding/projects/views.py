@@ -119,7 +119,10 @@ def projectDonate(request, id):
 def project_details(request, id):
     if request.user.is_authenticated:
         add_rate = 0
-        project = Projects.objects.get(id=id)
+        try:
+            project = Projects.objects.get(id=id)
+        except Projects.DoesNotExist:
+            return redirect("project_not_found")
         comments = Comments.objects.filter(project=project)
         project_category = Category.objects.get(id=project.category_id)
         user = User.objects.get(id=request.user.pk)
