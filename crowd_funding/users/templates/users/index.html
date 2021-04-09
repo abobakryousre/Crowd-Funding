@@ -206,11 +206,12 @@
         {% if projects %}
             <div class="row justify-content-center mt-5">
                 {% for project in projects.object_list %}
-                    <div class="card col-md-2 me-3" style="width: 18rem;">
+                    <div class="card col-md-1 me-3 p-2" style="width: 15rem;">
                         <img
                                 src="{{ project.images_set.first.path.url }}"
                                 class="card-img-top"
                                 alt="..."
+                                style="height: 50%;"
                         />
                         <div class="card-body">
                             <h5 class="card-title">{{ project.title }}</h5>
